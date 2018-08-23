@@ -2,7 +2,7 @@ package ua.kpi.training.controller;
 
 import ua.kpi.training.controller.command.ICommand;
 import ua.kpi.training.controller.command.auth.ExceptionCommand;
-import ua.kpi.training.controller.command.auth.LoginCommand;
+import ua.kpi.training.controller.command.auth.LogInCommand;
 import ua.kpi.training.controller.resource.PageContainer;
 
 import javax.servlet.ServletConfig;
@@ -29,7 +29,7 @@ public class Servlet extends HttpServlet{
     public void init(ServletConfig servletConfig){
         servletConfig.getServletContext().setAttribute(PageContainer.CONTEXT_LOGGED_USERS, new HashSet<String>());
         commands.put(PageContainer.COMMAND_EXCEPTION, new ExceptionCommand());
-        commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand());
+        commands.put(PageContainer.COMMAND_LOGIN, new LogInCommand());
 
 
     }

@@ -1,0 +1,2 @@
+INSERT INTO `testing_db`.`user` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `enabled_flag`, `admin_flag`) VALUES ('1', 'admin', 'qnicky.13@gmail.com', 'admin', 'Anton', 'Makukhin', '1', '1');
+INSERT INTO `testing_db`.`user` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `enabled_flag`, `admin_flag`) VALUES ('2', 'user', 'maktoni.13@gmail.com', 'user', 'Tonio', 'Makukhin', '1', '0');
