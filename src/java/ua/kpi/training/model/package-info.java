@@ -1,1 +1,0 @@
-package ua.kpi.training.model;
