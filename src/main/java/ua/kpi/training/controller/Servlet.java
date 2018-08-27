@@ -1,10 +1,12 @@
 package ua.kpi.training.controller;
 
-import ua.kpi.training.controller.command.ICommand;
+import ua.kpi.training.controller.command.Command;
 import ua.kpi.training.controller.command.auth.ExceptionCommand;
-import ua.kpi.training.controller.command.auth.LogInCommand;
+import ua.kpi.training.controller.command.auth.LoginCommand;
+import ua.kpi.training.controller.command.auth.LogoutCommand;
 import ua.kpi.training.controller.resource.PageContainer;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,14 +25,14 @@ import java.util.Map;
  */
 public class Servlet extends HttpServlet{
 
-    private Map<String, ICommand> commands = new HashMap<>();
+    private Map<String, Command> commands = new HashMap<>();
 
     @Override
     public void init(ServletConfig servletConfig){
         servletConfig.getServletContext().setAttribute(PageContainer.CONTEXT_LOGGED_USERS, new HashSet<String>());
         commands.put(PageContainer.COMMAND_EXCEPTION, new ExceptionCommand());
-        commands.put(PageContainer.COMMAND_LOGIN, new LogInCommand());
-
+        commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand());
+        commands.put(PageContainer.COMMAND_LOGOUT, new LogoutCommand());
 
     }
 
@@ -51,10 +53,13 @@ public class Servlet extends HttpServlet{
         String path = request.getRequestURI();
         path = path.replaceAll(PageContainer.PATH_REPLACE_REGEX,
                 PageContainer.PATH_REPLACE_REPLACEMENT);
-        ICommand command = commands.getOrDefault(path,
+        Command command = commands.getOrDefault(path,
                 (r) -> PageContainer.INDEX_PAGE_PATH);
         String page = command.execute(request);
-        request.getRequestDispatcher(page).forward(request, response);
+        RequestDispatcher requestDispatcher = request.getSession()
+                .getServletContext()
+                .getRequestDispatcher(page);
+        requestDispatcher.forward(request, response);
     }
 
 

@@ -7,10 +7,11 @@ import ua.kpi.training.model.entity.UserAuthority;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ExceptionCommand implements Command {
+public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
+        CommandUtility.invalidateCurrentSession(request);
         CommandUtility.setUserRights(request, "", UserAuthority.GUEST);
-        return PageContainer.INDEX_PAGE_PATH; //TODO: Need to create exception page with error details for user
+        return PageContainer.INDEX_PAGE_PATH;
     }
 }

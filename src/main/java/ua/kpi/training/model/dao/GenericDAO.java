@@ -2,7 +2,7 @@ package ua.kpi.training.model.dao;
 
 import java.util.List;
 
-public interface IGenericDAO<T> extends AutoCloseable {
+public interface GenericDAO<T> extends AutoCloseable {
     void create(T entity);
     T findById(int id);
     List<T> findAll();
