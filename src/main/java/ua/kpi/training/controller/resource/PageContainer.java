@@ -1,6 +1,7 @@
 package ua.kpi.training.controller.resource;
 
 public interface PageContainer {
+    String PAGE_REGISTRATION = "/registration.jsp";
     String INDEX_PAGE_PATH = "/index.jsp";
     String LOGIN_PAGE_PATH = "/login.jsp";
     String ERROR_PAGE_PATH = "/WEB-INF/error.jsp";
@@ -12,6 +13,7 @@ public interface PageContainer {
     String COMMAND_LOGIN = "login";
     String COMMAND_LOGOUT = "logout";
     String COMMAND_EXCEPTION = "exception";
+    String COMMAND_REGISTRATION = "registration";
     String SESSION_USER_NAME = "username";
     String SESSION_AUTHORITY = "authority";
     String SESSION_INCORRECT_LOGIN_PASSWORD = "";
@@ -20,4 +22,23 @@ public interface PageContainer {
     String PARAMETER_USER_NAME = "username";
     String PARAMETER_PASSWORD = "password";
     String ADMIN_PROFILE_PATH = "/WEB-INF/admin/adminbasis.jsp";
+    String REG_PARAM_USERNAME = "username";
+    String REG_PARAM_PASSWORD = "password";
+    String REG_PARAM_CONFIRM_PASSWORD = "confirm-password";
+    String REG_PARAM_EMAIL = "email";
+    String REG_PARAM_CONFIRM_EMAIL = "confirm-email";
+    String REG_PARAM_FIRST_NAME = "first-name";
+    String REG_PARAM_FIRST_NAME_UA = "first-name-ua";
+    String REG_PARAM_LAST_NAME = "last-name";
+    String REG_PARAM_LAST_NAME_UA = "last-name-ua";
+    String REG_ATTR_USERNAME = "username";
+    String REG_ATTR_PASSWORD = "password";
+    String REG_ATTR_CONFIRM_PASSWORD = "confirmPassword";
+    String REG_ATTR_EMAIL = "email";
+    String REG_ATTR_CONFIRM_EMAIL = "confirmEmail";
+    String REG_ATTR_FIRST_NAME = "firstName";
+    String REG_ATTR_FIRST_NAME_UA = "firstNameUA";
+    String REG_ATTR_LAST_NAME = "lastName";
+    String REG_ATTR_LAST_NAME_UA = "lastNameUA";
+    String REG_ATTR_ERROR_MESSAGE = "registrationErrorMessage";
 }

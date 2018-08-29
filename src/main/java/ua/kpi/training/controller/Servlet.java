@@ -4,6 +4,7 @@ import ua.kpi.training.controller.command.Command;
 import ua.kpi.training.controller.command.auth.ExceptionCommand;
 import ua.kpi.training.controller.command.auth.LoginCommand;
 import ua.kpi.training.controller.command.auth.LogoutCommand;
+import ua.kpi.training.controller.command.auth.RegistrationCommand;
 import ua.kpi.training.controller.resource.PageContainer;
 
 import javax.servlet.RequestDispatcher;
@@ -33,7 +34,7 @@ public class Servlet extends HttpServlet{
         commands.put(PageContainer.COMMAND_EXCEPTION, new ExceptionCommand());
         commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand());
         commands.put(PageContainer.COMMAND_LOGOUT, new LogoutCommand());
-
+        commands.put(PageContainer.COMMAND_REGISTRATION, new RegistrationCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -53,12 +54,15 @@ public class Servlet extends HttpServlet{
         String path = request.getRequestURI();
         path = path.replaceAll(PageContainer.PATH_REPLACE_REGEX,
                 PageContainer.PATH_REPLACE_REPLACEMENT);
+        // Command command = commands.getOrDefault(path,
+        //        (r) -> PageContainer.INDEX_PAGE_PATH);
         Command command = commands.getOrDefault(path,
-                (r) -> PageContainer.INDEX_PAGE_PATH);
+                new LoginCommand());
         String page = command.execute(request);
         RequestDispatcher requestDispatcher = request.getSession()
                 .getServletContext()
                 .getRequestDispatcher(page);
+
         requestDispatcher.forward(request, response);
     }
 
