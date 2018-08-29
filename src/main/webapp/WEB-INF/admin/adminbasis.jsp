@@ -1,6 +1,6 @@
-<%@include file="../jspf/head.jspf"%>
+<%@include file="../jspf/header.jspf"%>
 
 <h1><fmt:message key="message.admin.welcome.title"/></h1>
 <a href="${pageContext.request.contextPath}/logout"><fmt:message key="message.logout"/></a>
-</body>
-</html>
+
+<%@include file="../jspf/footer.jspf"%>

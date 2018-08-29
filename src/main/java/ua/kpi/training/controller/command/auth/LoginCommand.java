@@ -5,6 +5,7 @@ import ua.kpi.training.controller.command.dto.UserDTO;
 import ua.kpi.training.controller.command.utility.CommandUtility;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.model.entity.UserAuthority;
+import ua.kpi.training.model.service.CommonService;
 import ua.kpi.training.model.service.LoginService;
 import ua.kpi.training.model.service.factory.ServiceFactory;
 
@@ -12,20 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements Command {
-    private LoginService loginService;
 
     public LoginCommand() {
     }
 
-    public LoginCommand(LoginService loginService) {
-        this.loginService = loginService;
-    }
-
-    private void initLoginService() {
-        if (this.loginService == null) {
-            this.loginService = ServiceFactory.getInstance()
-                    .getLoginService();
-        }
+    @Override
+    public CommonService getService() {
+        return ServiceFactory.getInstance()
+                .getLoginService();
     }
 
     @Override
@@ -50,7 +45,8 @@ public class LoginCommand implements Command {
             return PageContainer.ERROR_PAGE_PATH;
         }
 
-        initLoginService();
+        LoginService loginService = (LoginService) getService();
+
         UserDTO userDTO = loginService.getUserDTOUsernamePassword(username, password);
         if (!userDTO.isExists()) {
             session.setAttribute(PageContainer.SESSION_INCORRECT_LOGIN_PASSWORD,
