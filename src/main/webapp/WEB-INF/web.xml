@@ -38,7 +38,12 @@
 
   <servlet-mapping>
     <servlet-name>Servlet</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>/testing/api/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Servlet</servlet-name>
+    <url-pattern>/testing/action/*</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>

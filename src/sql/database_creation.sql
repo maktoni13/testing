@@ -12,6 +12,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema testing_db
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `testing_db` DEFAULT CHARACTER SET utf8 ;
+-- -----------------------------------------------------
+-- Schema web_library
+-- -----------------------------------------------------
 USE `testing_db` ;
 
 -- -----------------------------------------------------
@@ -101,12 +104,16 @@ DROP TABLE IF EXISTS `testing_db`.`user` ;
 CREATE TABLE IF NOT EXISTS `testing_db`.`user` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `email` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   `password` CHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `first_name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `email` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `first_name` VARCHAR(50) NOT NULL,
+  `first_name_ua` VARCHAR(50) NOT NULL,
   `last_name` VARCHAR(50) NOT NULL,
+  `last_name_ua` VARCHAR(50) NOT NULL,
   `enabled_flag` TINYINT NOT NULL DEFAULT 0,
   `admin_flag` TINYINT NOT NULL DEFAULT 0,
+  `tests_completed` INT(11) NOT NULL DEFAULT 0,
+  `average_evaluation` INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `student_id_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
@@ -126,8 +133,9 @@ CREATE TABLE IF NOT EXISTS `testing_db`.`summary` (
   `informed_flag` TINYINT NOT NULL,
   `start_date` DATETIME NOT NULL,
   `finish_date` DATETIME NOT NULL,
-  `questions_quantity` INT NULL,
-  `correct_answered` INT NULL,
+  `questions_quantity` INT NOT NULL,
+  `correct_answered` INT NOT NULL,
+  `best_result_flag` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `fk_summary_test1_idx` (`test_id` ASC) VISIBLE,

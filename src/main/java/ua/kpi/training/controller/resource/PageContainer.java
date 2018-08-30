@@ -14,6 +14,8 @@ public interface PageContainer {
     String COMMAND_LOGOUT = "logout";
     String COMMAND_EXCEPTION = "exception";
     String COMMAND_REGISTRATION = "registration";
+    String COMMAND_STUDENT_LIST = "students";
+    String COMMAND_THEME_LIST = "themes";
     String SESSION_USER_NAME = "username";
     String SESSION_AUTHORITY = "authority";
     String SESSION_INCORRECT_LOGIN_PASSWORD = "";
@@ -41,4 +43,8 @@ public interface PageContainer {
     String REG_ATTR_LAST_NAME = "lastName";
     String REG_ATTR_LAST_NAME_UA = "lastNameUA";
     String REG_ATTR_ERROR_MESSAGE = "registrationErrorMessage";
+    String STUDENT_LIST_ATTR = "studentList";
+    String PAGE_STUDENT_LIST = "/studentslist.jsp";
+    String THEME_LIST_ATTR = "themeList";
+    String PAGE_THEME_LIST = "/themeslist.jsp";
 }

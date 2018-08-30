@@ -1,13 +1,13 @@
 package ua.kpi.training.controller.command.dto;
 
-import ua.kpi.training.model.entity.UserAuthority;
+import ua.kpi.training.model.entity.enums.UserType;
 
 public class UserDTO {
     private boolean exists;
     private String username;
     private boolean enabled;
     private boolean validPassword;
-    private UserAuthority authority;
+    private UserType authority;
 
     public UserDTO() {
     }
@@ -36,11 +36,11 @@ public class UserDTO {
         this.enabled = enabled;
     }
 
-    public UserAuthority getAuthority() {
+    public UserType getAuthority() {
         return authority;
     }
 
-    public void setAuthority(UserAuthority authority) {
+    public void setAuthority(UserType authority) {
         this.authority = authority;
     }
 

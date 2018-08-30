@@ -1,8 +1,10 @@
 package ua.kpi.training.model.dao.factory;
 
 import ua.kpi.training.model.dao.DAOFactory;
+import ua.kpi.training.model.dao.ThemeDAO;
 import ua.kpi.training.model.dao.UserDAO;
 import ua.kpi.training.model.dao.connection.ConnectionPoolHolder;
+import ua.kpi.training.model.dao.impl.JDBCThemeDAO;
 import ua.kpi.training.model.dao.impl.JDBCUserDAO;
 
 import javax.sql.DataSource;
@@ -16,6 +18,11 @@ public class JDBCDAOFactory extends DAOFactory {
     @Override
     public UserDAO createUserDAO() {
         return new JDBCUserDAO(getConnection());
+    }
+
+    @Override
+    public ThemeDAO createThemeDAO() {
+        return new JDBCThemeDAO(getConnection());
     }
 
     private Connection getConnection(){

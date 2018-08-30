@@ -4,7 +4,7 @@ import ua.kpi.training.controller.command.Command;
 import ua.kpi.training.controller.command.dto.UserDTO;
 import ua.kpi.training.controller.command.utility.CommandUtility;
 import ua.kpi.training.controller.resource.PageContainer;
-import ua.kpi.training.model.entity.UserAuthority;
+import ua.kpi.training.model.entity.enums.UserType;
 import ua.kpi.training.model.service.CommonService;
 import ua.kpi.training.model.service.LoginService;
 import ua.kpi.training.model.service.factory.ServiceFactory;
@@ -64,7 +64,7 @@ public class LoginCommand implements Command {
         CommandUtility.setUserRights(request, userDTO.getUsername(),
             userDTO.getAuthority());
 
-        return userDTO.getAuthority().equals(UserAuthority.ADMIN) ?
+        return userDTO.getAuthority().equals(UserType.ADMIN) ?
                 PageContainer.ADMIN_PROFILE_PATH :
                 PageContainer.USER_PROFILE_PATH;
     }

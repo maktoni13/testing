@@ -3,8 +3,10 @@ package ua.kpi.training.model.service.factory;
 import ua.kpi.training.model.dao.DAOFactory;
 import ua.kpi.training.model.service.LoginService;
 import ua.kpi.training.model.service.RegistrationService;
+import ua.kpi.training.model.service.StudentService;
 import ua.kpi.training.model.service.impl.LoginServiceImpl;
 import ua.kpi.training.model.service.impl.RegistrationServiceImpl;
+import ua.kpi.training.model.service.impl.StudentServiceImpl;
 
 public class ServiceFactory {
     private static volatile ServiceFactory serviceFactoryInstance;
@@ -34,6 +36,9 @@ public class ServiceFactory {
     }
     public RegistrationService getRegistrationService(){
         return new RegistrationServiceImpl();
+    }
+    public StudentService getStudentService(){
+        return new StudentServiceImpl();
     }
 
 }
