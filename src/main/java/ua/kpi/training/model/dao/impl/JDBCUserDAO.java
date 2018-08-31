@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCUserDAO implements UserDAO {
@@ -62,7 +63,20 @@ public class JDBCUserDAO implements UserDAO {
 
     @Override
     public List<User> findAll() {
-        return null;
+        List<User> userArrayList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.
+                prepareStatement(
+                        DAOResourceBundle.getStatement(
+                                DAOKeyContainer.SELECT_ALL_USERS))) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            while (resultSet.next()) {
+                userArrayList.add(userMapper.extractFromResultSet(resultSet));
+            }
+            return userArrayList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ua.kpi.training.view.resource;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MessageBundle {
@@ -9,13 +10,14 @@ public class MessageBundle {
     public MessageBundle() {
     }
 
+    public static void updateByDefaultLocale(){
+        bundle = ResourceBundle.getBundle(MessageKey.PROPERTIES, Locale.getDefault());
+    }
+
     public static ResourceBundle getBundle() {
         return bundle;
     }
 
-    public static void setMessageBundle(ResourceBundle bundle) {
-        MessageBundle.bundle = bundle;
-    }
 
     public static String getMessage(String key){
         return bundle.getString(key);

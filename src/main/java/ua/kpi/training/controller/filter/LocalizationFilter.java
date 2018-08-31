@@ -2,6 +2,7 @@ package ua.kpi.training.controller.filter;
 
 
 import com.sun.deploy.util.StringUtils;
+import ua.kpi.training.view.resource.MessageBundle;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -19,22 +20,18 @@ public class LocalizationFilter implements Filter {
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
 
-//        HttpServletRequest request = (HttpServletRequest) servletRequest;
-//        HttpServletResponse response = (HttpServletResponse) servletResponse;
-
-//        Locale locale1 = (Locale) request.getSession().getAttribute("language");
-
-        //res.setLocale(locale);
-        //chain.doFilter(req, res);
-
-        //String localeText = servletRequest.getParameter("language");
-        //if (localeText == null) {
+//        String localeText = servletRequest.getParameter("language");
+//        if (localeText == null) {
 //            localeText = "en_EN";
+//            servletRequest.setAttribute("language", localeText);
 //        }
 //        Locale locale = new Locale(localeText);
-//        Locale.setDefault(locale);
-//       servletResponse.setLocale(locale);
-        filterChain.doFilter(servletRequest, servletResponse);
+//        if (!Locale.getDefault().equals(locale)){
+//            Locale.setDefault(locale);
+//            MessageBundle.updateByDefaultLocale();
+//        }
+//
+//        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

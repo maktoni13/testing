@@ -1,8 +1,7 @@
 package ua.kpi.training.controller.command.utility;
 
-import com.sun.deploy.net.HttpRequest;
 import ua.kpi.training.controller.resource.PageContainer;
-import ua.kpi.training.model.entity.UserAuthority;
+import ua.kpi.training.model.entity.enums.UserType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +11,7 @@ public class CommandUtility {
 
     public static void setUserRights(HttpServletRequest request,
                               String username,
-                              UserAuthority authority) {
+                              UserType authority) {
         HttpSession session = request.getSession();
         session.setAttribute(PageContainer.SESSION_USER_NAME, username);
         session.setAttribute(PageContainer.SESSION_AUTHORITY, authority);

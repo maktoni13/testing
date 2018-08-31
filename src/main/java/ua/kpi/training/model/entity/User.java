@@ -1,5 +1,7 @@
 package ua.kpi.training.model.entity;
 
+import ua.kpi.training.model.entity.enums.UserType;
+
 public class User {
 
     private int id;
@@ -12,7 +14,9 @@ public class User {
     private String lastNameUA;
     private boolean enabled;
     private boolean admin;
-    private UserAuthority authority;
+    private int testsCompleted;
+    private int averageEvaluation;
+    private UserType authority;
 
     public int getId() {
         return id;
@@ -26,7 +30,7 @@ public class User {
         return password;
     }
 
-    public UserAuthority getAuthority() {
+    public UserType getAuthority() {
         return authority;
     }
 
@@ -42,7 +46,7 @@ public class User {
         this.password = password;
     }
 
-    public void setAuthority(UserAuthority authority) {
+    public void setAuthority(UserType authority) {
         this.authority = authority;
     }
 
@@ -106,7 +110,23 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
-        this.authority = admin ? UserAuthority.ADMIN : UserAuthority.USER;
+        this.authority = admin ? UserType.ADMIN : UserType.USER;
+    }
+
+    public int getTestsCompleted() {
+        return testsCompleted;
+    }
+
+    public void setTestsCompleted(int testsCompleted) {
+        this.testsCompleted = testsCompleted;
+    }
+
+    public int getAverageEvaluation() {
+        return averageEvaluation;
+    }
+
+    public void setAverageEvaluation(int averageEvaluation) {
+        this.averageEvaluation = averageEvaluation;
     }
 
     @Override
@@ -120,6 +140,9 @@ public class User {
                 ", firstNameUA='" + firstNameUA + '\'' +
                 ", lastNameUA='" + lastNameUA + '\'' +
                 ", enabled=" + enabled +
+                ", admin=" + admin +
+                ", testsCompleted=" + testsCompleted +
+                ", averageEvaluation=" + averageEvaluation +
                 ", authority=" + authority +
                 '}';
     }

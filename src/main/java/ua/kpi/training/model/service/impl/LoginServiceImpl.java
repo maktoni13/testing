@@ -4,7 +4,6 @@ import ua.kpi.training.controller.command.dto.UserDTO;
 import ua.kpi.training.model.dao.UserDAO;
 import ua.kpi.training.model.dao.DAOFactory;
 import ua.kpi.training.model.entity.User;
-import ua.kpi.training.model.entity.UserAuthority;
 import ua.kpi.training.model.service.LoginService;
 
 public class LoginServiceImpl implements LoginService {

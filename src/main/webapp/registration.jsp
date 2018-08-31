@@ -9,7 +9,7 @@
 
 <h1><fmt:message key="message.registration.page.title"/></h1><br/>
 <div class="container">
-    <form action="registration" method="post">
+    <form action="testing/api/registration" method="post">
 
         <label>${registrationErrorMessage}</label>
         <br/>

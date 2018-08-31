@@ -5,6 +5,8 @@ import ua.kpi.training.controller.command.auth.ExceptionCommand;
 import ua.kpi.training.controller.command.auth.LoginCommand;
 import ua.kpi.training.controller.command.auth.LogoutCommand;
 import ua.kpi.training.controller.command.auth.RegistrationCommand;
+import ua.kpi.training.controller.command.students.StudentListCommand;
+import ua.kpi.training.controller.command.students.ThemeListCommand;
 import ua.kpi.training.controller.resource.PageContainer;
 
 import javax.servlet.RequestDispatcher;
@@ -35,6 +37,8 @@ public class Servlet extends HttpServlet{
         commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand());
         commands.put(PageContainer.COMMAND_LOGOUT, new LogoutCommand());
         commands.put(PageContainer.COMMAND_REGISTRATION, new RegistrationCommand());
+        commands.put(PageContainer.COMMAND_STUDENT_LIST, new StudentListCommand());
+        commands.put(PageContainer.COMMAND_THEME_LIST, new ThemeListCommand());
     }
 
     public void doGet(HttpServletRequest request,

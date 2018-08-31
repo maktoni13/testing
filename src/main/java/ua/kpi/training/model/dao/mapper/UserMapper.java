@@ -17,6 +17,8 @@ public class UserMapper implements ObjectMapper<User> {
     private static final String LAST_NAME_UA_COLUMN = "last_name_ua";
     private static final String ENABLED_FLAG_COLUMN = "enabled_flag";
     private static final String ADMIN_FLAG_COLUMN = "admin_flag";
+    private static final String TESTS_COMPLETED_COLUMN = "tests_completed";
+    private static final String AVERAGE_EVALUATION_COLUMN = "average_evaluation";
 
     @Override
     public User extractFromResultSet(ResultSet resultSet) throws SQLException {
@@ -31,6 +33,8 @@ public class UserMapper implements ObjectMapper<User> {
         user.setLastNameUA(resultSet.getString(LAST_NAME_UA_COLUMN));
         user.setEnabled(resultSet.getBoolean(ENABLED_FLAG_COLUMN));
         user.setAdmin(resultSet.getBoolean(ADMIN_FLAG_COLUMN));
+        user.setTestsCompleted(resultSet.getInt(TESTS_COMPLETED_COLUMN));
+        user.setAverageEvaluation(resultSet.getInt(AVERAGE_EVALUATION_COLUMN));
         return user;
     }
 
