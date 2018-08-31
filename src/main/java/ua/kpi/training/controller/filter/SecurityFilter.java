@@ -32,11 +32,13 @@ public class SecurityFilter implements Filter {
                     userType);
         }
         String requestURI = httpServletRequest.getRequestURI();
-        if (requestURI.contains("admin/")
+        if (requestURI.contains(PageContainer.SECURITY_FILTER_ADMIN)
                 && !userType.equals(UserType.ADMIN)) {
+            // TODO: Send error message
             httpServletResponse.sendRedirect(PageContainer.INDEX_PAGE_PATH);
-        } else if(requestURI.contains("common/")
+        } else if(requestURI.contains(PageContainer.SECURITY_FILTER_COMMON)
                 && userType.equals(UserType.GUEST)){
+            // TODO: Send error message
             httpServletResponse.sendRedirect(PageContainer.INDEX_PAGE_PATH);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
