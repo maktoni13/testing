@@ -4,6 +4,6 @@ import ua.kpi.training.model.entity.Theme;
 
 import java.util.List;
 
-public interface ThemeService extends CommonService {
+public interface ThemeService{
     List<Theme> getAllThemes();
 }

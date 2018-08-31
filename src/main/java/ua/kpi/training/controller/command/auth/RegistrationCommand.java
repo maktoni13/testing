@@ -5,9 +5,7 @@ import ua.kpi.training.controller.command.dto.RegistrationUserDTO;
 import ua.kpi.training.controller.command.regex.RegexContainer;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.model.entity.exception.NonUniqueUserException;
-import ua.kpi.training.model.service.CommonService;
 import ua.kpi.training.model.service.RegistrationService;
-import ua.kpi.training.model.service.factory.ServiceFactory;
 import ua.kpi.training.view.resource.MessageBundle;
 import ua.kpi.training.view.resource.MessageKey;
 
@@ -15,6 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
 public class RegistrationCommand implements Command {
+
+    private RegistrationService registrationService;
+
+    public RegistrationCommand() {
+    }
+
+    public RegistrationCommand(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     private RegistrationUserDTO extractRegistrationUserDTO(HttpServletRequest request){
         RegistrationUserDTO regUserDTO = new RegistrationUserDTO();
@@ -88,9 +95,8 @@ public class RegistrationCommand implements Command {
     }
 
     private boolean isRegistrationSuccessful(RegistrationUserDTO regUserDTO){
-        RegistrationService regService = (RegistrationService) getService();
         try {
-            return regService.registerUser(regUserDTO);
+            return registrationService.registerUser(regUserDTO);
         } catch (NonUniqueUserException e){
             regUserDTO.appendValidationResult(e.getMessage());
             return false;
@@ -121,14 +127,8 @@ public class RegistrationCommand implements Command {
     }
 
     @Override
-    public CommonService getService() {
-          return ServiceFactory.getInstance()
-                    .getRegistrationService();
-    }
-
-    @Override
     public String execute(HttpServletRequest request) {
-        String page = PageContainer.PAGE_REGISTRATION;
+        String page = PageContainer.REGISTRATION_PAGE_PATH;
         RegistrationUserDTO regUserDTO = extractRegistrationUserDTO(request);
         if (isUserDataCorrect(regUserDTO) && isRegistrationSuccessful(regUserDTO)){
             page = PageContainer.LOGIN_PAGE_PATH;

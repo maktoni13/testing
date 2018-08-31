@@ -1,13 +1,11 @@
 package ua.kpi.training.controller;
 
 import ua.kpi.training.controller.command.Command;
-import ua.kpi.training.controller.command.auth.ExceptionCommand;
-import ua.kpi.training.controller.command.auth.LoginCommand;
-import ua.kpi.training.controller.command.auth.LogoutCommand;
-import ua.kpi.training.controller.command.auth.RegistrationCommand;
+import ua.kpi.training.controller.command.auth.*;
 import ua.kpi.training.controller.command.students.StudentListCommand;
 import ua.kpi.training.controller.command.students.ThemeListCommand;
 import ua.kpi.training.controller.resource.PageContainer;
+import ua.kpi.training.model.service.impl.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -34,11 +32,16 @@ public class Servlet extends HttpServlet{
     public void init(ServletConfig servletConfig){
         servletConfig.getServletContext().setAttribute(PageContainer.CONTEXT_LOGGED_USERS, new HashSet<String>());
         commands.put(PageContainer.COMMAND_EXCEPTION, new ExceptionCommand());
-        commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand());
+        commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand(new LoginServiceImpl()));
         commands.put(PageContainer.COMMAND_LOGOUT, new LogoutCommand());
-        commands.put(PageContainer.COMMAND_REGISTRATION, new RegistrationCommand());
-        commands.put(PageContainer.COMMAND_STUDENT_LIST, new StudentListCommand());
-        commands.put(PageContainer.COMMAND_THEME_LIST, new ThemeListCommand());
+        commands.put(PageContainer.COMMAND_REGISTRATION, new RegistrationCommand(new RegistrationServiceImpl()));
+        commands.put(PageContainer.COMMAND_STUDENT_LIST, new StudentListCommand(new StudentServiceImpl()));
+        commands.put(PageContainer.COMMAND_THEME_LIST, new ThemeListCommand(new ThemeServiceImpl()));
+        commands.put(PageContainer.COMMAND_VIEW_USER_PROFILE, new ViewUserProfileCommand(new ViewUserProfileServiceImpl()));
+        commands.put(PageContainer.COMMAND_VIEW_ADMIN_PROFILE, new ViewAdminProfileCommand(new ViewAdminProfileServiceImpl()));
+        commands.put(PageContainer.COMMAND_DO_LOGIN, new DoLoginCommand());
+        commands.put(PageContainer.COMMAND_DO_REGISTRATION, new DoRegistrationCommand());
+        commands.put(PageContainer.COMMAND_CHANGE_LOCALE, new ChangeLocaleCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -58,16 +61,17 @@ public class Servlet extends HttpServlet{
         String path = request.getRequestURI();
         path = path.replaceAll(PageContainer.PATH_REPLACE_REGEX,
                 PageContainer.PATH_REPLACE_REPLACEMENT);
-        // Command command = commands.getOrDefault(path,
-        //        (r) -> PageContainer.INDEX_PAGE_PATH);
         Command command = commands.getOrDefault(path,
-                new LoginCommand());
+                (r) -> PageContainer.INDEX_PAGE_PATH);
+        //Command command = commands.getOrDefault(path,
+                //new LoginCommand());
         String page = command.execute(request);
-        RequestDispatcher requestDispatcher = request.getSession()
-                .getServletContext()
-                .getRequestDispatcher(page);
-
-        requestDispatcher.forward(request, response);
+        if(page.contains(PageContainer.REDIRECT_REGEX)){
+            response.sendRedirect(page.replace(PageContainer.REDIRECT_REGEX,
+                    PageContainer.PATH_REPLACE_REPLACEMENT));
+        }else {
+            request.getRequestDispatcher(page).forward(request, response);
+        }
     }
 
 

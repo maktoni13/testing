@@ -4,6 +4,6 @@ import ua.kpi.training.model.entity.User;
 
 import java.util.List;
 
-public interface StudentService extends CommonService{
+public interface StudentService{
     List<User> getAllStudents();
 }

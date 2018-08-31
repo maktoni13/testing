@@ -5,22 +5,20 @@ import ua.kpi.training.controller.command.dto.UserDTO;
 import ua.kpi.training.controller.command.utility.CommandUtility;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.model.entity.enums.UserType;
-import ua.kpi.training.model.service.CommonService;
 import ua.kpi.training.model.service.LoginService;
-import ua.kpi.training.model.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements Command {
 
+    private LoginService loginService;
+
     public LoginCommand() {
     }
 
-    @Override
-    public CommonService getService() {
-        return ServiceFactory.getInstance()
-                .getLoginService();
+    public LoginCommand(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     @Override
@@ -45,8 +43,6 @@ public class LoginCommand implements Command {
             return PageContainer.ERROR_PAGE_PATH;
         }
 
-        LoginService loginService = (LoginService) getService();
-
         UserDTO userDTO = loginService.getUserDTOUsernamePassword(username, password);
         if (!userDTO.isExists()) {
             session.setAttribute(PageContainer.SESSION_INCORRECT_LOGIN_PASSWORD,
@@ -65,7 +61,7 @@ public class LoginCommand implements Command {
             userDTO.getAuthority());
 
         return userDTO.getAuthority().equals(UserType.ADMIN) ?
-                PageContainer.ADMIN_PROFILE_PATH :
-                PageContainer.USER_PROFILE_PATH;
+                PageContainer.ADMIN_PROFILE_COMMAND_PATH :
+                PageContainer.USER_PROFILE_COMMAND_PATH;
     }
 }

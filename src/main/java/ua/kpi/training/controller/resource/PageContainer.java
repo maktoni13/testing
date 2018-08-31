@@ -1,11 +1,13 @@
 package ua.kpi.training.controller.resource;
 
 public interface PageContainer {
-    String PAGE_REGISTRATION = "/registration.jsp";
-    String INDEX_PAGE_PATH = "/index.jsp";
-    String LOGIN_PAGE_PATH = "/login.jsp";
+    String REGISTRATION_PAGE_PATH = "/WEB-INF/registration.jsp";
+    String INDEX_PAGE_PATH = "redirect:/index.jsp";
+    String LOGIN_PAGE_PATH = "/WEB-INF/login.jsp";
     String ERROR_PAGE_PATH = "/WEB-INF/error.jsp";
     String USER_PROFILE_PATH = "/WEB-INF/user/userbasis.jsp";
+    String USER_PROFILE_COMMAND_PATH = "redirect:/testing/api/userprofile";
+    String ADMIN_PROFILE_COMMAND_PATH = "redirect:/testing/api/adminprofile";
     // String PATH_REPLACE_REGEX = ".*/testing/";
     String PATH_REPLACE_REGEX = ".*/";
     String PATH_REPLACE_REPLACEMENT = "";
@@ -16,6 +18,12 @@ public interface PageContainer {
     String COMMAND_REGISTRATION = "registration";
     String COMMAND_STUDENT_LIST = "students";
     String COMMAND_THEME_LIST = "themes";
+    String COMMAND_VIEW_USER_PROFILE = "userprofile";
+    String COMMAND_VIEW_ADMIN_PROFILE = "adminprofile";
+    String COMMAND_DO_LOGIN = "dologin";
+    String COMMAND_DO_REGISTRATION = "doregistration";
+    String COMMAND_CHANGE_LOCALE = "changelocale";
+    //    String COMMAND_DO_LOGIN = "redirect:/testing/api/dologin";
     String SESSION_USER_NAME = "username";
     String SESSION_AUTHORITY = "authority";
     String SESSION_INCORRECT_LOGIN_PASSWORD = "";
@@ -47,4 +55,5 @@ public interface PageContainer {
     String PAGE_STUDENT_LIST = "/WEB-INF/admin/studentslist.jsp";
     String THEME_LIST_ATTR = "themeList";
     String PAGE_THEME_LIST = "/WEB-INF/themeslist.jsp";
+    String REDIRECT_REGEX = "redirect:";
 }
