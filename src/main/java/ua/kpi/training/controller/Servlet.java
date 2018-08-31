@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -30,6 +31,7 @@ public class Servlet extends HttpServlet{
 
     @Override
     public void init(ServletConfig servletConfig){
+//        Locale.;
         servletConfig.getServletContext().setAttribute(PageContainer.CONTEXT_LOGGED_USERS, new HashSet<String>());
         commands.put(PageContainer.COMMAND_EXCEPTION, new ExceptionCommand());
         commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand(new LoginServiceImpl()));
@@ -62,7 +64,7 @@ public class Servlet extends HttpServlet{
         path = path.replaceAll(PageContainer.PATH_REPLACE_REGEX,
                 PageContainer.PATH_REPLACE_REPLACEMENT);
         Command command = commands.getOrDefault(path,
-                (r) -> PageContainer.INDEX_PAGE_PATH);
+                (r) -> PageContainer.REDIRECT_INDEX_PAGE_PATH);
         //Command command = commands.getOrDefault(path,
                 //new LoginCommand());
         String page = command.execute(request);

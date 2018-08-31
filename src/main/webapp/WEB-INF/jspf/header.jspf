@@ -30,15 +30,5 @@
 <!--<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
 
 <br/>
-
-<div class="dropdown-menu" aria-labelledby="navbarDropdownLang">
-    <form action = "/testing/api/language" method="post" >
-        <input type="hidden" name="command" value="changelocale">
-        <label for="language1">lang</label><select id="language1" name="language" onchange="submit()">
-            <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>EN</option>
-            <option value="ua_UA" ${language == 'ua_UA' ? 'selected' : ''}>UA</option>
-        </select>
-    </form>
-</div>
 <div class="container">
 </div>

@@ -5,7 +5,7 @@
   Time: 12:16
   To change this template use File | Settings | File Templates.
 --%>
-<%@include file="WEB-INF/jspf/header.jspf"%>
+<%@include file="jspf/header.jspf"%>
 
 <h1><fmt:message key="message.registration.page.title"/></h1><br/>
 <div class="container">
@@ -55,4 +55,4 @@
     </form>
 </div>
 
-<%@include file="WEB-INF/jspf/footer.jspf"%>
+<%@include file="jspf/footer.jspf"%>

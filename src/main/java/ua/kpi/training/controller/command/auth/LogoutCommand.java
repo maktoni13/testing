@@ -13,6 +13,6 @@ public class LogoutCommand implements Command {
     public String execute(HttpServletRequest request) {
         CommandUtility.invalidateCurrentSession(request);
         CommandUtility.setUserRights(request, "", UserType.GUEST);
-        return PageContainer.INDEX_PAGE_PATH;
+        return PageContainer.REDIRECT_INDEX_PAGE_PATH;
     }
 }

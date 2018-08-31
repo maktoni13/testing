@@ -2,24 +2,25 @@ package ua.kpi.training.controller.resource;
 
 public interface PageContainer {
     String REGISTRATION_PAGE_PATH = "/WEB-INF/registration.jsp";
-    String INDEX_PAGE_PATH = "redirect:/index.jsp";
+    String INDEX_PAGE_PATH = "index.jsp";
+    String REDIRECT_INDEX_PAGE_PATH = "redirect:/index.jsp";
     String LOGIN_PAGE_PATH = "/WEB-INF/login.jsp";
     String ERROR_PAGE_PATH = "/WEB-INF/error.jsp";
     String USER_PROFILE_PATH = "/WEB-INF/user/userbasis.jsp";
     String USER_PROFILE_COMMAND_PATH = "redirect:/testing/api/userprofile";
     String ADMIN_PROFILE_COMMAND_PATH = "redirect:/testing/api/adminprofile";
     // String PATH_REPLACE_REGEX = ".*/testing/";
-    String PATH_REPLACE_REGEX = ".*/";
+    String PATH_REPLACE_REGEX = ".*/testing/api/";
     String PATH_REPLACE_REPLACEMENT = "";
     String CONTEXT_LOGGED_USERS = "loggedUsers";
     String COMMAND_LOGIN = "login";
     String COMMAND_LOGOUT = "logout";
     String COMMAND_EXCEPTION = "exception";
     String COMMAND_REGISTRATION = "registration";
-    String COMMAND_STUDENT_LIST = "students";
-    String COMMAND_THEME_LIST = "themes";
-    String COMMAND_VIEW_USER_PROFILE = "userprofile";
-    String COMMAND_VIEW_ADMIN_PROFILE = "adminprofile";
+    String COMMAND_STUDENT_LIST = "admin/students";
+    String COMMAND_THEME_LIST = "common/themes";
+    String COMMAND_VIEW_USER_PROFILE = "common/userprofile";
+    String COMMAND_VIEW_ADMIN_PROFILE = "admin/adminprofile";
     String COMMAND_DO_LOGIN = "dologin";
     String COMMAND_DO_REGISTRATION = "doregistration";
     String COMMAND_CHANGE_LOCALE = "changelocale";
@@ -56,4 +57,6 @@ public interface PageContainer {
     String THEME_LIST_ATTR = "themeList";
     String PAGE_THEME_LIST = "/WEB-INF/themeslist.jsp";
     String REDIRECT_REGEX = "redirect:";
+    String SECURITY_FILTER_ADMIN = "admin/";
+    String SECURITY_FILTER_COMMON = "common/";
 }
