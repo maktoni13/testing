@@ -1,5 +1,5 @@
-<%@include file="WEB-INF/jspf/header.jspf"%>
-<%@include file="WEB-INF/jspf/navigation.jspf"%>
+<%@include file="jspf/header.jspf"%>
+<%@include file="jspf/navigation.jspf"%>
 
 <div class="container" >
     <table class="table">
@@ -20,4 +20,4 @@
     </table>
 </div>
 
-<%@include file="WEB-INF/jspf/footer.jspf"%>
+<%@include file="jspf/footer.jspf"%>

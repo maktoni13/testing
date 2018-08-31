@@ -44,7 +44,7 @@ public interface PageContainer {
     String REG_ATTR_LAST_NAME_UA = "lastNameUA";
     String REG_ATTR_ERROR_MESSAGE = "registrationErrorMessage";
     String STUDENT_LIST_ATTR = "studentList";
-    String PAGE_STUDENT_LIST = "/studentslist.jsp";
+    String PAGE_STUDENT_LIST = "/WEB-INF/admin/studentslist.jsp";
     String THEME_LIST_ATTR = "themeList";
-    String PAGE_THEME_LIST = "/themeslist.jsp";
+    String PAGE_THEME_LIST = "/WEB-INF/themeslist.jsp";
 }

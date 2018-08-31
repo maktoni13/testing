@@ -1,5 +1,5 @@
 <%@include file="WEB-INF/jspf/header.jspf"%>
-
+<%@include file="WEB-INF/jspf/navigation.jspf"%>
 <h1><fmt:message key="message.login"/></h1><br/>
 <form method="post" action="${pageContext.request.contextPath}/testing/api/login">
     <input type="text" name="username"><br/>
