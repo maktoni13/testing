@@ -138,7 +138,7 @@ public class RegistrationCommand implements Command {
             if (isUserDataCorrect(regUserDTO)
                     && isRegistrationSuccessful(regUserDTO)) {
                 page = PageContainer.PATH_PREFIX_REDIRECT +
-                        PageContainer.PATH_COMMAND_DO_LOGIN;
+                        PageContainer.PATH_COMMAND_LOGIN;
             } else {
                 saveRegistrationData(request, regUserDTO);
             }

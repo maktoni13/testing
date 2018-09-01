@@ -34,12 +34,14 @@ public class LocalizationFilter implements Filter {
         String currentLocaleText = (String) httpSession.
                 getAttribute(SESSION_USER_LOCALE_PARAM);
 
-        if (currentLocaleText == null) {
-            currentLocale = ConfigurationContainer.DEFAULT_LOCALE;
-        } else {
-            currentLocale = Locale.forLanguageTag(currentLocaleText);
-        }
+        currentLocale = (currentLocaleText == null) ?
+                ConfigurationContainer.DEFAULT_LOCALE :
+                Locale.forLanguageTag(currentLocaleText);
+
         if (!ConfigurationContainer.SUPPORTED_LOCALE_LIST.contains(currentLocale)) {
+            currentLocale = ConfigurationContainer.DEFAULT_LOCALE;
+            httpSession.setAttribute(SESSION_USER_LOCALE_PARAM,
+                    currentLocale.toString());
         }
 
         if (!Locale.getDefault().equals(currentLocale)) {

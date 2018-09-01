@@ -29,7 +29,7 @@
         </ul>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/dologin"><fmt:message key="message.login"/></a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/login"><fmt:message key="message.login"/></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/registration"><fmt:message

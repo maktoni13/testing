@@ -17,12 +17,25 @@ public interface PageContainer {
     // PATH Commands
     String PATH_COMMAND_USER_PROFILE = "/testing/api/common/userprofile";
     String PATH_COMMAND_ADMIN_PROFILE = "/testing/api/admin/adminprofile";
-    String PATH_COMMAND_DO_LOGIN = "/testing/api/dologin";
+    String PATH_COMMAND_LOGIN = "/testing/api/login";
 
     // HTTP METHOD
     String HTTP_GET = "GET";
     String HTTP_POST = "POST";
 
+    // COMMAND
+    String COMMAND_LOGIN = "login";
+    String COMMAND_LOGOUT = "logout";
+    String COMMAND_REGISTRATION = "registration";
+    String COMMAND_EXCEPTION = "exception";
+    String COMMAND_VIEW_USER_PROFILE = "common/userprofile";
+    String COMMAND_THEME_LIST = "common/themes";
+    String COMMAND_VIEW_ADMIN_PROFILE = "admin/adminprofile";
+    String COMMAND_STUDENT_LIST = "admin/students";
+
+    // SECURITY filter
+    String SECURITY_FILTER_ADMIN = "admin/";
+    String SECURITY_FILTER_COMMON = "common/";
 
 
     String INDEX_PAGE_PATH = "index.jsp";
@@ -31,18 +44,6 @@ public interface PageContainer {
     String PATH_REPLACE_REGEX = ".*/testing/api/";
     String PATH_REPLACE_REPLACEMENT = "";
     String CONTEXT_LOGGED_USERS = "loggedUsers";
-    String COMMAND_LOGIN = "login";
-    String COMMAND_LOGOUT = "logout";
-    String COMMAND_EXCEPTION = "exception";
-    String COMMAND_REGISTRATION = "registration";
-    String COMMAND_STUDENT_LIST = "admin/students";
-    String COMMAND_THEME_LIST = "common/themes";
-    String COMMAND_VIEW_USER_PROFILE = "common/userprofile";
-    String COMMAND_VIEW_ADMIN_PROFILE = "admin/adminprofile";
-    String COMMAND_DO_LOGIN = "dologin";
-    String COMMAND_DO_REGISTRATION = "doregistration";
-    String COMMAND_CHANGE_LOCALE = "changelocale";
-    //    String COMMAND_DO_LOGIN = "redirect:/testing/api/dologin";
     String SESSION_USER_NAME = "username";
     String SESSION_AUTHORITY = "authority";
     String SESSION_INCORRECT_LOGIN_PASSWORD = "";
@@ -71,6 +72,4 @@ public interface PageContainer {
     String REG_ATTR_ERROR_MESSAGE = "registrationErrorMessage";
     String STUDENT_LIST_ATTR = "studentList";
     String THEME_LIST_ATTR = "themeList";
-    String SECURITY_FILTER_ADMIN = "admin/";
-    String SECURITY_FILTER_COMMON = "common/";
 }

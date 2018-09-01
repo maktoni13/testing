@@ -39,8 +39,6 @@ public class Servlet extends HttpServlet{
         commands.put(PageContainer.COMMAND_THEME_LIST, new ThemeListCommand(new ThemeServiceImpl()));
         commands.put(PageContainer.COMMAND_VIEW_USER_PROFILE, new ViewUserProfileCommand(new ViewUserProfileServiceImpl()));
         commands.put(PageContainer.COMMAND_VIEW_ADMIN_PROFILE, new ViewAdminProfileCommand(new ViewAdminProfileServiceImpl()));
-        commands.put(PageContainer.COMMAND_DO_LOGIN, new DoLoginCommand());
-        commands.put(PageContainer.COMMAND_CHANGE_LOCALE, new ChangeLocaleCommand());
     }
 
     public void doGet(HttpServletRequest request,

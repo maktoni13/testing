@@ -36,11 +36,11 @@ public class SecurityFilter implements Filter {
         if (requestURI.contains(PageContainer.SECURITY_FILTER_ADMIN)
                 && !userType.equals(UserType.ADMIN)) {
             // TODO: Send error message
-            httpServletResponse.sendRedirect(PageContainer.PATH_COMMAND_DO_LOGIN);
+            httpServletResponse.sendRedirect(PageContainer.PATH_COMMAND_LOGIN);
         } else if (requestURI.contains(PageContainer.SECURITY_FILTER_COMMON)
                 && userType.equals(UserType.GUEST)) {
             // TODO: Send error message
-            httpServletResponse.sendRedirect(PageContainer.PATH_COMMAND_DO_LOGIN);
+            httpServletResponse.sendRedirect(PageContainer.PATH_COMMAND_LOGIN);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

@@ -4,7 +4,7 @@
 <%@ page language="java" isErrorPage="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.text.*" %>
 
-<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" scope="session" />
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : 'ua_UA'}" scope="session" />
 <fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="message" />
 

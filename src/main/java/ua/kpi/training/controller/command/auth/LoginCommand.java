@@ -26,34 +26,39 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
+        String page = PageContainer.WEB_INF_LOGIN_JSP;
+        if (PageContainer.HTTP_GET.equals(request.getMethod())){
+            return page;
+        }
         String username = request.getParameter(PageContainer.PARAMETER_USER_NAME);
         String password = request.getParameter(PageContainer.PARAMETER_PASSWORD);
+
         HttpSession session = request.getSession();
         // TODO: Add logout message
 
         if (username == null || username.equals("") || password == null || password.equals("")) {
             // TODO: Login error message
-            return PageContainer.WEB_INF_LOGIN_JSP;
+            return page;
         }
 
         if (CommandUtility.checkUserAlreadyLogged(request, username)) {
             // TODO: Error Message
-            return PageContainer.WEB_INF_ERROR_JSP;
+            return page;
         }
 
         UserDTO userDTO = loginService.getUserDTOUsernamePassword(username, password);
         if (!userDTO.isExists()) {
             session.setAttribute(PageContainer.SESSION_INCORRECT_LOGIN_PASSWORD,
                     MessageBundle.getMessage(MessageKey.INCORRECT_USERNAME_OR_PASSWORD));
-            return PageContainer.WEB_INF_LOGIN_JSP;
+            return page;
         } else if (!userDTO.isValidPassword()) {
             session.setAttribute(PageContainer.SESSION_INCORRECT_LOGIN_PASSWORD,
                     MessageBundle.getMessage(MessageKey.INCORRECT_USERNAME_OR_PASSWORD));
-            return PageContainer.WEB_INF_LOGIN_JSP;
+            return page;
         } else if (!userDTO.isEnabled()) {
             session.setAttribute(PageContainer.SESSION_INCORRECT_LOGIN_PASSWORD,
                     MessageBundle.getMessage(MessageKey.USER_IS_DISABLED));
-            return PageContainer.WEB_INF_LOGIN_JSP;
+            return page;
         }
         CommandUtility.setUserRights(request, userDTO.getUsername(),
                 userDTO.getAuthority());
