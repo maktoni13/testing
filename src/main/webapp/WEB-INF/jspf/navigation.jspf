@@ -5,24 +5,34 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
+
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <form action="/testing/api/language" method="post">
+            <form>
+                <select id="language" name="lang" onchange="submit()">
+                    <option value="en" ${lang == 'en' ? 'selected' : ''}>EN</option>
+                    <option value="ua_UA" ${lang == 'ua_UA' ? 'selected' : ''}>UA</option>
+                </select>
+            </form>
+
+  <!--          <form action="${pageContext.request.requestURL}" method="get">
                 <div class="form-group">
-                    <label for="language"><fmt:message key="message.change.locale" /></label>
-                    <select class="form-control" id="language" name="language" onchange="submit()">
+
+                    <label for="language2"><fmt:message key="message.change.locale" /></label>
+                    <select class="form-control" id="language2" name="language" onchange="submit()">
                         <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>EN</option>
                         <option value="ua_UA" ${language == 'ua_UA' ? 'selected' : ''}>UA</option>
                     </select>
                 </div>
-            </form>
+            </form>-->
         </ul>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/dologin"><fmt:message key="message.login"/></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/doregistration"><fmt:message
+                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/registration"><fmt:message
                         key="message.registration.page.link"/></a>
             </li>
             <li class="nav-item">

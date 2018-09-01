@@ -4,16 +4,18 @@
 <%@ page language="java" isErrorPage="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.text.*" %>
 
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
-<fmt:setLocale value="${language}" scope="session"/>
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="message" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="${lang}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><fmt:message key="message.title"/></title>
-    <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">-->
     <style type="text/css">
         .footer {
             position: absolute;
@@ -25,3 +27,8 @@
     </style>
 </head>
 <body>
+<!--<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+
+<br/>
+<div class="container">
+</div>

@@ -10,6 +10,7 @@ import ua.kpi.training.view.resource.MessageBundle;
 import ua.kpi.training.view.resource.MessageKey;
 
 public class RegistrationServiceImpl implements RegistrationService {
+
     private DAOFactory daoFactory = DAOFactory.getInstance();
 
     public RegistrationServiceImpl() {
@@ -39,11 +40,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         if (userDAO.isUserWithSameUsernameExist(user.getUsername())) {
             message.append(MessageBundle.getMessage(MessageKey.USERNAME_ALREADY_REGISTERED));
+            message.append("\n");
             message.append(user.getUsername());
             exceptionFlag = true;
         }
         if (userDAO.isUserWithSameEmailExist(user.getEmail())) {
             message.append(MessageBundle.getMessage(MessageKey.EMAIL_ALREADY_REGISTERED));
+            message.append("\n");
             message.append(user.getEmail());
             exceptionFlag = true;
         }

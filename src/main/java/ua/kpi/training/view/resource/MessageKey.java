@@ -24,4 +24,6 @@ public interface MessageKey {
     String USER_PROFILE_TITLE = "message.user.profile.title";
     String USER_WELCOME_TITLE = "message.user.welcome.title";
 
+    String INCORRECT_USERNAME_OR_PASSWORD = "message.incorrect.username.or.password";
+    String USER_IS_DISABLED = "message.user.is.disabled";
 }

@@ -6,10 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@include file="jspf/header.jspf"%>
+<%@include file="jspf/navigation.jspf"%>
 
 <h1><fmt:message key="message.registration.page.title"/></h1><br/>
 <div class="container">
-    <form action="testing/api/registration" method="post">
+    <form action="registration" method="post">
 
         <label>${registrationErrorMessage}</label>
         <br/>

@@ -5,6 +5,7 @@ import ua.kpi.training.controller.resource.PageContainer;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashSet;
+import java.util.Set;
 
 public class SessionListener implements HttpSessionListener {
 
@@ -15,7 +16,8 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        HashSet<?> loggedUsers = (HashSet<?>) httpSessionEvent
+        // TODO: remove <?>. add exception handler
+        Set<String> loggedUsers = (HashSet<String>) httpSessionEvent
                 .getSession().getServletContext()
                 .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
         String username = (String) httpSessionEvent.getSession()

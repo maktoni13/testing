@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 public class RegistrationCommand implements Command {
 
+    private static final String GET_METHOD = "GET";
     private RegistrationService registrationService;
 
     public RegistrationCommand() {
@@ -23,7 +24,7 @@ public class RegistrationCommand implements Command {
         this.registrationService = registrationService;
     }
 
-    private RegistrationUserDTO extractRegistrationUserDTO(HttpServletRequest request){
+    private RegistrationUserDTO extractRegistrationUserDTO(HttpServletRequest request) {
         RegistrationUserDTO regUserDTO = new RegistrationUserDTO();
         regUserDTO.setUsername(
                 request.getParameter(PageContainer.REG_PARAM_USERNAME));
@@ -46,15 +47,15 @@ public class RegistrationCommand implements Command {
         return regUserDTO;
     }
 
-    private boolean matchWithRegex(String inputValue, String regexExpression){
+    private boolean matchWithRegex(String inputValue, String regexExpression) {
         return Pattern.compile(regexExpression).matcher(inputValue).matches();
     }
 
-    private String getValidationResult(String value, String regex, String message){
+    private String getValidationResult(String value, String regex, String message) {
         return matchWithRegex(value, regex) ? "" : message;
     }
 
-    private boolean isUserDataCorrect(RegistrationUserDTO regUserDTO){
+    private boolean isUserDataCorrect(RegistrationUserDTO regUserDTO) {
         regUserDTO.appendValidationResult(getValidationResult(
                 regUserDTO.getUsername(),
                 RegexContainer.USERNAME,
@@ -83,27 +84,27 @@ public class RegistrationCommand implements Command {
                 regUserDTO.getLastNameUA(),
                 RegexContainer.NAME_UA,
                 MessageBundle.getMessage(MessageKey.LAST_NAME_UA_REGEX_ERR)));
-        if (!regUserDTO.getPassword().equals(regUserDTO.getConfirmPassword())){
+        if (!regUserDTO.getPassword().equals(regUserDTO.getConfirmPassword())) {
             regUserDTO.appendValidationResult(
                     MessageBundle.getMessage(MessageKey.PASSWORDS_NOT_EQUAL_ERR));
         }
-        if (!regUserDTO.getEmail().equals(regUserDTO.getConfirmEmail())){
+        if (!regUserDTO.getEmail().equals(regUserDTO.getConfirmEmail())) {
             regUserDTO.appendValidationResult(
                     MessageBundle.getMessage(MessageKey.EMAILS_NOT_EQUAL_ERR));
         }
         return "".equals(regUserDTO.getValidationResultString());
     }
 
-    private boolean isRegistrationSuccessful(RegistrationUserDTO regUserDTO){
+    private boolean isRegistrationSuccessful(RegistrationUserDTO regUserDTO) {
         try {
             return registrationService.registerUser(regUserDTO);
-        } catch (NonUniqueUserException e){
+        } catch (NonUniqueUserException e) {
             regUserDTO.appendValidationResult(e.getMessage());
             return false;
         }
     }
 
-    private void saveRegistrationData(HttpServletRequest request, RegistrationUserDTO regUserDTO){
+    private void saveRegistrationData(HttpServletRequest request, RegistrationUserDTO regUserDTO) {
         request.setAttribute(PageContainer.REG_ATTR_USERNAME,
                 regUserDTO.getUsername());
         request.setAttribute(PageContainer.REG_ATTR_PASSWORD,
@@ -128,12 +129,19 @@ public class RegistrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String page = PageContainer.REGISTRATION_PAGE_PATH;
+        String page = PageContainer.WEB_INF_REGISTRATION_JSP;
+        if (PageContainer.HTTP_GET.equals(request.getMethod())){
+            return page;
+        }
         RegistrationUserDTO regUserDTO = extractRegistrationUserDTO(request);
-        if (isUserDataCorrect(regUserDTO) && isRegistrationSuccessful(regUserDTO)){
-            page = PageContainer.LOGIN_PAGE_PATH;
-        } else {
-            saveRegistrationData(request, regUserDTO);
+        if (regUserDTO != null) {
+            if (isUserDataCorrect(regUserDTO)
+                    && isRegistrationSuccessful(regUserDTO)) {
+                page = PageContainer.PATH_PREFIX_REDIRECT +
+                        PageContainer.PATH_COMMAND_DO_LOGIN;
+            } else {
+                saveRegistrationData(request, regUserDTO);
+            }
         }
         return page;
     }

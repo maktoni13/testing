@@ -9,6 +9,6 @@ public class DoLoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         // TODO: redirect if logged not from direct link
-        return PageContainer.LOGIN_PAGE_PATH;
+        return PageContainer.WEB_INF_LOGIN_JSP;
     }
 }

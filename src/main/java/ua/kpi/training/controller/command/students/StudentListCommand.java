@@ -20,6 +20,6 @@ public class StudentListCommand implements Command {
     public String execute(HttpServletRequest request) {
         request.setAttribute(PageContainer.STUDENT_LIST_ATTR,
                 studentService.getAllStudents());
-        return PageContainer.PAGE_STUDENT_LIST;
+        return PageContainer.WEB_INF_ADMIN_STUDENTS_LIST_JSP;
     }
 }

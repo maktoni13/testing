@@ -1,14 +1,32 @@
 package ua.kpi.training.controller.resource;
 
 public interface PageContainer {
-    String REGISTRATION_PAGE_PATH = "/WEB-INF/registration.jsp";
+
+    // direct WEB-INF paths
+    String WEB_INF_REGISTRATION_JSP = "/WEB-INF/registration.jsp";
+    String WEB_INF_LOGIN_JSP = "/WEB-INF/login.jsp";
+    String WEB_INF_ERROR_JSP = "/WEB-INF/error.jsp";
+    String WEB_INF_USER_USER_PROFILE_JSP = "/WEB-INF/user/userprofile.jsp";
+    String WEB_INF_ADMIN_ADMIN_PROFILE_JSP = "/WEB-INF/admin/adminprofile.jsp";
+    String WEB_INF_ADMIN_STUDENTS_LIST_JSP = "/WEB-INF/admin/studentslist.jsp";
+    String WEB_INF_THEMES_LIST_JSP = "/WEB-INF/themeslist.jsp";
+
+    // PATH prefixes
+    String PATH_PREFIX_REDIRECT = "redirect:";
+
+    // PATH Commands
+    String PATH_COMMAND_USER_PROFILE = "/testing/api/common/userprofile";
+    String PATH_COMMAND_ADMIN_PROFILE = "/testing/api/admin/adminprofile";
+    String PATH_COMMAND_DO_LOGIN = "/testing/api/dologin";
+
+    // HTTP METHOD
+    String HTTP_GET = "GET";
+    String HTTP_POST = "POST";
+
+
+
     String INDEX_PAGE_PATH = "index.jsp";
     String REDIRECT_INDEX_PAGE_PATH = "redirect:/index.jsp";
-    String LOGIN_PAGE_PATH = "/WEB-INF/login.jsp";
-    String ERROR_PAGE_PATH = "/WEB-INF/error.jsp";
-    String USER_PROFILE_PATH = "/WEB-INF/user/userbasis.jsp";
-    String USER_PROFILE_COMMAND_PATH = "redirect:/testing/api/userprofile";
-    String ADMIN_PROFILE_COMMAND_PATH = "redirect:/testing/api/adminprofile";
     // String PATH_REPLACE_REGEX = ".*/testing/";
     String PATH_REPLACE_REGEX = ".*/testing/api/";
     String PATH_REPLACE_REPLACEMENT = "";
@@ -32,7 +50,6 @@ public interface PageContainer {
     String CHARACTER_ENCODING = "UTF-8";
     String PARAMETER_USER_NAME = "username";
     String PARAMETER_PASSWORD = "password";
-    String ADMIN_PROFILE_PATH = "/WEB-INF/admin/adminbasis.jsp";
     String REG_PARAM_USERNAME = "username";
     String REG_PARAM_PASSWORD = "password";
     String REG_PARAM_CONFIRM_PASSWORD = "confirm-password";
@@ -53,10 +70,7 @@ public interface PageContainer {
     String REG_ATTR_LAST_NAME_UA = "lastNameUA";
     String REG_ATTR_ERROR_MESSAGE = "registrationErrorMessage";
     String STUDENT_LIST_ATTR = "studentList";
-    String PAGE_STUDENT_LIST = "/WEB-INF/admin/studentslist.jsp";
     String THEME_LIST_ATTR = "themeList";
-    String PAGE_THEME_LIST = "/WEB-INF/themeslist.jsp";
-    String REDIRECT_REGEX = "redirect:";
     String SECURITY_FILTER_ADMIN = "admin/";
     String SECURITY_FILTER_COMMON = "common/";
 }

@@ -31,15 +31,16 @@ public class SecurityFilter implements Filter {
             httpSession.setAttribute(PageContainer.SESSION_AUTHORITY,
                     userType);
         }
+
         String requestURI = httpServletRequest.getRequestURI();
         if (requestURI.contains(PageContainer.SECURITY_FILTER_ADMIN)
                 && !userType.equals(UserType.ADMIN)) {
             // TODO: Send error message
-            httpServletResponse.sendRedirect(PageContainer.INDEX_PAGE_PATH);
-        } else if(requestURI.contains(PageContainer.SECURITY_FILTER_COMMON)
-                && userType.equals(UserType.GUEST)){
+            httpServletResponse.sendRedirect(PageContainer.PATH_COMMAND_DO_LOGIN);
+        } else if (requestURI.contains(PageContainer.SECURITY_FILTER_COMMON)
+                && userType.equals(UserType.GUEST)) {
             // TODO: Send error message
-            httpServletResponse.sendRedirect(PageContainer.INDEX_PAGE_PATH);
+            httpServletResponse.sendRedirect(PageContainer.PATH_COMMAND_DO_LOGIN);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }

@@ -2,17 +2,21 @@ package ua.kpi.training.controller.filter;
 
 
 import com.sun.deploy.util.StringUtils;
+import ua.kpi.training.controller.command.utility.ConfigurationContainer;
 import ua.kpi.training.view.resource.MessageBundle;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Locale;
 
 @WebFilter(urlPatterns = {"/*"}, servletNames = {"Servlet"})
 public class LocalizationFilter implements Filter {
+    private final static String SESSION_USER_LOCALE_PARAM = "lang";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -22,19 +26,27 @@ public class LocalizationFilter implements Filter {
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
 
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        HttpSession httpSession = httpServletRequest.getSession();
 
-//        String localeText = servletRequest.getParameter("language");
-//        if (localeText == null) {
-//            localeText = "en_EN";
-//            servletRequest.setAttribute("language", localeText);
-//        }
-//        Locale locale = new Locale(localeText);
-//        if (!Locale.getDefault().equals(locale)){
-//            Locale.setDefault(locale);
-//            MessageBundle.updateByDefaultLocale();
-//        }
-//
-//        filterChain.doFilter(servletRequest, servletResponse);
+        Locale currentLocale;
+
+        String currentLocaleText = (String) httpSession.
+                getAttribute(SESSION_USER_LOCALE_PARAM);
+
+        if (currentLocaleText == null) {
+            currentLocale = ConfigurationContainer.DEFAULT_LOCALE;
+        } else {
+            currentLocale = Locale.forLanguageTag(currentLocaleText);
+        }
+        if (!ConfigurationContainer.SUPPORTED_LOCALE_LIST.contains(currentLocale)) {
+        }
+
+        if (!Locale.getDefault().equals(currentLocale)) {
+            Locale.setDefault(currentLocale);
+            MessageBundle.updateByDefaultLocale();
+        }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

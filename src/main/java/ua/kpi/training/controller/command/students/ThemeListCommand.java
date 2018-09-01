@@ -20,6 +20,6 @@ public class ThemeListCommand implements Command {
     public String execute(HttpServletRequest request) {
         request.setAttribute(PageContainer.THEME_LIST_ATTR,
                 themeService.getAllThemes());
-        return PageContainer.PAGE_THEME_LIST;
+        return PageContainer.WEB_INF_THEMES_LIST_JSP;
     }
 }

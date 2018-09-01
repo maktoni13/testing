@@ -21,6 +21,6 @@ public class ViewAdminProfileCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         // TODO: Add user profile data receiving
-        return PageContainer.ADMIN_PROFILE_PATH;
+        return PageContainer.WEB_INF_ADMIN_ADMIN_PROFILE_JSP;
     }
 }

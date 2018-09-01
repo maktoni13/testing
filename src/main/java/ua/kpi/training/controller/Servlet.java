@@ -7,7 +7,6 @@ import ua.kpi.training.controller.command.students.ThemeListCommand;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.model.service.impl.*;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -42,7 +40,6 @@ public class Servlet extends HttpServlet{
         commands.put(PageContainer.COMMAND_VIEW_USER_PROFILE, new ViewUserProfileCommand(new ViewUserProfileServiceImpl()));
         commands.put(PageContainer.COMMAND_VIEW_ADMIN_PROFILE, new ViewAdminProfileCommand(new ViewAdminProfileServiceImpl()));
         commands.put(PageContainer.COMMAND_DO_LOGIN, new DoLoginCommand());
-        commands.put(PageContainer.COMMAND_DO_REGISTRATION, new DoRegistrationCommand());
         commands.put(PageContainer.COMMAND_CHANGE_LOCALE, new ChangeLocaleCommand());
     }
 
@@ -64,12 +61,12 @@ public class Servlet extends HttpServlet{
         path = path.replaceAll(PageContainer.PATH_REPLACE_REGEX,
                 PageContainer.PATH_REPLACE_REPLACEMENT);
         Command command = commands.getOrDefault(path,
-                (r) -> PageContainer.REDIRECT_INDEX_PAGE_PATH);
+                (r) -> PageContainer.INDEX_PAGE_PATH);
         //Command command = commands.getOrDefault(path,
                 //new LoginCommand());
         String page = command.execute(request);
-        if(page.contains(PageContainer.REDIRECT_REGEX)){
-            response.sendRedirect(page.replace(PageContainer.REDIRECT_REGEX,
+        if(page.contains(PageContainer.PATH_PREFIX_REDIRECT)){
+            response.sendRedirect(page.replace(PageContainer.PATH_PREFIX_REDIRECT,
                     PageContainer.PATH_REPLACE_REPLACEMENT));
         }else {
             request.getRequestDispatcher(page).forward(request, response);
