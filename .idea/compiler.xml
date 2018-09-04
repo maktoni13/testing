@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="testing" />
+        <module name="testing_auth30" />
         <module name="testing_feature_authreg20" />
         <module name="testing_registration_2.0" />
       </profile>
