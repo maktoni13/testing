@@ -34,29 +34,36 @@ public class LoginCommand implements Command {
         String password = request.getParameter(PageContainer.PARAMETER_PASSWORD);
 
         HttpSession session = request.getSession();
-        // TODO: Add logout message
+        String usernameSessionAttr = (String) session.getAttribute(PageContainer.SESSION_USER_NAME);
+        if (usernameSessionAttr != null && !usernameSessionAttr.equals("")){
+            request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_ERROR_MESSAGE,
+                    MessageBundle.getMessage(MessageKey.LOGIN_SHOULD_LOGOUT_FIRST));
+            return page;
+        }
 
         if (username == null || username.equals("") || password == null || password.equals("")) {
-            // TODO: Login error message
+            request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_ERROR_MESSAGE,
+                    MessageBundle.getMessage(MessageKey.LOGIN_EMPTY_ERROR));
             return page;
         }
 
         if (CommandUtility.checkUserAlreadyLogged(request, username)) {
-            // TODO: Error Message
+            request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_ERROR_MESSAGE,
+                    MessageBundle.getMessage(MessageKey.LOGIN_USER_ALREADY_LOGGGED_ERROR));
             return page;
         }
 
         UserDTO userDTO = loginService.getUserDTOUsernamePassword(username, password);
         if (!userDTO.isExists()) {
-            session.setAttribute(PageContainer.SESSION_INCORRECT_LOGIN_PASSWORD,
+            request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_ERROR_MESSAGE,
                     MessageBundle.getMessage(MessageKey.INCORRECT_USERNAME_OR_PASSWORD));
             return page;
         } else if (!userDTO.isValidPassword()) {
-            session.setAttribute(PageContainer.SESSION_INCORRECT_LOGIN_PASSWORD,
+            request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_ERROR_MESSAGE,
                     MessageBundle.getMessage(MessageKey.INCORRECT_USERNAME_OR_PASSWORD));
             return page;
         } else if (!userDTO.isEnabled()) {
-            session.setAttribute(PageContainer.SESSION_INCORRECT_LOGIN_PASSWORD,
+            request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_ERROR_MESSAGE,
                     MessageBundle.getMessage(MessageKey.USER_IS_DISABLED));
             return page;
         }

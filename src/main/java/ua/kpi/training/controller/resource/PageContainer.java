@@ -70,6 +70,7 @@ public interface PageContainer {
     String REG_ATTR_LAST_NAME = "lastName";
     String REG_ATTR_LAST_NAME_UA = "lastNameUA";
     String REG_ATTR_ERROR_MESSAGE = "registrationErrorMessage";
+    String LOGIN_PAGE_ATTR_ERROR_MESSAGE = "loginErrorMessage";
     String STUDENT_LIST_ATTR = "studentList";
     String THEME_LIST_ATTR = "themeList";
 }

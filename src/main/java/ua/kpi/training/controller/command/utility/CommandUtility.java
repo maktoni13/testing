@@ -3,9 +3,11 @@ package ua.kpi.training.controller.command.utility;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.model.entity.enums.UserType;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
+import java.util.Set;
 
 public class CommandUtility {
 
@@ -19,10 +21,10 @@ public class CommandUtility {
 
     public static boolean checkUserAlreadyLogged(HttpServletRequest request,
                                           String username) {
-        HashSet<?> loggedUsersSource = (HashSet<?>) request.getSession()
+        Set<String> loggedUsersSource = (HashSet<String>) request.getSession()
                 .getServletContext()
                 .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
-        HashSet<String> loggedUsers = new HashSet<>();
+        Set<String> loggedUsers = new HashSet<>();
         loggedUsersSource.forEach(element -> loggedUsers.add((String) element));
         if (loggedUsers.stream().anyMatch(username::equals)) {
             return true;
@@ -37,6 +39,12 @@ public class CommandUtility {
     public static void invalidateCurrentSession(HttpServletRequest request){
         HttpSession currentSession = request.getSession();
         if(currentSession != null){
+            ServletContext servletContext = currentSession.getServletContext();
+            Set<String> loggedUsers = (HashSet<String>) servletContext
+                    .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
+            loggedUsers.remove((String) currentSession.getAttribute(PageContainer.SESSION_USER_NAME));
+            servletContext.setAttribute(PageContainer.CONTEXT_LOGGED_USERS,
+                    loggedUsers);
             currentSession.invalidate();
         }
     }

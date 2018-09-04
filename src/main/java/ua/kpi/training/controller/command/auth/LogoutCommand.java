@@ -12,7 +12,7 @@ public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         CommandUtility.invalidateCurrentSession(request);
-        CommandUtility.setUserRights(request, "", UserType.GUEST);
+        // CommandUtility.setUserRights(request, "", UserType.GUEST);
         return PageContainer.PATH_PREFIX_REDIRECT +
                 PageContainer.PATH_COMMAND_INDEX;
     }
