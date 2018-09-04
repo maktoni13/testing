@@ -25,6 +25,8 @@
             background-color: #f5f5f5;
         }
     </style>
+<!--    <script src="webjars/jquery/3.2.1/jquery.min.js"></script>-->
+
 </head>
 <body>
 <!--<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->

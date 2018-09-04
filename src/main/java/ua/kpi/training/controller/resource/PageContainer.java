@@ -3,6 +3,7 @@ package ua.kpi.training.controller.resource;
 public interface PageContainer {
 
     // direct WEB-INF paths
+    String WEB_INF_INDEX_JSP = "/WEB-INF/index.jsp";
     String WEB_INF_REGISTRATION_JSP = "/WEB-INF/registration.jsp";
     String WEB_INF_LOGIN_JSP = "/WEB-INF/login.jsp";
     String WEB_INF_ERROR_JSP = "/WEB-INF/error.jsp";
@@ -18,6 +19,7 @@ public interface PageContainer {
     String PATH_COMMAND_USER_PROFILE = "/testing/api/common/userprofile";
     String PATH_COMMAND_ADMIN_PROFILE = "/testing/api/admin/adminprofile";
     String PATH_COMMAND_LOGIN = "/testing/api/login";
+    String PATH_COMMAND_INDEX = "/testing/api/index";
 
     // HTTP METHOD
     String HTTP_GET = "GET";
@@ -32,15 +34,13 @@ public interface PageContainer {
     String COMMAND_THEME_LIST = "common/themes";
     String COMMAND_VIEW_ADMIN_PROFILE = "admin/adminprofile";
     String COMMAND_STUDENT_LIST = "admin/students";
+    String COMMAND_INDEX_PAGE = "index";
 
     // SECURITY filter
     String SECURITY_FILTER_ADMIN = "admin/";
     String SECURITY_FILTER_COMMON = "common/";
 
 
-    String INDEX_PAGE_PATH = "index.jsp";
-    String REDIRECT_INDEX_PAGE_PATH = "redirect:/index.jsp";
-    // String PATH_REPLACE_REGEX = ".*/testing/";
     String PATH_REPLACE_REGEX = ".*/testing/api/";
     String PATH_REPLACE_REPLACEMENT = "";
     String CONTEXT_LOGGED_USERS = "loggedUsers";

@@ -1,6 +1,7 @@
 package ua.kpi.training.controller;
 
 import ua.kpi.training.controller.command.Command;
+import ua.kpi.training.controller.command.IndexPageCommand;
 import ua.kpi.training.controller.command.auth.*;
 import ua.kpi.training.controller.command.students.StudentListCommand;
 import ua.kpi.training.controller.command.students.ThemeListCommand;
@@ -39,6 +40,7 @@ public class Servlet extends HttpServlet{
         commands.put(PageContainer.COMMAND_THEME_LIST, new ThemeListCommand(new ThemeServiceImpl()));
         commands.put(PageContainer.COMMAND_VIEW_USER_PROFILE, new ViewUserProfileCommand(new ViewUserProfileServiceImpl()));
         commands.put(PageContainer.COMMAND_VIEW_ADMIN_PROFILE, new ViewAdminProfileCommand(new ViewAdminProfileServiceImpl()));
+        commands.put(PageContainer.COMMAND_INDEX_PAGE, new IndexPageCommand(new IndexPageServiceImpl()));
     }
 
     public void doGet(HttpServletRequest request,
@@ -59,9 +61,7 @@ public class Servlet extends HttpServlet{
         path = path.replaceAll(PageContainer.PATH_REPLACE_REGEX,
                 PageContainer.PATH_REPLACE_REPLACEMENT);
         Command command = commands.getOrDefault(path,
-                (r) -> PageContainer.INDEX_PAGE_PATH);
-        //Command command = commands.getOrDefault(path,
-                //new LoginCommand());
+                (r) -> PageContainer.PATH_COMMAND_INDEX);
         String page = command.execute(request);
         if(page.contains(PageContainer.PATH_PREFIX_REDIRECT)){
             response.sendRedirect(page.replace(PageContainer.PATH_PREFIX_REDIRECT,

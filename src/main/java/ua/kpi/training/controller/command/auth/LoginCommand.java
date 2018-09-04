@@ -68,4 +68,5 @@ public class LoginCommand implements Command {
                         PageContainer.PATH_COMMAND_ADMIN_PROFILE :
                         PageContainer.PATH_COMMAND_USER_PROFILE);
     }
+
 }

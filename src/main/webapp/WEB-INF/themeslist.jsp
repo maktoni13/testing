@@ -20,4 +20,5 @@
     </table>
 </div>
 
+<script src="../webjars/bootstrap/4.0.0/js/bootstrap.js"></script>
 <%@include file="jspf/footer.jspf"%>

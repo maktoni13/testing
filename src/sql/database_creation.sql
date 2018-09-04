@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS `testing_db`.`user` ;
 CREATE TABLE IF NOT EXISTS `testing_db`.`user` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `password` CHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `password` CHAR(79) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   `email` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   `first_name` VARCHAR(50) NOT NULL,
   `first_name_ua` VARCHAR(50) NOT NULL,

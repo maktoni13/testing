@@ -1,6 +1,7 @@
 package ua.kpi.training.model.service.impl;
 
 import ua.kpi.training.controller.command.dto.UserDTO;
+import ua.kpi.training.controller.command.utility.SCryptPassHashing;
 import ua.kpi.training.model.dao.UserDAO;
 import ua.kpi.training.model.dao.DAOFactory;
 import ua.kpi.training.model.entity.User;
@@ -13,16 +14,15 @@ public class LoginServiceImpl implements LoginService {
     public LoginServiceImpl() {
     }
 
-    private boolean checkPassword(String passwordText, String passwordHash){
-        // TODO: Change to hash password validator
-        return (passwordText !=null)
+    private boolean checkPassword(String passwordText, String passwordHash) {
+        return (passwordText != null)
                 && (!passwordText.equals(""))
-                && passwordText.equals(passwordHash);
+                && SCryptPassHashing.validPassword(passwordText, passwordHash);
     }
 
-    private UserDTO constructUserDTO(User user, String passwordText){
+    private UserDTO constructUserDTO(User user, String passwordText) {
         UserDTO userDTO = new UserDTO();
-        if (user == null){
+        if (user == null) {
             userDTO.setExists(false);
         } else {
             userDTO.setExists(true);
@@ -38,10 +38,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public UserDTO getUserDTOUsernamePassword(String username, String password) {
         UserDAO userDAO = daoFactory.createUserDAO();
-        UserDTO userDTO = constructUserDTO(
-                userDAO.findUserByUsername(username),
-                password);
-        return userDTO;
+        return constructUserDTO(userDAO.findUserByUsername(username), password);
     }
 
 
