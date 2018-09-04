@@ -2,7 +2,7 @@ package ua.kpi.training.controller.command.dto;
 
 public class RegistrationUserDTO {
 
-    private final String NEXT_LINE = "\n";
+    private static final String NEXT_LINE = "\n";
 
     private String username;
     private String email;

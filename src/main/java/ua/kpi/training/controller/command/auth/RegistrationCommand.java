@@ -3,6 +3,7 @@ package ua.kpi.training.controller.command.auth;
 import ua.kpi.training.controller.command.Command;
 import ua.kpi.training.controller.command.dto.RegistrationUserDTO;
 import ua.kpi.training.controller.command.regex.RegexContainer;
+import ua.kpi.training.controller.command.utility.SCryptPassHashing;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.model.entity.exception.NonUniqueUserException;
 import ua.kpi.training.model.service.RegistrationService;
@@ -14,7 +15,6 @@ import java.util.regex.Pattern;
 
 public class RegistrationCommand implements Command {
 
-    private static final String GET_METHOD = "GET";
     private RegistrationService registrationService;
 
     public RegistrationCommand() {
@@ -92,7 +92,17 @@ public class RegistrationCommand implements Command {
             regUserDTO.appendValidationResult(
                     MessageBundle.getMessage(MessageKey.EMAILS_NOT_EQUAL_ERR));
         }
-        return "".equals(regUserDTO.getValidationResultString());
+        boolean result = "".equals(regUserDTO.getValidationResultString());
+        if (result){
+            String cryptedPassword =
+                    SCryptPassHashing.cryptPass(regUserDTO.getPassword());
+            regUserDTO.setPassword(cryptedPassword);
+            regUserDTO.setConfirmPassword(cryptedPassword);
+        } else {
+            regUserDTO.setPassword("");
+            regUserDTO.setConfirmPassword("");
+        }
+        return result;
     }
 
     private boolean isRegistrationSuccessful(RegistrationUserDTO regUserDTO) {

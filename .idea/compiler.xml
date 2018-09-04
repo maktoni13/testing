@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="testing" />
         <module name="testing_feature_authreg20" />
+        <module name="testing_registration_2.0" />
       </profile>
     </annotationProcessing>
   </component>

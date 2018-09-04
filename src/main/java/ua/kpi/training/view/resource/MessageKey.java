@@ -26,4 +26,7 @@ public interface MessageKey {
 
     String INCORRECT_USERNAME_OR_PASSWORD = "message.incorrect.username.or.password";
     String USER_IS_DISABLED = "message.user.is.disabled";
+    String LOGIN_EMPTY_ERROR = "message.login.empty.error";
+    String LOGIN_USER_ALREADY_LOGGGED_ERROR = "message.login.user.already.logged";
+    String LOGIN_SHOULD_LOGOUT_FIRST = "message.login.should.logout.first";
 }

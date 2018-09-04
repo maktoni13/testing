@@ -1,3 +1,6 @@
+import ua.kpi.training.controller.command.utility.SCryptPassHashing;
+import ua.kpi.training.tracing.SOut;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +19,7 @@ public class App {
         System.out.println(d);
 //        //char e = '0514';
         //char f = '\0202';
-
+        SOut.println(SCryptPassHashing.cryptPass("user"));
 
     }
 }
