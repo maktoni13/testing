@@ -21,38 +21,36 @@ public class CommandUtility {
 
     public static boolean checkUserAlreadyLogged(HttpServletRequest request,
                                           String username) {
-        Set<String> loggedUsersSource = (HashSet<String>) request.getSession()
-                .getServletContext()
-                .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
-        Set<String> loggedUsers = new HashSet<>();
-        loggedUsersSource.forEach(element -> loggedUsers.add((String) element));
-        if (loggedUsers.stream().anyMatch(username::equals)) {
-            return true;
-        }
-        loggedUsers.add(username);
-        request.getSession().getServletContext()
-                .setAttribute(PageContainer.CONTEXT_LOGGED_USERS,
-                        loggedUsers);
-        return false;
+        Set<String> loggedUsers = getLoggedUsers(
+                request.getSession().getServletContext());
+        return loggedUsers.stream().anyMatch(username::equals);
     }
 
     public static void invalidateCurrentSession(HttpServletRequest request){
         HttpSession currentSession = request.getSession();
         if(currentSession != null){
             ServletContext servletContext = currentSession.getServletContext();
-            Set<String> loggedUsers = (HashSet<String>) servletContext
-                    .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
-            loggedUsers.remove((String) currentSession.getAttribute(PageContainer.SESSION_USER_NAME));
+            Set<String> loggedUsers = getLoggedUsers(servletContext);
+            loggedUsers.remove(getUserFromSession(currentSession));
             servletContext.setAttribute(PageContainer.CONTEXT_LOGGED_USERS,
                     loggedUsers);
             currentSession.invalidate();
         }
     }
 
-    public static void setIncorrectUsernamePassword(HttpServletRequest request,
-                                               String username) {
-        HttpSession session = request.getSession();
-        session.setAttribute(PageContainer.SESSION_USER_NAME, username);
-
+    private static String getUserFromSession(HttpSession session){
+        return (String) session.getAttribute(PageContainer.SESSION_USER_NAME);
     }
+
+    private static Set<String> getLoggedUsers(ServletContext servletContext){
+        return (HashSet<String>) servletContext
+                .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
+//        Set<?> loggedUsersObj = (HashSet<?>) servletContext
+//                .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
+//        Set<String> loggedUsers = new HashSet<>();
+//        loggedUsersObj.forEach(element -> loggedUsers.add((String) element));
+//
+//        return loggedUsers;
+    }
+
 }
