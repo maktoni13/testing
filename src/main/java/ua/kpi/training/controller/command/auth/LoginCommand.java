@@ -33,6 +33,8 @@ public class LoginCommand implements Command {
         String username = request.getParameter(PageContainer.PARAMETER_USER_NAME);
         String password = request.getParameter(PageContainer.PARAMETER_PASSWORD);
 
+        request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_USERNAME, username);
+
         HttpSession session = request.getSession();
         String usernameSessionAttr = (String) session.getAttribute(PageContainer.SESSION_USER_NAME);
         if (usernameSessionAttr != null && !usernameSessionAttr.equals("")){
