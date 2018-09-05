@@ -19,11 +19,11 @@
         <label for="user-name-label"><fmt:message key="message.registration.username.label" /></label>
         <br/>
 
-        <input type="password" name="password" id="password-label" value="${password}">
+        <input type="password" name="password" id="password-label">
         <label for="password-label"><fmt:message key="message.registration.password.label" /></label>
         <br/>
 
-        <input type="password" name="confirm-password" id="confirm-password-label" value="${confirmPassword}">
+        <input type="password" name="confirm-password" id="confirm-password-label">
         <label for="confirm-password-label"><fmt:message key="message.registration.confirm.password.label" /></label>
         <br/>
 

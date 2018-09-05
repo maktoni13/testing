@@ -17,7 +17,13 @@ public class SCryptPassHashing {
     }
 
     public static boolean validPassword(String passPlainText, String userPassHash){
-        return SCryptUtil.check(passPlainText, userPassHash);
+        boolean result = false;
+        try{
+            result = SCryptUtil.check(passPlainText, userPassHash);
+        } catch (IllegalArgumentException e){
+            // TODO: Logging
+        }
+        return result;
     }
 
 }
