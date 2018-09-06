@@ -1,9 +1,7 @@
 package ua.kpi.training.model.service;
 
-import ua.kpi.training.model.entity.Test;
-
-import java.util.List;
+import ua.kpi.training.controller.command.dto.TestsListByThemeDTO;
 
 public interface TestService {
-    List<Test> getTestsListByThemeId(int id);
+    TestsListByThemeDTO getTestsListByThemeId(int id);
 }

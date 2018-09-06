@@ -2,6 +2,7 @@
 <%@include file="jspf/navigation.jspf"%>
 <!--<form class="form-signin" method="post" action="${pageContext.request.contextPath}/testing/api/login">-->
     <!--<img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
+<h2><br/></h2>
 <form class="text-center" method="post" action="${pageContext.request.contextPath}/testing/api/login">
     <div class="form-group">
         <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="label.login.page.please.sign.in"/></h1>
@@ -17,8 +18,12 @@
     <div class="form-group">
         <button class="btn btn-sm btn-dark" type="submit"><fmt:message key="label.login.page.sign.in.button"/></button>
     </div>
-    <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
-    <label>${loginErrorMessage}</label>
+    <div class="form-group">
+        <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
+    </div>
+    <div class="form-group">
+        <span class="label alert-danger">${loginErrorMessage}</span>
+    </div>
 </form>
 
 <%@include file="jspf/footer.jspf"%>

@@ -13,6 +13,7 @@ public class TestMapper implements ObjectMapper<Test> {
     private static final String NAME_UA_COLUMN = "name_ua";
     private static final String DESCRIPTION_COLUMN = "description";
     private static final String DESCRIPTION_UA_COLUMN = "description_ua";
+    private static final String THEME_ID_COLUMN = "theme_id";
 
     @Override
     public Test extractFromResultSet(ResultSet resultSet) throws SQLException {
@@ -22,6 +23,7 @@ public class TestMapper implements ObjectMapper<Test> {
         test.setNameUA(resultSet.getString(NAME_UA_COLUMN));
         test.setDescription(resultSet.getString(DESCRIPTION_COLUMN));
         test.setDescriptionUA(resultSet.getString(DESCRIPTION_UA_COLUMN));
+        test.setThemeId(resultSet.getInt(THEME_ID_COLUMN));
         return test;
     }
 

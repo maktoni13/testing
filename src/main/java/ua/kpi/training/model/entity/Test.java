@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Test {
     private Theme theme;
+    private int themeId;
     private int id;
     private int idLocal;
     private String name;
@@ -12,6 +13,7 @@ public class Test {
     private String descriptionUA;
     private boolean correct;
     private boolean inactive;
+    private boolean chosen;
     private List<Question> questions;
 
     public Test() {
@@ -19,6 +21,14 @@ public class Test {
 
     public Theme getTheme() {
         return theme;
+    }
+
+    public int getThemeId() {
+        return themeId;
+    }
+
+    public void setThemeId(int themeId) {
+        this.themeId = themeId;
     }
 
     public void setTheme(Theme theme) {
@@ -89,12 +99,40 @@ public class Test {
         this.inactive = inactive;
     }
 
+    public boolean isChosen() {
+        return chosen;
+    }
+
+    public void setChosen(boolean chosen) {
+        this.chosen = chosen;
+    }
+
     public List<Question> getQuestions() {
         return questions;
     }
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public void setLocalQuestionsId() {
+        questions.forEach(question -> question.setIdLocal(questions.indexOf(question) + 1));
+    }
+
+    public Question getById(int id) {
+        return getQuestions()
+                .stream()
+                .filter(question -> question.getId() == id)
+                .findFirst()
+                .orElse(null); // TODO: change to Integer / equals
+    }
+
+    public Question getByLocalId(int id) {
+        return getQuestions()
+                .stream()
+                .filter(question -> question.getIdLocal() == id)
+                .findFirst()
+                .orElse(null); // TODO: change to Integer / equals
     }
 
     @Override

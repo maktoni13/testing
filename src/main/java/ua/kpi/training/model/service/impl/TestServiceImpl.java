@@ -1,5 +1,6 @@
 package ua.kpi.training.model.service.impl;
 
+import ua.kpi.training.controller.command.dto.TestsListByThemeDTO;
 import ua.kpi.training.model.dao.DAOFactory;
 import ua.kpi.training.model.dao.TestDAO;
 import ua.kpi.training.model.dao.ThemeDAO;
@@ -13,7 +14,7 @@ public class TestServiceImpl implements TestService {
     private DAOFactory daoFactory = DAOFactory.getInstance();
 
     @Override
-    public List<Test> getTestsListByThemeId(int id) {
+    public TestsListByThemeDTO getTestsListByThemeId(int id) {
         Theme theme;
         try (ThemeDAO themeDAO = daoFactory.createThemeDAO()) {
             theme = themeDAO.findById(id);
@@ -24,7 +25,7 @@ public class TestServiceImpl implements TestService {
         try (TestDAO testDAO = daoFactory.createTestDAO()){
             List<Test> testList = testDAO.findAllByThemeId(id);
             testList.forEach(test -> test.setTheme(theme));
-            return testList;
+            return new TestsListByThemeDTO(theme, testList);
         } catch (Exception e){
             throw new RuntimeException(e); // TODO: Right exception
         }

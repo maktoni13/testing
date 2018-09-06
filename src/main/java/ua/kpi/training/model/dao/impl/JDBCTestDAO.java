@@ -28,7 +28,21 @@ public class JDBCTestDAO implements TestDAO {
 
     @Override
     public Test findById(int id) {
-        return null;
+        Test test = new Test();
+        try (PreparedStatement preparedStatement = connection.
+                prepareStatement(
+                        DAOResourceBundle.getStatement(
+                                DAOKeyContainer.SELECT_TEST_BY_ID))) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            TestMapper themeMapper = new TestMapper();
+            if (resultSet.next()) {
+                test = themeMapper.extractFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return test;
     }
 
     @Override

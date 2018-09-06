@@ -12,6 +12,7 @@ public interface PageContainer {
     String WEB_INF_ADMIN_STUDENTS_LIST_JSP = "/WEB-INF/admin/studentslist.jsp";
     String WEB_INF_THEMES_LIST_JSP = "/WEB-INF/themeslist.jsp";
     String WEB_INF_TESTS_LIST_JSP = "/WEB-INF/testslist.jsp";
+    String WEB_INF_TEST_PASSING_JSP = "/WEB-INF/testpassing.jsp";
 
     // PATH prefixes
     String PATH_PREFIX_REDIRECT = "redirect:";
@@ -38,6 +39,7 @@ public interface PageContainer {
     String COMMAND_STUDENT_LIST = "admin/students";
     String COMMAND_INDEX_PAGE = "index";
     String COMMAND_TEST_LIST = "common/tests";
+    String COMMAND_TEST_PASSING = "common/passing";
 
     // SECURITY filter
     String SECURITY_FILTER_ADMIN = "admin/";
