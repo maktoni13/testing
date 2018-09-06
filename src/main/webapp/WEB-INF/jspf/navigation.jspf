@@ -1,65 +1,73 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/testing/api/index"><fmt:message
+            key="label.application.short.title"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05"
+            aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
-
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarsExample05">
         <ul class="navbar-nav mr-auto">
-            <form>
+
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <c:if test="${not empty sessionScope.authority && sessionScope.authority.toString() == 'ADMIN'}">
+                <li class="nav-item active">
+                    <a class="nav-link"
+                       href="${pageContext.request.contextPath}/testing/api/admin/students"><fmt:message
+                            key="label.menu.students.link"/></a>
+                </li>
+            </c:if>
+            <c:if test="${empty sessionScope.authority || sessionScope.authority.toString() == 'GUEST'}">
+                <li class="nav-item">
+                    <a class="nav-link disabled"
+                       href="${pageContext.request.contextPath}/testing/api/common/themes"><fmt:message
+                            key="label.menu.themes.link"/></a>
+                </li>
+            </c:if>
+            <c:if test="${not empty sessionScope.authority && sessionScope.authority.toString() != 'GUEST'}">
+                <li class="nav-item active">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/common/themes"><fmt:message
+                            key="label.menu.themes.link"/></a>
+                </li>
+            </c:if>
+        </ul>
+        <form class="form-inline my-2 my-md-0">
+            <label for="search"><fmt:message key="label.search" var="labelSearch"/></label>
+            <input id="search" name="searchRequest" class="form-control form-control-dark" type="text" placeholder="${labelSearch}"
+                   value="${searchRequest}">
+        </form>
+        <form class="form-inline my-2 my-md-0">
+            <ul class="navbar-nav mr-auto">
+                <c:if test="${not empty sessionScope.username}">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="${pageContext.request.contextPath}/testing/api/common/userprofile">${sessionScope.username}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/logout"><fmt:message
+                                key="label.logout"/> </a>
+                    </li>
+                </c:if>
+                <c:if test="${empty sessionScope.username}">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="${pageContext.request.contextPath}/testing/api/registration"><fmt:message
+                                key="label.registration.page.link"/></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/login"><fmt:message
+                                key="label.login"/></a>
+                    </li>
+                </c:if>
+            </ul>
+        </form>
+        <form class="form-inline my-2 my-md-0 bg-dark">
+            <ul class="navbar-nav mr-auto">
                 <select id="language" name="lang" onchange="submit()">
                     <option value="en" ${lang == 'en' ? 'selected' : ''}>EN</option>
                     <option value="ua" ${lang == 'ua' ? 'selected' : ''}>UA</option>
                 </select>
-            </form>
-
-  <!--          <form action="${pageContext.request.requestURL}" method="get">
-                <div class="form-group">
-
-                    <label for="language2"><fmt:message key="message.change.locale" /></label>
-                    <select class="form-control" id="language2" name="language" onchange="submit()">
-                        <option value="en_US" ${language == 'en' ? 'selected' : ''}>EN</option>
-                        <option value="ua_UA" ${language == 'ua' ? 'selected' : ''}>UA</option>
-                    </select>
-                </div>
-            </form>-->
-        </ul>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/login"><fmt:message key="message.login"/></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/registration"><fmt:message
-                        key="message.registration.page.link"/></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/logout"><fmt:message
-                        key="message.logout"/></a>
-            </li>
-        </ul>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/common/themes"><fmt:message
-                        key="message.menu.themes.link"/></a>
-            </li>
-            <!--<li class="nav-item">
-                <a class="nav-link" href="testing?action=tests&page=1"><fmt:message key="message.menu.tests.link"/></a>
-            </li>-->
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/testing/api/admin/students"><fmt:message
-                        key="message.menu.students.link"/></a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0" action="testing" method="post">
-            <input type="hidden" name="command" value="search">
-            <fmt:message key="message.search" var="searchlabel"/>
-            <input class="form-control mr-sm-2" type="search" name="searchrequest"
-                   placeholder="${searchlabel}" aria-label="Search" value="${searchrequest}">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><fmt:message
-                    key="message.search"/></button>
+            </ul>
         </form>
     </div>
 </nav>
