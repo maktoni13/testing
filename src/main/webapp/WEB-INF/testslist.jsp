@@ -15,7 +15,6 @@
                 <c:if test="${lang == 'en'}">
                     <td>${test.name}</td>
                     <td>${test.description}</td>
-                    <td>${test.description}</td>
                 </c:if>
                 <c:if test="${lang == 'ua'}">
                     <td>${test.nameUA}</td>
