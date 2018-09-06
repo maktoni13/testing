@@ -7,7 +7,7 @@ import ua.kpi.training.model.service.StudentService;
 import javax.servlet.http.HttpServletRequest;
 
 public class StudentListCommand implements Command {
-    StudentService studentService;
+    private StudentService studentService;
 
     public StudentListCommand() {
     }

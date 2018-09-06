@@ -4,7 +4,7 @@
 <%@ page language="java" isErrorPage="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, java.text.*" %>
 
-<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : 'ua_UA'}" scope="session" />
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : 'ua'}" scope="session" />
 <fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="message" />
 
@@ -12,10 +12,8 @@
 <html lang="${lang}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title><fmt:message key="message.title"/></title>
-    <!--<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+    <title><fmt:message key="label.title"/></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">-->
     <style type="text/css">
         .footer {
             position: absolute;
@@ -27,7 +25,6 @@
     </style>
 </head>
 <body>
-<!--<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
 
 <br/>
 <div class="container">

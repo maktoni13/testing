@@ -1,24 +1,32 @@
-<%@include file="jspf/header.jspf"%>
-<%@include file="jspf/navigation.jspf"%>
+<%@include file="jspf/header.jspf" %>
+<%@include file="jspf/navigation.jspf" %>
 
-<div class="container" >
+<div class="container">
     <table class="table">
         <thead>
-            <tr>
-                <th scope="col"><fmt:message key="message.column.description.label" /></th>
-                <th scope="col"><fmt:message key="message.column.description.ua.label" /></th>
-            </tr>
+        <tr>
+            <th scope="col"><fmt:message key="label.themes.column.go.to.test.link"/></th>
+            <th scope="col"><fmt:message key="label.column.name.label"/></th>
+            <th scope="col"><fmt:message key="label.column.description.label"/></th>
+        </tr>
         </thead>
         <tbody>
-            <c:forEach items="${themeList}" var="theme">
-                <tr>
+        <c:forEach items="${themeList}" var="theme">
+            <tr>
+                <td><a href="${pageContext.request.contextPath}/testing/api/common/tests?themeid=${theme.id}"
+                       class="btn btn-link" role="button"><fmt:message key="label.themes.go.to.test.link"/></a></td>
+                <c:if test="${lang == 'en'}">
+                    <td>${theme.name}</td>
                     <td>${theme.description}</td>
+                </c:if>
+                <c:if test="${lang == 'ua'}">
+                    <td>${theme.nameUA}</td>
                     <td>${theme.descriptionUA}</td>
-                </tr>
-            </c:forEach>
+                </c:if>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>
 
-<script src="../webjars/bootstrap/4.0.0/js/bootstrap.js"></script>
-<%@include file="jspf/footer.jspf"%>
+<%@include file="jspf/footer.jspf" %>

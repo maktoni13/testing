@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class ThemeMapper implements ObjectMapper<Theme>{
-    private int id;
-    private String description;
-    private String descriptionUA;
 
     private static final String ID_COLUMN = "id";
+    private static final String NAME_COLUMN = "name";
+    private static final String NAME_UA_COLUMN = "name_ua";
     private static final String DESCRIPTION_COLUMN = "description";
     private static final String DESCRIPTION_UA_COLUMN = "description_ua";
 
@@ -19,6 +18,8 @@ public class ThemeMapper implements ObjectMapper<Theme>{
     public Theme extractFromResultSet(ResultSet resultSet) throws SQLException {
         Theme theme = new Theme();
         theme.setId(resultSet.getInt(ID_COLUMN));
+        theme.setName(resultSet.getString(NAME_COLUMN));
+        theme.setNameUA(resultSet.getString(NAME_UA_COLUMN));
         theme.setDescription(resultSet.getString(DESCRIPTION_COLUMN));
         theme.setDescriptionUA(resultSet.getString(DESCRIPTION_UA_COLUMN));
         return theme;

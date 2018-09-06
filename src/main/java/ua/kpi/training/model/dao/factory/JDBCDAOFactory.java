@@ -1,9 +1,9 @@
 package ua.kpi.training.model.dao.factory;
 
-import ua.kpi.training.model.dao.DAOFactory;
-import ua.kpi.training.model.dao.ThemeDAO;
-import ua.kpi.training.model.dao.UserDAO;
+import ua.kpi.training.model.dao.*;
 import ua.kpi.training.model.dao.connection.ConnectionPoolHolder;
+import ua.kpi.training.model.dao.impl.JDBCQuestionDAO;
+import ua.kpi.training.model.dao.impl.JDBCTestDAO;
 import ua.kpi.training.model.dao.impl.JDBCThemeDAO;
 import ua.kpi.training.model.dao.impl.JDBCUserDAO;
 
@@ -23,6 +23,16 @@ public class JDBCDAOFactory extends DAOFactory {
     @Override
     public ThemeDAO createThemeDAO() {
         return new JDBCThemeDAO(getConnection());
+    }
+
+    @Override
+    public TestDAO createTestDAO() {
+        return new JDBCTestDAO(getConnection());
+    }
+
+    @Override
+    public QuestionDAO createQuestionDAO() {
+        return new JDBCQuestionDAO(getConnection());
     }
 
     private Connection getConnection(){

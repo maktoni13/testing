@@ -7,7 +7,7 @@ import ua.kpi.training.model.service.ThemeService;
 import javax.servlet.http.HttpServletRequest;
 
 public class ThemeListCommand implements Command {
-    ThemeService themeService;
+    private ThemeService themeService;
 
     public ThemeListCommand() {
     }

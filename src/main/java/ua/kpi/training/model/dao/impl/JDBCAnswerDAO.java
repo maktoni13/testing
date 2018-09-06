@@ -3,9 +3,17 @@ package ua.kpi.training.model.dao.impl;
 import ua.kpi.training.model.dao.AnswerDAO;
 import ua.kpi.training.model.entity.Answer;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class JDBCAnswerDAO implements AnswerDAO {
+    private Connection connection;
+
+    public JDBCAnswerDAO(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void create(Answer entity) {
 
@@ -33,6 +41,10 @@ public class JDBCAnswerDAO implements AnswerDAO {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
