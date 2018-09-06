@@ -10,7 +10,6 @@
     </custom-resource-bundle>
     <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/src/resources/message.properties" />
-      <file value="file://$PROJECT_DIR$/src/resources/message_ru.properties" />
       <file value="file://$PROJECT_DIR$/src/resources/message_ua_UA.properties" />
       <base-name>message</base-name>
     </custom-resource-bundle>

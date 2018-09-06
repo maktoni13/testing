@@ -12,7 +12,7 @@
             <form>
                 <select id="language" name="lang" onchange="submit()">
                     <option value="en" ${lang == 'en' ? 'selected' : ''}>EN</option>
-                    <option value="ua_UA" ${lang == 'ua_UA' ? 'selected' : ''}>UA</option>
+                    <option value="ua" ${lang == 'ua' ? 'selected' : ''}>UA</option>
                 </select>
             </form>
 
@@ -21,8 +21,8 @@
 
                     <label for="language2"><fmt:message key="message.change.locale" /></label>
                     <select class="form-control" id="language2" name="language" onchange="submit()">
-                        <option value="en_US" ${language == 'en_US' ? 'selected' : ''}>EN</option>
-                        <option value="ua_UA" ${language == 'ua_UA' ? 'selected' : ''}>UA</option>
+                        <option value="en_US" ${language == 'en' ? 'selected' : ''}>EN</option>
+                        <option value="ua_UA" ${language == 'ua' ? 'selected' : ''}>UA</option>
                     </select>
                 </div>
             </form>-->
