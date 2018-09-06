@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 public interface ConfigurationContainer {
-    String LOCALE_UA = "ua_UA";
+    String LOCALE_UA = "ua";
     Locale DEFAULT_LOCALE = Locale.forLanguageTag(LOCALE_UA);
     Locale[] SUPPORTED_LOCALE_ARRAY = {Locale.ENGLISH, DEFAULT_LOCALE};
     List<Locale> SUPPORTED_LOCALE_LIST = Arrays.asList(SUPPORTED_LOCALE_ARRAY);

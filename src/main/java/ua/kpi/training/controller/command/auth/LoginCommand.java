@@ -51,7 +51,7 @@ public class LoginCommand implements Command {
 
         if (CommandUtility.checkUserAlreadyLogged(request, username)) {
             request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_ERROR_MESSAGE,
-                    MessageBundle.getMessage(MessageKey.LOGIN_USER_ALREADY_LOGGGED_ERROR));
+                    MessageBundle.getMessage(MessageKey.LOGIN_USER_ALREADY_LOGGED_ERROR));
             return page;
         }
 

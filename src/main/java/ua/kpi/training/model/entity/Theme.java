@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Theme {
     private int id;
+    private String name;
+    private String nameUA;
     private String description;
     private String descriptionUA;
     private List<Test> tests;
@@ -17,6 +19,22 @@ public class Theme {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNameUA() {
+        return nameUA;
+    }
+
+    public void setNameUA(String nameUA) {
+        this.nameUA = nameUA;
     }
 
     public String getDescription() {

@@ -5,15 +5,15 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col"><fmt:message key="message.column.username.label" /></th>
-                <th scope="col"><fmt:message key="message.column.first.name.label" /></th>
-                <th scope="col"><fmt:message key="message.column.last.name.label" /></th>
-                <th scope="col"><fmt:message key="message.column.first.name.ua.label" /></th>
-                <th scope="col"><fmt:message key="message.column.last.name.ua.label" /></th>
-                <th scope="col"><fmt:message key="message.column.enabled.label" /></th>
-                <th scope="col"><fmt:message key="message.column.admin.label" /></th>
-                <th scope="col"><fmt:message key="message.column.tests.completed.label" /></th>
-                <th scope="col"><fmt:message key="message.column.average.evaluation.label" /></th>
+                <th scope="col"><fmt:message key="label.column.username.label" /></th>
+                <th scope="col"><fmt:message key="label.column.first.name.label" /></th>
+                <th scope="col"><fmt:message key="label.column.last.name.label" /></th>
+                <th scope="col"><fmt:message key="label.column.first.name.ua.label" /></th>
+                <th scope="col"><fmt:message key="label.column.last.name.ua.label" /></th>
+                <th scope="col"><fmt:message key="label.column.enabled.label" /></th>
+                <th scope="col"><fmt:message key="label.column.admin.label" /></th>
+                <th scope="col"><fmt:message key="label.column.tests.completed.label" /></th>
+                <th scope="col"><fmt:message key="label.column.average.evaluation.label" /></th>
             </tr>
         </thead>
         <tbody>

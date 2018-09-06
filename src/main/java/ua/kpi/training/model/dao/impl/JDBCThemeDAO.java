@@ -27,7 +27,21 @@ public class JDBCThemeDAO implements ThemeDAO {
 
     @Override
     public Theme findById(int id) {
-        return null;
+        Theme theme = new Theme();
+        try (PreparedStatement preparedStatement = connection.
+                prepareStatement(
+                        DAOResourceBundle.getStatement(
+                                DAOKeyContainer.SELECT_THEME_BY_ID))) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ThemeMapper themeMapper = new ThemeMapper();
+            if (resultSet.next()) {
+                theme = themeMapper.extractFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return theme;
     }
 
     @Override
@@ -60,6 +74,10 @@ public class JDBCThemeDAO implements ThemeDAO {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

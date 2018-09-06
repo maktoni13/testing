@@ -11,6 +11,7 @@ public interface PageContainer {
     String WEB_INF_ADMIN_ADMIN_PROFILE_JSP = "/WEB-INF/admin/adminprofile.jsp";
     String WEB_INF_ADMIN_STUDENTS_LIST_JSP = "/WEB-INF/admin/studentslist.jsp";
     String WEB_INF_THEMES_LIST_JSP = "/WEB-INF/themeslist.jsp";
+    String WEB_INF_TESTS_LIST_JSP = "/WEB-INF/testslist.jsp";
 
     // PATH prefixes
     String PATH_PREFIX_REDIRECT = "redirect:";
@@ -20,6 +21,7 @@ public interface PageContainer {
     String PATH_COMMAND_ADMIN_PROFILE = "/testing/api/admin/adminprofile";
     String PATH_COMMAND_LOGIN = "/testing/api/login";
     String PATH_COMMAND_INDEX = "/testing/api/index";
+    String PATH_COMMAND_THEMES = "/testing/api/common/themes";
 
     // HTTP METHOD
     String HTTP_GET = "GET";
@@ -35,6 +37,7 @@ public interface PageContainer {
     String COMMAND_VIEW_ADMIN_PROFILE = "admin/adminprofile";
     String COMMAND_STUDENT_LIST = "admin/students";
     String COMMAND_INDEX_PAGE = "index";
+    String COMMAND_TEST_LIST = "common/tests";
 
     // SECURITY filter
     String SECURITY_FILTER_ADMIN = "admin/";
@@ -74,4 +77,5 @@ public interface PageContainer {
     String LOGIN_PAGE_ATTR_USERNAME = "username";
     String STUDENT_LIST_ATTR = "studentList";
     String THEME_LIST_ATTR = "themeList";
+    String TEST_LIST_ATTR = "testList";
 }

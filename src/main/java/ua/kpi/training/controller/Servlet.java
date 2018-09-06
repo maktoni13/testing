@@ -4,6 +4,7 @@ import ua.kpi.training.controller.command.Command;
 import ua.kpi.training.controller.command.IndexPageCommand;
 import ua.kpi.training.controller.command.auth.*;
 import ua.kpi.training.controller.command.students.StudentListCommand;
+import ua.kpi.training.controller.command.students.TestsListCommand;
 import ua.kpi.training.controller.command.students.ThemeListCommand;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.model.service.impl.*;
@@ -41,6 +42,7 @@ public class Servlet extends HttpServlet{
         commands.put(PageContainer.COMMAND_VIEW_USER_PROFILE, new ViewUserProfileCommand(new ViewUserProfileServiceImpl()));
         commands.put(PageContainer.COMMAND_VIEW_ADMIN_PROFILE, new ViewAdminProfileCommand(new ViewAdminProfileServiceImpl()));
         commands.put(PageContainer.COMMAND_INDEX_PAGE, new IndexPageCommand(new IndexPageServiceImpl()));
+        commands.put(PageContainer.COMMAND_TEST_LIST, new TestsListCommand(new TestServiceImpl()));
     }
 
     public void doGet(HttpServletRequest request,

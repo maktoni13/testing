@@ -5,6 +5,9 @@ import java.util.List;
 public class Test {
     private Theme theme;
     private int id;
+    private int idLocal;
+    private String name;
+    private String nameUA;
     private String description;
     private String descriptionUA;
     private boolean correct;
@@ -28,6 +31,30 @@ public class Test {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getIdLocal() {
+        return idLocal;
+    }
+
+    public void setIdLocal(int idLocal) {
+        this.idLocal = idLocal;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNameUA() {
+        return nameUA;
+    }
+
+    public void setNameUA(String nameUA) {
+        this.nameUA = nameUA;
     }
 
     public String getDescription() {

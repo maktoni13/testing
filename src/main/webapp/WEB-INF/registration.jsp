@@ -8,7 +8,7 @@
 <%@include file="jspf/header.jspf"%>
 <%@include file="jspf/navigation.jspf"%>
 
-<h1><fmt:message key="message.registration.page.title"/></h1><br/>
+<h1><fmt:message key="label.registration.page.title"/></h1><br/>
 <div class="container">
     <form action="registration" method="post">
 
@@ -16,42 +16,42 @@
         <br/>
 
         <input type="text" name="username" id="user-name-label" value="${username}">
-        <label for="user-name-label"><fmt:message key="message.registration.username.label" /></label>
+        <label for="user-name-label"><fmt:message key="label.registration.username.label" /></label>
         <br/>
 
         <input type="password" name="password" id="password-label">
-        <label for="password-label"><fmt:message key="message.registration.password.label" /></label>
+        <label for="password-label"><fmt:message key="label.registration.password.label" /></label>
         <br/>
 
         <input type="password" name="confirm-password" id="confirm-password-label">
-        <label for="confirm-password-label"><fmt:message key="message.registration.confirm.password.label" /></label>
+        <label for="confirm-password-label"><fmt:message key="label.registration.confirm.password.label" /></label>
         <br/>
 
         <input type="text" name="email" id="email-label" value="${email}">
-        <label for="email-label"><fmt:message key="message.registration.email.label" /></label>
+        <label for="email-label"><fmt:message key="label.registration.email.label" /></label>
         <br/>
 
         <input type="text" name="confirm-email" id="confirm-email-label" value="${confirmEmail}">
-        <label for="confirm-email-label"><fmt:message key="message.registration.confirm.email.label" /></label>
+        <label for="confirm-email-label"><fmt:message key="label.registration.confirm.email.label" /></label>
         <br/>
 
         <input type="text" name="first-name" id="first-name-label" value="${firstName}">
-        <label for="first-name-label"><fmt:message key="message.registration.first.name.label" /></label>
+        <label for="first-name-label"><fmt:message key="label.registration.first.name.label" /></label>
         <br/>
 
         <input type="text" name="first-name-ua" id="first-name-ua-label" value="${firstNameUA}">
-        <label for="first-name-ua-label"><fmt:message key="message.registration.first.name.ua.label" /></label>
+        <label for="first-name-ua-label"><fmt:message key="label.registration.first.name.ua.label" /></label>
         <br/>
 
         <input type="text" name="last-name" id="last-name-label" value="${lastName}">
-        <label for="last-name-label"><fmt:message key="message.registration.last.name.label" /></label>
+        <label for="last-name-label"><fmt:message key="label.registration.last.name.label" /></label>
         <br/>
 
         <input type="text" name="last-name-ua" id="last-name-ua-label" value="${lastNameUA}">
-        <label for="last-name-ua-label"><fmt:message key="message.registration.last.name.ua.label" /></label>
+        <label for="last-name-ua-label"><fmt:message key="label.registration.last.name.ua.label" /></label>
         <br/>
 
-        <button type="submit" value="registration"><fmt:message key="message.registration.button"/></button>
+        <button type="submit" value="registration"><fmt:message key="label.registration.button"/></button>
 
     </form>
 </div>

@@ -91,7 +91,11 @@ public class JDBCUserDAO implements UserDAO {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

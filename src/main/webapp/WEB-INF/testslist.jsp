@@ -5,23 +5,21 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"><fmt:message key="label.themes.column.go.to.test.link"/></th>
             <th scope="col"><fmt:message key="label.column.name.label"/></th>
             <th scope="col"><fmt:message key="label.column.description.label"/></th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${themeList}" var="theme">
+        <c:forEach items="${testList}" var="test">
             <tr>
-                <td><a href="${pageContext.request.contextPath}/testing/api/common/tests?themeid=${theme.id}"
-                       class="btn btn-link" role="button"><fmt:message key="label.themes.go.to.test.link"/></a></td>
                 <c:if test="${lang == 'en'}">
-                    <td>${theme.name}</td>
-                    <td>${theme.description}</td>
+                    <td>${test.name}</td>
+                    <td>${test.description}</td>
+                    <td>${test.description}</td>
                 </c:if>
                 <c:if test="${lang == 'ua'}">
-                    <td>${theme.nameUA}</td>
-                    <td>${theme.descriptionUA}</td>
+                    <td>${test.nameUA}</td>
+                    <td>${test.descriptionUA}</td>
                 </c:if>
             </tr>
         </c:forEach>
