@@ -48,7 +48,6 @@ public class JDBCPassedTestDAO implements PassedTestDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
 
