@@ -1,5 +1,7 @@
 package ua.kpi.training.model.dao;
 
+import ua.kpi.training.model.dao.exception.DAOException;
+
 import java.util.List;
 
 public interface GenericDAO<T> extends AutoCloseable {

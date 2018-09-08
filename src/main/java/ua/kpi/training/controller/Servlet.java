@@ -32,7 +32,6 @@ public class Servlet extends HttpServlet{
 
     @Override
     public void init(ServletConfig servletConfig){
-//        Locale.;
         servletConfig.getServletContext().setAttribute(PageContainer.CONTEXT_LOGGED_USERS, new HashSet<String>());
         commands.put(PageContainer.COMMAND_EXCEPTION, new ExceptionCommand());
         commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand(new LoginServiceImpl()));

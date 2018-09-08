@@ -2,6 +2,8 @@ package ua.kpi.training.model.dao;
 
 import ua.kpi.training.model.dao.factory.JDBCDAOFactory;
 
+import java.sql.Connection;
+
 public abstract class DAOFactory {
 
     private static volatile DAOFactory daoFactoryInstance;
@@ -10,6 +12,8 @@ public abstract class DAOFactory {
     public abstract ThemeDAO createThemeDAO();
     public abstract TestDAO createTestDAO();
     public abstract QuestionDAO createQuestionDAO();
+
+    public abstract Connection getConnection();
 
     public static DAOFactory getInstance(){
         if( daoFactoryInstance == null ){
@@ -21,6 +25,5 @@ public abstract class DAOFactory {
         }
         return daoFactoryInstance;
     }
-
 
 }

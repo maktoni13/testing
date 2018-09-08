@@ -35,13 +35,15 @@ public class JDBCDAOFactory extends DAOFactory {
         return new JDBCQuestionDAO(getConnection());
     }
 
-    private Connection getConnection(){
+    @Override
+    public Connection getConnection(){
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e); // TODO: Exception
         }
     }
+
 
 
 }

@@ -5,7 +5,7 @@ import ua.kpi.training.controller.command.dto.RegistrationUserDTO;
 import ua.kpi.training.controller.command.regex.RegexContainer;
 import ua.kpi.training.controller.command.utility.SCryptPassHashing;
 import ua.kpi.training.controller.resource.PageContainer;
-import ua.kpi.training.model.entity.exception.NonUniqueUserException;
+import ua.kpi.training.model.dao.exception.NonUniqueUserException;
 import ua.kpi.training.model.service.RegistrationService;
 import ua.kpi.training.view.resource.MessageBundle;
 import ua.kpi.training.view.resource.MessageKey;

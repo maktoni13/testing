@@ -14,8 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCTestDAO implements TestDAO {
-    private Connection connection;
+public class JDBCTestDAO extends JDBCAbstractDAO<Test> implements TestDAO {
 
     public JDBCTestDAO(Connection connection) {
         this.connection = connection;
@@ -29,7 +28,7 @@ public class JDBCTestDAO implements TestDAO {
     @Override
     public Test findById(int id) {
         Test test = new Test();
-        try (PreparedStatement preparedStatement = connection.
+        try (PreparedStatement preparedStatement = this.connection.
                 prepareStatement(
                         DAOResourceBundle.getStatement(
                                 DAOKeyContainer.SELECT_TEST_BY_ID))) {

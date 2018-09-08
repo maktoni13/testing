@@ -4,14 +4,14 @@ import ua.kpi.training.controller.command.dto.RegistrationUserDTO;
 import ua.kpi.training.model.dao.DAOFactory;
 import ua.kpi.training.model.dao.UserDAO;
 import ua.kpi.training.model.entity.User;
-import ua.kpi.training.model.entity.exception.NonUniqueUserException;
+import ua.kpi.training.model.dao.exception.NonUniqueUserException;
 import ua.kpi.training.model.service.RegistrationService;
 import ua.kpi.training.view.resource.MessageBundle;
 import ua.kpi.training.view.resource.MessageKey;
 
-public class RegistrationServiceImpl implements RegistrationService {
+import java.sql.SQLException;
 
-    private DAOFactory daoFactory = DAOFactory.getInstance();
+public class RegistrationServiceImpl extends AbstractService<RegistrationUserDTO, Boolean> implements RegistrationService{
 
     public RegistrationServiceImpl() {
     }
@@ -31,7 +31,18 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public boolean registerUser(RegistrationUserDTO regUserDTO) throws NonUniqueUserException {
+    public boolean registerUser(RegistrationUserDTO regUserDTO){// throws NonUniqueUserException {
+
+        try{
+            return performServiceInSerializableTransaction(regUserDTO);
+        } catch (SQLException e){
+            return false;
+        }
+
+    }
+
+    @Override
+    public Boolean performService(RegistrationUserDTO regUserDTO){// throws NonUniqueUserException{
 
         User user = getUserFromRegistrationDTO(regUserDTO);
         UserDAO userDAO = daoFactory.createUserDAO();
@@ -52,7 +63,8 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
 
         if (exceptionFlag) {
-            throw new NonUniqueUserException(message.toString());
+            throw new RuntimeException(message.toString());
+            //throw new NonUniqueUserException(message.toString());
         }
 
         try {
