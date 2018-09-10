@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class PassingTestCommand implements Command{
-    PassingTestService passingTestService;
+    private PassingTestService passingTestService;
     private static final String TEST_ID_PARAM = "testid";
     private static final String TEST_SESSION_ATTR = "testPass";
     private static final String QUESTION_CURRENT_ID_PARAM = "currentquestion";

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ThemeService{
     List<Theme> getAllThemes();
+    Theme getThemeEntity(int id);
+    boolean saveThemeEntity(Theme theme);
 }

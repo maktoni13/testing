@@ -22,6 +22,9 @@ public abstract class AbstractService<I, O> implements AutoCloseable {
     DAOFactory daoFactory = DAOFactory.getInstance();
     private Connection connection;
 
+    protected AbstractService() {
+    }
+
     /**
      * Template method for service operation performing with transaction with SERIALIZABLE isolation,
      * should be covered in service interface method with exception handling
@@ -41,7 +44,7 @@ public abstract class AbstractService<I, O> implements AutoCloseable {
      * @return output value
      * @throws SQLException connection and DAO errors should be covered on interface service level
      */
-    O performServiceInRepeatableReadTransaction(I input) throws SQLException{
+    protected O performServiceInRepeatableReadTransaction(I input) throws SQLException{
         return performServiceInTransaction(input,
                 Connection.TRANSACTION_REPEATABLE_READ);
     }
@@ -63,11 +66,11 @@ public abstract class AbstractService<I, O> implements AutoCloseable {
             output = performService(input);
             connection.commit();
         } catch (Exception e) {
-            LOGGER_SLF4J.error(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
-            LOGGER_SLF4J.error(e.getMessage());
+            LOGGER_SLF4J.error(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE, e);
             connection.rollback();
         } finally {
             connection.setAutoCommit(true);
+            connection.close();
         }
         return output;
     }
@@ -78,7 +81,7 @@ public abstract class AbstractService<I, O> implements AutoCloseable {
      * @return output value
      * @throws SQLException connection and DAO errors should be covered on interface service level
      */
-    abstract O performService(I input) throws SQLException;
+    protected abstract O performService(I input) throws SQLException;
 
     @Override
     public void close(){
@@ -89,8 +92,7 @@ public abstract class AbstractService<I, O> implements AutoCloseable {
                 }
                 connection.close();
             } catch (SQLException e){
-                LOGGER_SLF4J.error(LoggerMessages.ERROR_SERVICE_CONNECTION_CLOSING);
-                LOGGER_SLF4J.error(e.toString());
+                LOGGER_SLF4J.error(LoggerMessages.ERROR_SERVICE_CONNECTION_CLOSING, e);
                 throw new RuntimeException(e); // TODO: Move closing connection to daoFactory.
             }
         }

@@ -1,9 +1,10 @@
 package ua.kpi.training.model.dao.impl;
 
 import ua.kpi.training.model.dao.UserDAO;
+import ua.kpi.training.model.dao.factory.JDBCDAOFactory;
 import ua.kpi.training.model.dao.mapper.UserMapper;
-import ua.kpi.training.model.dao.resource.DAOKeyContainer;
-import ua.kpi.training.model.dao.resource.DAOResourceBundle;
+import ua.kpi.training.model.dao.resource.DAOKey;
+import ua.kpi.training.model.dao.resource.DAOBundle;
 import ua.kpi.training.model.entity.User;
 
 import java.sql.Connection;
@@ -22,10 +23,10 @@ public class JDBCUserDAO implements UserDAO {
 
 
     @Override
-    public void create(User entity) {
+    public boolean create(User entity) {
 
         try (PreparedStatement ps = connection.prepareStatement
-                (DAOResourceBundle.getStatement(DAOKeyContainer.INSERT_USER))) {
+                (DAOBundle.getStatement(DAOKey.INSERT_USER))) {
             ps.setString(1, entity.getUsername());
             ps.setString(2, entity.getPassword());
             ps.setString(3, entity.getEmail());
@@ -37,23 +38,10 @@ public class JDBCUserDAO implements UserDAO {
             ps.setBoolean(9, entity.isAdmin());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            // TODO: Logging and validation result updating
+            return false;
         }
-
-
-        //        try (PreparedStatement preparedStatement = connection.prepareStatement(
-//                DAOResourceBundle.getStatement(
-//                        DAOKeyContainer.SELECT_USER_BY_USERNAME))){
-//            preparedStatement.setString(1, username);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()){
-//                UserMapper userMapper = new UserMapper();
-//                return userMapper.extractFromResultSet(resultSet);
-//            }
-//            return null;
-//        } catch (SQLException e){
-//            throw new RuntimeException(e);
-//        }
+        return true;
     }
 
     @Override
@@ -64,11 +52,11 @@ public class JDBCUserDAO implements UserDAO {
     @Override
     public List<User> findAll() {
         List<User> userArrayList = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.
+        try (PreparedStatement ps = connection.
                 prepareStatement(
-                        DAOResourceBundle.getStatement(
-                                DAOKeyContainer.SELECT_ALL_USERS))) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+                        DAOBundle.getStatement(
+                                DAOKey.SELECT_ALL_USERS))) {
+            ResultSet resultSet = ps.executeQuery();
             UserMapper userMapper = new UserMapper();
             while (resultSet.next()) {
                 userArrayList.add(userMapper.extractFromResultSet(resultSet));
@@ -80,27 +68,18 @@ public class JDBCUserDAO implements UserDAO {
     }
 
     @Override
-    public void update(User entity) {
-
+    public boolean update(User entity) {
+        return false;
     }
 
     @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public boolean delete(int id) {
+        return false;
     }
 
     @Override
     public User findUserByUsername(String username) {
-        return findUserByParam(DAOKeyContainer.SELECT_USER_BY_USERNAME,
+        return findUserByParam(DAOKey.SELECT_USER_BY_USERNAME,
                 username);
     }
 
@@ -111,7 +90,7 @@ public class JDBCUserDAO implements UserDAO {
 
     @Override
     public User findUserByEmail(String email) {
-        return findUserByParam(DAOKeyContainer.SELECT_USER_BY_EMAIL,
+        return findUserByParam(DAOKey.SELECT_USER_BY_EMAIL,
                 email);
     }
 
@@ -121,10 +100,10 @@ public class JDBCUserDAO implements UserDAO {
     }
 
     private User findUserByParam(String sqlStatement, String param) {
-        try (PreparedStatement preparedStatement = connection.
-                prepareStatement(DAOResourceBundle.getStatement(sqlStatement))) {
-            preparedStatement.setString(1, param);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (PreparedStatement ps = connection.
+                prepareStatement(DAOBundle.getStatement(sqlStatement))) {
+            ps.setString(1, param);
+            ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
                 UserMapper userMapper = new UserMapper();
                 return userMapper.extractFromResultSet(resultSet);
@@ -133,6 +112,11 @@ public class JDBCUserDAO implements UserDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void close() {
+        JDBCDAOFactory.connectionClose(connection);
     }
 
 }

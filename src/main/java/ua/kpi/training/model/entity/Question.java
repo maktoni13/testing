@@ -81,7 +81,10 @@ public class Question {
         this.answers = answers;
     }
 
-    public void setLocalAnswersId(){
-        answers.forEach(answer -> answer.setIdLocal(answers.indexOf(answer) + 1));
+    public void setLocalAnswersId() {
+        answers.forEach(answer -> {
+            answer.setIdLocal(answers.indexOf(answer) + 1);
+            answer.setQuestion(this);
+        });
     }
 }

@@ -7,8 +7,11 @@ import ua.kpi.training.controller.command.students.PassingTestCommand;
 import ua.kpi.training.controller.command.students.StudentListCommand;
 import ua.kpi.training.controller.command.students.TestsListCommand;
 import ua.kpi.training.controller.command.students.ThemeListCommand;
+import ua.kpi.training.controller.command.test.ProcessingTestCommand;
+import ua.kpi.training.controller.command.theme.ProcessingThemeCommand;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.model.service.impl.*;
+import ua.kpi.training.model.service.impl.ThemeServiceImpl;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -44,6 +47,8 @@ public class Servlet extends HttpServlet{
         commands.put(PageContainer.COMMAND_INDEX_PAGE, new IndexPageCommand(new IndexPageServiceImpl()));
         commands.put(PageContainer.COMMAND_TEST_LIST, new TestsListCommand(new TestServiceImpl()));
         commands.put(PageContainer.COMMAND_TEST_PASSING, new PassingTestCommand(new PassingTestServiceImpl()));
+        commands.put(PageContainer.COMMAND_PROCESS_THEME, new ProcessingThemeCommand(new ThemeServiceImpl()));
+        commands.put(PageContainer.COMMAND_PROCESS_TEST, new ProcessingTestCommand(new TestServiceImpl()));
     }
 
     public void doGet(HttpServletRequest request,

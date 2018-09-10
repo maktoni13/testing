@@ -1,6 +1,7 @@
 package ua.kpi.training.model.dao.impl;
 
 import ua.kpi.training.model.dao.SummaryDAO;
+import ua.kpi.training.model.dao.factory.JDBCDAOFactory;
 import ua.kpi.training.model.entity.Summary;
 
 import java.sql.Connection;
@@ -15,11 +16,6 @@ public class JDBCSummaryDAO implements SummaryDAO {
     }
 
     @Override
-    public void create(Summary entity) {
-
-    }
-
-    @Override
     public Summary findById(int id) {
         return null;
     }
@@ -30,22 +26,23 @@ public class JDBCSummaryDAO implements SummaryDAO {
     }
 
     @Override
-    public void update(Summary entity) {
-
+    public boolean create(Summary entity) {
+        return false;
     }
 
     @Override
-    public void delete(int id) {
+    public boolean update(Summary entity) {
+        return false;
+    }
 
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 
     @Override
     public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        JDBCDAOFactory.connectionClose(connection);
     }
+
 }

@@ -11,12 +11,20 @@ public class Test {
     private String nameUA;
     private String description;
     private String descriptionUA;
-    private boolean correct;
     private boolean inactive;
-    private boolean chosen;
     private List<Question> questions;
+    private StringBuilder validationResult;
 
     public Test() {
+        validationResult = new StringBuilder();
+    }
+
+    public StringBuilder getValidationResult() {
+        return validationResult;
+    }
+
+    public void setValidationResult(StringBuilder validationResult) {
+        this.validationResult = validationResult;
     }
 
     public Theme getTheme() {
@@ -83,28 +91,12 @@ public class Test {
         this.descriptionUA = descriptionUA;
     }
 
-    public boolean isCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(boolean correct) {
-        this.correct = correct;
-    }
-
     public boolean isInactive() {
         return inactive;
     }
 
     public void setInactive(boolean inactive) {
         this.inactive = inactive;
-    }
-
-    public boolean isChosen() {
-        return chosen;
-    }
-
-    public void setChosen(boolean chosen) {
-        this.chosen = chosen;
     }
 
     public List<Question> getQuestions() {
@@ -116,7 +108,15 @@ public class Test {
     }
 
     public void setLocalQuestionsId() {
-        questions.forEach(question -> question.setIdLocal(questions.indexOf(question) + 1));
+        questions.forEach(question -> {
+            question.setIdLocal(questions.indexOf(question) + 1);
+            question.setTest(this);
+            question.setLocalAnswersId();
+        });
+    }
+
+    public void appendValidationResult(String validationMessage) {
+        validationResult.append(validationMessage);
     }
 
     public Question getById(int id) {
@@ -141,7 +141,6 @@ public class Test {
                 ", id=" + id +
                 ", description='" + description + '\'' +
                 ", descriptionUA='" + descriptionUA + '\'' +
-                ", correct=" + correct +
                 ", inactive=" + inactive +
                 '}';
     }

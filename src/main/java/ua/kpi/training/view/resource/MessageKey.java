@@ -20,4 +20,7 @@ public interface MessageKey {
     String LOGIN_EMPTY_ERROR = "messages.login.empty.error";
     String LOGIN_USER_ALREADY_LOGGED_ERROR = "messages.login.user.already.logged";
     String LOGIN_SHOULD_LOGOUT_FIRST = "messages.login.should.logout.first";
+    String SQL_ERROR = "messages.sql.error";
+
+    String SQL_ERROR_PLEASE_TRY_AGAIN = "";
 }

@@ -2,10 +2,10 @@ package ua.kpi.training.model.dao.resource;
 
 import java.util.ResourceBundle;
 
-public class DAOResourceBundle {
-    private static ResourceBundle daoBundle = ResourceBundle.getBundle(DAOKeyContainer.DAO_PROPERTIES);
+public class DAOBundle {
+    private static ResourceBundle daoBundle = ResourceBundle.getBundle(DAOKey.DAO_PROPERTIES);
 
-    public DAOResourceBundle() {
+    public DAOBundle() {
     }
 
     public static ResourceBundle getDaoBundle() {
@@ -13,7 +13,7 @@ public class DAOResourceBundle {
     }
 
     public static void setDaoBundle(ResourceBundle daoBundle) {
-        DAOResourceBundle.daoBundle = daoBundle;
+        DAOBundle.daoBundle = daoBundle;
     }
 
     public static String getStatement(String key){

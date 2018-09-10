@@ -1,16 +1,27 @@
 package ua.kpi.training.model.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Theme {
+public class Theme implements Serializable {
     private int id;
     private String name;
     private String nameUA;
     private String description;
     private String descriptionUA;
     private List<Test> tests;
+    private StringBuilder validationResult;
 
     public Theme() {
+        validationResult = new StringBuilder();
+    }
+
+    public StringBuilder getValidationResult() {
+        return validationResult;
+    }
+
+    public void setValidationResult(StringBuilder validationResult) {
+        this.validationResult = validationResult;
     }
 
     public int getId() {
@@ -61,12 +72,19 @@ public class Theme {
         this.tests = tests;
     }
 
+    public void appendValidationResult(String validationMessage){
+        validationResult.append(validationMessage);
+    }
+
     @Override
     public String toString() {
         return "Theme{" +
                 "id=" + id +
+                ", name='" + name + '\'' +
+                ", nameUA='" + nameUA + '\'' +
                 ", description='" + description + '\'' +
                 ", descriptionUA='" + descriptionUA + '\'' +
+                ", validationResult=" + validationResult +
                 '}';
     }
 }
