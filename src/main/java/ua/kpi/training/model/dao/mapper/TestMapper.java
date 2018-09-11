@@ -31,6 +31,7 @@ public class TestMapper implements ObjectMapper<Test> {
 
     @Override
     public Test makeUnique(Map<Integer, Test> map, Test objectT) {
-        return null;
+        map.putIfAbsent(objectT.getId(), objectT);
+        return map.get(objectT.getId());
     }
 }

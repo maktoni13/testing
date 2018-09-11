@@ -99,4 +99,35 @@ public abstract class JDBCAbstractDAO<T> {
         return true;
     }
 
+    boolean updateEntityList(List<T> entityList, String sql, Connection connection) throws DAOException{
+        if (entityList == null) {
+            return true;
+        }
+        try (PreparedStatement ps = connection.prepareStatement(sql,
+                Statement.RETURN_GENERATED_KEYS )) {
+            for (T entity : entityList) {
+                fillUpdatePrepareStatement(ps, entity);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            ResultSet rs = ps.getGeneratedKeys();
+            if(rs == null){
+                throw new DAOException(DAOException.DAO_EXCEPTION);
+            }
+            for (T entity : entityList) {
+                if (rs.next()){
+                    setKeyToEntity(entity, rs);
+                } else {
+                    throw new DAOException(DAOException.DAO_EXCEPTION);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER_SLF4J.error(LoggerMessages.ERROR_DAO_UPDATE_QUERY);
+            throw new DAOException(
+                    MessageBundle.getMessage(MessageKey.SQL_ERROR), e);
+        }
+        return true;
+    }
+
+
 }

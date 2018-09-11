@@ -10,6 +10,7 @@ import ua.kpi.training.model.dao.resource.DAOKey;
 import ua.kpi.training.model.dao.resource.DAOBundle;
 import ua.kpi.training.model.entity.Answer;
 import ua.kpi.training.model.entity.Question;
+import ua.kpi.training.model.entity.Test;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,13 +36,13 @@ public class JDBCQuestionDAO extends JDBCAbstractDAO<Question> implements Questi
     }
 
     @Override
-    public List<Question> findQuestionsPassingTestId(int id) {
+    public List<Question> findQuestionsPassingTestId(Test test) {
         Map<Integer, Question> questionMap = new HashMap<>();
         try (PreparedStatement ps = connection.
                 prepareStatement(
                         DAOBundle.getStatement(
-                                DAOKey.SELECT_QUESTIONS_BY_THEME_ID))) {
-            ps.setInt(1, id);
+                                DAOKey.SELECT_QUESTIONS_BY_TEST_ID))) {
+            ps.setInt(1, test.getId());
             ResultSet resultSet = ps.executeQuery();
             ObjectMapper<Question> questionMapper = new QuestionMapper();
             ObjectMapper<Answer> answerMapper = new AnswerMapper();
@@ -51,9 +52,10 @@ public class JDBCQuestionDAO extends JDBCAbstractDAO<Question> implements Questi
                 Answer answer = answerMapper.extractFromResultSet(resultSet);
                 question = questionMapper.makeUnique(questionMap, question);
                 question.getAnswers().add(answer);
+                answer.setQuestion(question);
+                question.setTest(test);
             }
-            List<Question> questionList = new ArrayList<>(questionMap.values());
-            return questionList;
+            return new ArrayList<>(questionMap.values());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -94,7 +96,7 @@ public class JDBCQuestionDAO extends JDBCAbstractDAO<Question> implements Questi
     @Override
     public boolean createList(List<Question> questionList) throws DAOException{
         return createEntityList(questionList,
-                DAOBundle.getStatement(DAOKey.INSERT_QUESTION_BY_LIST),
+                DAOBundle.getStatement(DAOKey.INSERT_QUESTION),
                 connection);
     }
 

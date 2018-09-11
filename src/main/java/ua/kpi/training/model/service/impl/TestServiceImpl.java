@@ -6,10 +6,7 @@ import ua.kpi.training.controller.command.dto.TestsListByThemeDTO;
 import ua.kpi.training.logger.LoggerMessages;
 import ua.kpi.training.model.dao.*;
 import ua.kpi.training.model.dao.exception.DAOException;
-import ua.kpi.training.model.entity.Answer;
-import ua.kpi.training.model.entity.Question;
-import ua.kpi.training.model.entity.Test;
-import ua.kpi.training.model.entity.Theme;
+import ua.kpi.training.model.entity.*;
 import ua.kpi.training.model.service.TestService;
 import ua.kpi.training.view.resource.MessageBundle;
 import ua.kpi.training.view.resource.MessageKey;
@@ -22,6 +19,14 @@ import java.util.List;
 
 public class TestServiceImpl implements TestService {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(TestServiceImpl.class);
+
+    private static final String USER_NOT_FOUND = "Can't identify user!";
+    private static final String ERROR_SUMMARY_CREATION = "Can't create summary!";
+    private static final String ANSWERS_CREATION_ERROR = "Answers create error";
+    private static final String QUESTIONS_CREATION_ERROR = "Questions create error";
+    private static final String PREPARING_TO_SAVE_ERROR = "Preparing to save error";
+    private static final String THEME_NOT_EXIST = "Theme not exist";
+
     private DAOFactory daoFactory = DAOFactory.getInstance();
 
     @Override
@@ -47,7 +52,7 @@ public class TestServiceImpl implements TestService {
     @Override
     public boolean saveTestEntity(Test test) {
         Connection connection = daoFactory.getConnection();
-        boolean result = false;
+        boolean result;
         try {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
@@ -56,16 +61,16 @@ public class TestServiceImpl implements TestService {
             QuestionDAO questionDAO = daoFactory.createQuestionDAO(connection);
             AnswerDAO answerDAO = daoFactory.createAnswerDAO(connection);
             if (themeDAO.findById(test.getTheme().getId()) == null) {
-                throw new DAOException("Theme not exist");
+                throw new DAOException(THEME_NOT_EXIST);
             }
 
             if (test.getId() > 0) {
-                List<Question> questionList = questionDAO.findQuestionsPassingTestId(test.getId());
+                List<Question> questionList = questionDAO.findQuestionsPassingTestId(test);
                 if (!answerDAO.deleteList(getAnswersFromQuestionList(questionList))) {
-                    throw new DAOException("Preparing to save error");
+                    throw new DAOException(PREPARING_TO_SAVE_ERROR);
                 }
                 if (!questionDAO.deleteList(questionList)) {
-                    throw new DAOException("Preparing to save error");
+                    throw new DAOException(PREPARING_TO_SAVE_ERROR);
                 }
                 result = testDAO.update(test);
             } else {
@@ -76,13 +81,13 @@ public class TestServiceImpl implements TestService {
             if((questionList != null)
                     && !questionDAO.createList(test.getQuestions())){
                 test.appendValidationResult(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
-                throw new DAOException("Questions create error");
+                throw new DAOException(QUESTIONS_CREATION_ERROR);
             }
             List<Answer> answerList = getAnswersFromQuestionList(questionList);
             if((answerList != null)
                     && !answerDAO.createList(answerList)){
                 test.appendValidationResult(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
-                throw new DAOException("Answers create error");
+                throw new DAOException(ANSWERS_CREATION_ERROR);
             }
             connection.commit();
         } catch (Exception e) {
@@ -114,6 +119,16 @@ public class TestServiceImpl implements TestService {
         return answerList;
     }
 
+    private Test getTestById(int id, Connection connection) throws DAOException{
+        TestDAO testDAO = daoFactory.createTestDAO(connection);
+        Test test = testDAO.findById(id);
+        ThemeDAO themeDAO = daoFactory.createThemeDAO(connection);
+        test.setTheme(themeDAO.findById(test.getThemeId()));
+        QuestionDAO questionDAO = daoFactory.createQuestionDAO(connection);
+        test.setQuestions(questionDAO.findQuestionsPassingTestId(test));
+        return test;
+    }
+
 
     @Override
     public Test getTestEntity(int id) {
@@ -123,13 +138,7 @@ public class TestServiceImpl implements TestService {
         try {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-            TestDAO testDAO = daoFactory.createTestDAO(connection);
-            test = testDAO.findById(id);
-            ThemeDAO themeDAO = daoFactory.createThemeDAO(connection);
-            test.setTheme(themeDAO.findById(test.getThemeId()));
-            QuestionDAO questionDAO = daoFactory.createQuestionDAO(connection);
-            test.setQuestions(questionDAO.findQuestionsPassingTestId(id));
-            test.setLocalQuestionsId();
+            test = getTestById(id, connection);
             connection.commit();
         } catch (Exception e) {
             LOGGER_SLF4J.error(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE, e);
@@ -153,4 +162,61 @@ public class TestServiceImpl implements TestService {
         return test;
     }
 
+    @Override
+    public int prepareSummaryForTestPassing(int id, String username) {
+        int result = 0;
+        Connection connection = daoFactory.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            UserDAO userDAO = daoFactory.createUserDAO();
+            User user = userDAO.findUserByUsername(username);
+            if (user == null){
+                throw new DAOException(USER_NOT_FOUND);
+            }
+            Test test = getTestById(id, connection);
+            Summary summary = new Summary();
+            summary.setTest(test);
+            summary.setQuestions(test.getQuestions());
+            summary.setQuestionsQuantity(summary.getQuestions().size());
+            summary.setUser(user);
+            SummaryDAO summaryDAO = daoFactory.createSummaryDAO(connection);
+            if (!summaryDAO.create(summary)){
+                throw new DAOException(ERROR_SUMMARY_CREATION);
+            }
+            QuestionResultDAO questionResultDAO = daoFactory.createQuestionResultDAO(connection);
+            List<Question> questionList = summary.getQuestions();
+            if((questionList != null)
+                    && !questionResultDAO.createList(test.getQuestions())){
+                test.appendValidationResult(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
+                throw new DAOException(QUESTIONS_CREATION_ERROR);
+            }
+            AnswerResultDAO answerResultDAO = daoFactory.createAnswerResultDAO();
+            List<Answer> answerList = getAnswersFromQuestionList(questionList);
+            if((answerList != null)
+                    && !answerResultDAO.createList(answerList)){
+                test.appendValidationResult(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
+                throw new DAOException(ANSWERS_CREATION_ERROR);
+            }
+            connection.commit();
+
+            result = summary.getId();
+            connection.commit();
+        } catch (Exception e) {
+            LOGGER_SLF4J.error(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE, e);
+            try {
+                connection.rollback();
+            } catch (SQLException eRollback) {
+                LOGGER_SLF4J.error(LoggerMessages.ERROR_SERVICE_SQL_EXCEPTION, eRollback);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+                connection.close();
+            } catch (SQLException eClose) {
+                LOGGER_SLF4J.error(LoggerMessages.ERROR_SERVICE_SQL_EXCEPTION, eClose);
+            }
+        }
+        return result;
+    }
 }

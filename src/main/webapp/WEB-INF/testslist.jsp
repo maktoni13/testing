@@ -39,6 +39,8 @@
                     <a class="nav-link"
                        href="${pageContext.request.contextPath}/testing/api/common/passing?themeid=${theme.id}&testid=${test.id}"&currentquestion=1><fmt:message
                             key="label.tests.list.page.passing.the.test.link"/></a>
+                    <a class="nav-link"
+                       href="${pageContext.request.contextPath}/testing/api/common/testpass?themeid=${theme.id}&testid=${test.id}">summary</a>
                 </td>
                 <c:if test="${not empty sessionScope.authority && sessionScope.authority.toString() == 'ADMIN'}">
                     <td>

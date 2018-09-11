@@ -107,14 +107,6 @@ public class Test {
         this.questions = questions;
     }
 
-    public void setLocalQuestionsId() {
-        questions.forEach(question -> {
-            question.setIdLocal(questions.indexOf(question) + 1);
-            question.setTest(this);
-            question.setLocalAnswersId();
-        });
-    }
-
     public void appendValidationResult(String validationMessage) {
         validationResult.append(validationMessage);
     }
@@ -135,6 +127,13 @@ public class Test {
                 .orElse(null); // TODO: change to Integer / equals
     }
 
+    public void updateIdLocal(){
+        questions.forEach(question -> {
+            question.setIdLocal(questions.indexOf(question) + 1);
+        });
+
+    }
+
     @Override
     public String toString() {
         return "Test{" +
@@ -144,4 +143,6 @@ public class Test {
                 ", inactive=" + inactive +
                 '}';
     }
+
+
 }

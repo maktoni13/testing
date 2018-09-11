@@ -6,13 +6,9 @@ import ua.kpi.training.logger.LoggerMessages;
 import ua.kpi.training.model.dao.AnswerDAO;
 import ua.kpi.training.model.dao.exception.DAOException;
 import ua.kpi.training.model.dao.factory.JDBCDAOFactory;
-import ua.kpi.training.model.dao.mapper.ObjectMapper;
-import ua.kpi.training.model.dao.mapper.TestMapper;
 import ua.kpi.training.model.dao.resource.DAOBundle;
 import ua.kpi.training.model.dao.resource.DAOKey;
 import ua.kpi.training.model.entity.Answer;
-import ua.kpi.training.model.entity.Question;
-import ua.kpi.training.model.entity.Test;
 import ua.kpi.training.view.resource.MessageBundle;
 import ua.kpi.training.view.resource.MessageKey;
 
@@ -88,7 +84,7 @@ public class JDBCAnswerDAO extends JDBCAbstractDAO<Answer> implements AnswerDAO 
     @Override
     public boolean createList(List<Answer> answerList) throws DAOException {
         return createEntityList(answerList,
-                DAOBundle.getStatement(DAOKey.INSERT_ANSWER_BY_LIST),
+                DAOBundle.getStatement(DAOKey.INSERT_ANSWER),
                 connection);
     }
 

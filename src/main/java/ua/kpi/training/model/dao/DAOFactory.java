@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.kpi.training.logger.LoggerMessages;
 import ua.kpi.training.model.dao.factory.JDBCDAOFactory;
+import ua.kpi.training.model.entity.Summary;
 
 import java.sql.Connection;
 
@@ -27,6 +28,12 @@ public abstract class DAOFactory {
     public abstract QuestionDAO createQuestionDAO(Connection connection);
     public abstract AnswerDAO createAnswerDAO();
     public abstract AnswerDAO createAnswerDAO(Connection connection);
+    public abstract SummaryDAO createSummaryDAO();
+    public abstract SummaryDAO createSummaryDAO(Connection connection);
+    public abstract QuestionResultDAO createQuestionResultDAO();
+    public abstract QuestionResultDAO createQuestionResultDAO(Connection connection);
+    public abstract AnswerResultDAO createAnswerResultDAO();
+    public abstract AnswerResultDAO createAnswerResultDAO(Connection connection);
 
     /**
      * DAO Factory Instance getting

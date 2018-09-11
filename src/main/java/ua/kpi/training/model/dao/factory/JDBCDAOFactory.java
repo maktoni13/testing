@@ -66,6 +66,36 @@ public class JDBCDAOFactory extends DAOFactory {
     public AnswerDAO createAnswerDAO(Connection connection) { return new JDBCAnswerDAO(connection);
     }
 
+    @Override
+    public SummaryDAO createSummaryDAO() {
+        return new JDBCSummaryDAO(getConnection());
+    }
+
+    @Override
+    public SummaryDAO createSummaryDAO(Connection connection) {
+        return new JDBCSummaryDAO(connection);
+    }
+
+    @Override
+    public QuestionResultDAO createQuestionResultDAO() {
+        return new JDBCQuestionResultDAO(getConnection());
+    }
+
+    @Override
+    public QuestionResultDAO createQuestionResultDAO(Connection connection) {
+        return new JDBCQuestionResultDAO(connection);
+
+    }
+
+    @Override
+    public AnswerResultDAO createAnswerResultDAO() {
+        return new JDBCAnswerResultDAO(getConnection());
+    }
+
+    @Override
+    public AnswerResultDAO createAnswerResultDAO(Connection connection) {
+        return new JDBCAnswerResultDAO(connection);
+    }
 
     @Override
     public Connection getConnection(){

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class QuestionMapper implements ObjectMapper<Question> {
+public class QuestionResultMapper implements ObjectMapper<Question>{
     private static final String ID_COLUMN = "id";
     private static final String ID_LOCAL_COLUMN = "id_local";
     private static final String DESCRIPTION_COLUMN = "description";

@@ -7,4 +7,5 @@ public interface TestService {
     TestsListByThemeDTO getTestsListByThemeId(int id);
     boolean saveTestEntity(Test test);
     Test getTestEntity(int id);
+    int prepareSummaryForTestPassing(int id, String username);
 }

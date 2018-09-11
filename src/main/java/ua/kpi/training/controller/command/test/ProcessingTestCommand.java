@@ -81,7 +81,7 @@ public class ProcessingTestCommand implements Command {
         test.setValidationResult(new StringBuilder());
     }
 
-    private boolean isCorrectRequestParams(String themeIdText, String testIdText, String questionIdText){
+    private boolean isIncorrectRequestParams(String themeIdText, String testIdText, String questionIdText){
         return (themeIdText == null || "".equals(themeIdText))
                 || (testIdText == null || "".equals(testIdText))
                 || (questionIdText == null || "".equals(questionIdText));
@@ -124,17 +124,17 @@ public class ProcessingTestCommand implements Command {
         }
         Question question = new Question();
         question.setTest(test);
+        question.setIdLocal(test.getQuestions().size() + 1);
         List<Question> questionList = test.getQuestions();
         List<Answer> answerList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             Answer answer = new Answer();
+            answer.setIdLocal(i + 1);
             answer.setQuestion(question);
             answerList.add(answer);
         }
         question.setAnswers(answerList);
-        question.setLocalAnswersId();
         questionList.add(question);
-        test.setLocalQuestionsId();
     }
 
     private void removeAttributes(HttpServletRequest request){
@@ -160,7 +160,7 @@ public class ProcessingTestCommand implements Command {
             return redirectTestsPage;
         }
 
-        if (isCorrectRequestParams(themeIdText, testIdText, questionIdText)) {
+        if (isIncorrectRequestParams(themeIdText, testIdText, questionIdText)) {
             return redirectTestsPage;
         }
 

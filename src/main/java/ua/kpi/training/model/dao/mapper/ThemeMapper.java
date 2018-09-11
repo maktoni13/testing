@@ -27,6 +27,7 @@ public class ThemeMapper implements ObjectMapper<Theme>{
 
     @Override
     public Theme makeUnique(Map<Integer, Theme> map, Theme objectT) {
-        return null;
+        map.putIfAbsent(objectT.getId(), objectT);
+        return map.get(objectT.getId());
     }
 }

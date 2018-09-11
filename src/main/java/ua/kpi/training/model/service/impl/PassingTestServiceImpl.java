@@ -37,12 +37,11 @@ public class PassingTestServiceImpl implements PassingTestService {
 
         try {
             QuestionDAO questionDAO = daoFactory.createQuestionDAO();
-            test.setQuestions(questionDAO.findQuestionsPassingTestId(id));
+            test.setQuestions(questionDAO.findQuestionsPassingTestId(test));
         } catch (Exception e){
             throw new RuntimeException(e); // TODO: Right exception
         }
-        test.getQuestions().forEach(Question::setLocalAnswersId);
-        test.setLocalQuestionsId();
+        test.getQuestions().forEach(question -> question.setTest(test));
 
         return test;
     }
