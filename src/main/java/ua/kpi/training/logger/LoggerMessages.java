@@ -1,6 +1,14 @@
 package ua.kpi.training.logger;
 
+
+/**
+ * interface Logger Messages
+ * <p> Contains messages for using in logging process
+ *
+ * @author Anton Makukhin
+ */
 public interface LoggerMessages {
+
     String ERROR_SERVICE_TRANSACTION_INCOMPLETE = "Service transaction is incomplete ";
     String ERROR_SERVICE_CONNECTION_CLOSING = "Closing connection error";
     String ERROR_SERVICE_SQL_EXCEPTION = "SQL Exceptions throws during service performing";

@@ -48,7 +48,7 @@ public class TestPassingCommand implements Command {
         }
         String username = (String) request.getSession().getAttribute(USERNAME);
         int summaryId = testService.prepareSummaryForTestPassing(testId, username);
-        if (summaryId >= 0){
+        if (summaryId > 0){
             return PageContainer.PATH_PREFIX_REDIRECT +
                     PageContainer.PATH_COMMAND_TEST_SOLVE + summaryId + "&questionid=1";
         }

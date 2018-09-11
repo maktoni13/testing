@@ -1,5 +1,6 @@
 package ua.kpi.training.model.dao.resource;
 
+
 public interface DAOKey {
     String DAO_PROPERTIES = "dao";
 

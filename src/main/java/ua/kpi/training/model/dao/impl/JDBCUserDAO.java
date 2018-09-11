@@ -14,6 +14,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class User Test DAO
+ * <p> implementation of DAO for user database table
+ *
+ * @author Anton Makukhin
+ */
 public class JDBCUserDAO implements UserDAO {
     private Connection connection;
 

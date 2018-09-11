@@ -18,6 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class JDBC Question DAO
+ * <p> implementation of DAO for question database table
+ *
+ * @author Anton Makukhin
+ */
 public class JDBCQuestionDAO extends JDBCAbstractDAO<Question> implements QuestionDAO {
     protected Connection connection;
 

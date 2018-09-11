@@ -1,7 +1,14 @@
 package ua.kpi.training.model.entity;
 
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * Class Test
+ * DTO for Test
+ *
+ * @author Anton Makukhin
+ */
 public class Test {
     private Theme theme;
     private int themeId;
@@ -111,27 +118,27 @@ public class Test {
         validationResult.append(validationMessage);
     }
 
-    public Question getById(int id) {
-        return getQuestions()
-                .stream()
-                .filter(question -> question.getId() == id)
-                .findFirst()
-                .orElse(null); // TODO: change to Integer / equals
-    }
-
-    public Question getByLocalId(int id) {
+    public Question getQuestionByLocalId(int id) {
         return getQuestions()
                 .stream()
                 .filter(question -> question.getIdLocal() == id)
                 .findFirst()
-                .orElse(null); // TODO: change to Integer / equals
+                .orElse(null);
     }
 
-    public void updateIdLocal(){
-        questions.forEach(question -> {
-            question.setIdLocal(questions.indexOf(question) + 1);
-        });
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId() == user.getId();
+    }
 
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 37 * result + Objects.hash(getId());
+        return result;
     }
 
     @Override

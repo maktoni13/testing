@@ -18,6 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class JDBC Question Result DAO
+ * <p> implementation of DAO for question result database table
+ *
+ * @author Anton Makukhin
+ */
 public class JDBCQuestionResultDAO extends JDBCAbstractDAO<Question> implements QuestionResultDAO {
     protected Connection connection;
 
@@ -60,6 +66,12 @@ public class JDBCQuestionResultDAO extends JDBCAbstractDAO<Question> implements 
 
     @Override
     public void fillDeletePrepareStatement(PreparedStatement ps, Question entity) throws SQLException {
+        ps.setBoolean(1, entity.isIncorrect());
+        ps.setInt(2, entity.getId());
+        ps.setInt(1, entity.getIdLocal());
+        ps.setString(2, entity.getDescription());
+        ps.setString(3, entity.getDescriptionUA());
+        ps.setInt(4, entity.getSummary().getId());
 
     }
 
@@ -69,12 +81,19 @@ public class JDBCQuestionResultDAO extends JDBCAbstractDAO<Question> implements 
         ps.setString(2, entity.getDescription());
         ps.setString(3, entity.getDescriptionUA());
         ps.setInt(4, entity.getSummary().getId());
+        ps.setBoolean(5, entity.isIncorrect());
 
     }
 
     @Override
     public void fillUpdatePrepareStatement(PreparedStatement ps, Question entity) throws SQLException {
+        ps.setBoolean(1, entity.isIncorrect());
+        ps.setInt(2, entity.getId());
 
+
+//        UPDATE question_result SET \
+//        incorrect_flag = ? \
+//        WHERE ( id = ? )
     }
 
     @Override

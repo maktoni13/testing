@@ -15,6 +15,13 @@ import ua.kpi.training.view.resource.MessageKey;
 import java.sql.*;
 import java.util.List;
 
+
+/**
+ * Class JDBC Answer DAO
+ * <p> implementation of DAO for answer database table
+ *
+ * @author Anton Makukhin
+ */
 public class JDBCAnswerDAO extends JDBCAbstractDAO<Answer> implements AnswerDAO {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(JDBCAnswerDAO.class);
     private static final String PREFIX_OR = " OR ";

@@ -10,8 +10,13 @@ import ua.kpi.training.model.service.LoginService;
 public class LoginServiceImpl implements LoginService {
 
     private DAOFactory daoFactory = DAOFactory.getInstance();
+    private UserDAO userDAO;
 
     public LoginServiceImpl() {
+    }
+
+    public LoginServiceImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     private boolean checkPassword(String passwordText, String passwordHash) {

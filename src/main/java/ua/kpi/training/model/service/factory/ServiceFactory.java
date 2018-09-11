@@ -12,11 +12,11 @@ public class ServiceFactory {
     private static volatile ServiceFactory serviceFactoryInstance;
     private DAOFactory daoFactory;
 
-    private ServiceFactory() { // TODO: throws exception (own)
+    private ServiceFactory() {
         try {
             daoFactory = DAOFactory.getInstance();
         } catch (Exception e) {
-            // TODO: throws exception (own)
+            throw new RuntimeException(e);
         }
     }
 
@@ -32,7 +32,7 @@ public class ServiceFactory {
     }
 
     public LoginService getLoginService(){
-        return new LoginServiceImpl();
+        return new LoginServiceImpl(daoFactory.createUserDAO());
     }
     public RegistrationService getRegistrationService(){
         return new RegistrationServiceImpl();

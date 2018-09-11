@@ -2,8 +2,15 @@ package ua.kpi.training.model.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Question {
+/**
+ * Class Question
+ * DTO for Question
+ *
+ * @author Anton Makukhin
+ */
+public class Question{
     private Test test;
     private Summary summary;
     private int id;
@@ -88,5 +95,32 @@ public class Question {
 
     public void setSummary(Summary summary) {
         this.summary = summary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId() == user.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 37 * result + Objects.hash(getId());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", idLocal=" + idLocal +
+                ", description='" + description + '\'' +
+                ", descriptionUA='" + descriptionUA + '\'' +
+                ", incorrect=" + incorrect +
+                ", answered=" + answered +
+                '}';
     }
 }

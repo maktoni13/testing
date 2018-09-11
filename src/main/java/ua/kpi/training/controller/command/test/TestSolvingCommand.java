@@ -36,8 +36,6 @@ public class TestSolvingCommand implements Command {
     private static final String SUBMIT_VALUE_SAVE_QUESTION = "Save question";
     private static final String SUBMIT_VALUE_SAVE = "Save summary";
     private static final String ANSWERS = "answer";
-    private static final String ANSWER_DESC = "answerDesc";
-    private static final String ANSWER_UA_DESC = "answerDescUA";
     private static final String ATTR_ERROR = "savingErrorMessage";
 
     private SummaryTestSolveService summaryTestSolveService;
@@ -62,10 +60,6 @@ public class TestSolvingCommand implements Command {
         }
 
         for (Answer answer : question.getAnswers()) {
-            answer.setDescription(request.getParameter(
-                    ANSWER_DESC + answer.getIdLocal()));
-            answer.setDescriptionUA(request.getParameter(
-                    ANSWER_UA_DESC + answer.getIdLocal()));
             answer.setChosen(chosenAnswers.contains(Integer.toString(answer.getIdLocal())));
         }
     }
@@ -89,17 +83,17 @@ public class TestSolvingCommand implements Command {
         String actionText = request.getParameter(ACTION_PARAM);
 
         String pageSolveProcess = PageContainer.WEB_INF_COMMON_PASS_TEST_JSP;
-        String redirectLoginPage = PageContainer.PATH_PREFIX_REDIRECT +
-                PageContainer.PATH_COMMAND_LOGOUT;
+        String redirectIndexPage = PageContainer.PATH_PREFIX_REDIRECT +
+                PageContainer.PATH_COMMAND_INDEX;
 
         if(ACTION_CANCEL.equals(actionText)){
             removeAttributes(request);
-            return redirectLoginPage;
+            return redirectIndexPage;
         }
 
         if ((summaryIdText == null || "".equals(summaryIdText))
                 || (questionIdText == null || "".equals(questionIdText))) {
-            return redirectLoginPage;
+            return redirectIndexPage;
         }
 
         int summaryId;
@@ -108,18 +102,18 @@ public class TestSolvingCommand implements Command {
             summaryId = Integer.parseInt(summaryIdText);
             questionId = Integer.parseInt(questionIdText);
         } catch (NumberFormatException e) {
-            return redirectLoginPage;
+            return redirectIndexPage;
         }
 
         Summary summary = (Summary) request.getSession().getAttribute(SUMMARY);
         if (summary != null
                 && (summaryId != summary.getId()) ) {
-            return redirectLoginPage;
+            return redirectIndexPage;
         }else if (summary == null){
             if (summaryId > 0) {
                 summary = summaryTestSolveService.getSummaryEntity(summaryId);
                 if (summary == null) {
-                    return redirectLoginPage;
+                    return redirectIndexPage;
                 }
             } else {
                 summary = new Summary();
@@ -144,7 +138,7 @@ public class TestSolvingCommand implements Command {
                     return pageSolveProcess;
                 }
                 removeAttributes(request);
-                return redirectLoginPage;
+                return redirectIndexPage;
             }
         }
 

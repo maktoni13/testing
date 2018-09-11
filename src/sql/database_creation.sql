@@ -12,9 +12,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema testing_db
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `testing_db` DEFAULT CHARACTER SET utf8 ;
--- -----------------------------------------------------
--- Schema web_library
--- -----------------------------------------------------
 USE `testing_db` ;
 
 -- -----------------------------------------------------
@@ -24,8 +21,10 @@ DROP TABLE IF EXISTS `testing_db`.`theme` ;
 
 CREATE TABLE IF NOT EXISTS `testing_db`.`theme` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `description` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `description_ua` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `name_ua` VARCHAR(45) NOT NULL,
+  `description` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `description_ua` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `theme_id_UNIQUE` (`id` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -38,10 +37,12 @@ DROP TABLE IF EXISTS `testing_db`.`test` ;
 
 CREATE TABLE IF NOT EXISTS `testing_db`.`test` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `description` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `description_ua` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `theme_id` INT(11) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `name_ua` VARCHAR(45) NOT NULL,
+  `description` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `description_ua` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   `inactive` TINYINT ZEROFILL NOT NULL DEFAULT 0,
+  `theme_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `theme_id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `fk_test_theme_idx` (`theme_id` ASC) VISIBLE,
@@ -60,8 +61,9 @@ DROP TABLE IF EXISTS `testing_db`.`question` ;
 
 CREATE TABLE IF NOT EXISTS `testing_db`.`question` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `description` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
-  `description_ua` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `id_local` INT(11) NOT NULL,
+  `description` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `description_ua` LONGTEXT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   `test_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `theme_id_UNIQUE` (`id` ASC) VISIBLE,
@@ -81,6 +83,7 @@ DROP TABLE IF EXISTS `testing_db`.`answer` ;
 
 CREATE TABLE IF NOT EXISTS `testing_db`.`answer` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_local` INT(11) NOT NULL,
   `description` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
   `description_ua` VARCHAR(45) NOT NULL,
   `correct_flag` TINYINT NOT NULL DEFAULT 0,
@@ -131,8 +134,8 @@ CREATE TABLE IF NOT EXISTS `testing_db`.`summary` (
   `test_id` INT(11) NOT NULL,
   `user_id` INT(11) NOT NULL,
   `informed_flag` TINYINT NOT NULL,
-  `start_date` DATETIME NOT NULL,
-  `finish_date` DATETIME NOT NULL,
+  `start_date` TIMESTAMP NOT NULL,
+  `finish_date` TIMESTAMP NULL,
   `questions_quantity` INT NOT NULL,
   `correct_answered` INT NOT NULL,
   `best_result_flag` TINYINT NOT NULL,
@@ -154,28 +157,47 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `testing_db`.`result`
+-- Table `testing_db`.`question_result`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `testing_db`.`result` ;
+DROP TABLE IF EXISTS `testing_db`.`question_result` ;
 
-CREATE TABLE IF NOT EXISTS `testing_db`.`result` (
+CREATE TABLE IF NOT EXISTS `testing_db`.`question_result` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `test_description` VARCHAR(45) NOT NULL,
-  `test_description_ua` VARCHAR(45) NOT NULL,
-  `question_description` VARCHAR(45) NOT NULL,
-  `question_description_ua` VARCHAR(45) NOT NULL,
-  `answer_description` VARCHAR(45) NOT NULL,
-  `answer_description_ua` VARCHAR(45) NOT NULL,
-  `resultcol` VARCHAR(45) NOT NULL,
-  `answer_correct_flag` TINYINT NOT NULL DEFAULT 0,
-  `choosed_answer_flag` TINYINT NOT NULL DEFAULT 0,
+  `id_local` INT(11) NOT NULL,
+  `description` LONGTEXT NOT NULL,
+  `description_ua` LONGTEXT NOT NULL,
   `summary_id` INT(11) NOT NULL,
+  `incorrect_flag` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_result_summary1_idx` (`summary_id` ASC) VISIBLE,
-  CONSTRAINT `fk_result_summary1`
+  INDEX `fk_question_result_summary1_idx` (`summary_id` ASC) VISIBLE,
+  CONSTRAINT `fk_question_result_summary1`
     FOREIGN KEY (`summary_id`)
     REFERENCES `testing_db`.`summary` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `testing_db`.`answer_result`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `testing_db`.`answer_result` ;
+
+CREATE TABLE IF NOT EXISTS `testing_db`.`answer_result` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_local` INT(11) NOT NULL,
+  `description` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL,
+  `description_ua` VARCHAR(45) NOT NULL,
+  `correct_flag` TINYINT NOT NULL DEFAULT 0,
+  `chosen_flag` TINYINT NOT NULL,
+  `question_result_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `theme_id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_answer_result_question_result1_idx` (`question_result_id` ASC) VISIBLE,
+  CONSTRAINT `fk_answer_result_question_result1`
+    FOREIGN KEY (`question_result_id`)
+    REFERENCES `testing_db`.`question_result` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

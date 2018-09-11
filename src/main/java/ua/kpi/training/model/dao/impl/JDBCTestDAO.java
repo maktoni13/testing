@@ -16,6 +16,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class JDBC Test DAO
+ * <p> implementation of DAO for test database table
+ *
+ * @author Anton Makukhin
+ */
 public class JDBCTestDAO extends JDBCAbstractDAO<Test> implements TestDAO {
     private Connection connection;
 

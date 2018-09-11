@@ -2,6 +2,14 @@ package ua.kpi.training.model.entity;
 
 import ua.kpi.training.model.entity.enums.UserType;
 
+import java.util.Objects;
+
+/**
+ * Class User
+ * DTO for User
+ *
+ * @author Anton Makukhin
+ */
 public class User {
 
     private int id;
@@ -127,6 +135,21 @@ public class User {
 
     public void setAverageEvaluation(int averageEvaluation) {
         this.averageEvaluation = averageEvaluation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId() == user.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 37 * result + Objects.hash(getId());
+        return result;
     }
 
     @Override

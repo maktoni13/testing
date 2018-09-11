@@ -1,5 +1,11 @@
 package ua.kpi.training.controller.resource;
 
+/**
+ * interface Page Container
+ * <p> Contains application pages and commands configuration
+ *
+ * @author Anton Makukhin
+ */
 public interface PageContainer {
 
     // direct WEB-INF paths
@@ -45,17 +51,14 @@ public interface PageContainer {
     String COMMAND_STUDENT_LIST = "admin/students";
     String COMMAND_INDEX_PAGE = "index";
     String COMMAND_TEST_LIST = "common/tests";
-    String COMMAND_TEST_PASSING = "common/passing";
     String COMMAND_PROCESS_THEME = "admin/processtheme";
     String COMMAND_PROCESS_TEST = "admin/processtest";
-    String COMMAND_EDIT_THEME = "admin/edittheme";
     String COMMAND_PASSING_TEST = "common/testpass";
     String COMMAND_SOLVING_TEST = "common/testsolve";
 
     // SECURITY filter
     String SECURITY_FILTER_ADMIN = "admin/";
     String SECURITY_FILTER_COMMON = "common/";
-
 
     String PATH_REPLACE_REGEX = ".*/testing/api/";
     String PATH_REPLACE_REPLACEMENT = "";
@@ -64,8 +67,6 @@ public interface PageContainer {
     String SESSION_AUTHORITY = "authority";
     String CONTENT_TYPE = "text/html";
     String CHARACTER_ENCODING = "UTF-8";
-    String PARAMETER_USER_NAME = "username";
-    String PARAMETER_PASSWORD = "password";
     String LOGIN_PAGE_ATTR_ERROR_MESSAGE = "loginErrorMessage";
     String LOGIN_PAGE_ATTR_USERNAME = "username";
     String STUDENT_LIST_ATTR = "studentList";

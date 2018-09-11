@@ -2,12 +2,9 @@ package ua.kpi.training.model.dao.impl;
 
 import ua.kpi.training.model.dao.AnswerResultDAO;
 import ua.kpi.training.model.dao.exception.DAOException;
-import ua.kpi.training.model.dao.mapper.ObjectMapper;
-import ua.kpi.training.model.dao.mapper.TestMapper;
 import ua.kpi.training.model.dao.resource.DAOBundle;
 import ua.kpi.training.model.dao.resource.DAOKey;
 import ua.kpi.training.model.entity.Answer;
-import ua.kpi.training.model.entity.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class JDBC Answer Result DAO
+ * <p> implementation of DAO for answer result database table
+ *
+ * @author Anton Makukhin
+ */
 public class JDBCAnswerResultDAO extends JDBCAbstractDAO<Answer> implements AnswerResultDAO {
     private static final String ID_COLUMN = "question_result_id";
     protected Connection connection;
@@ -98,11 +101,11 @@ public class JDBCAnswerResultDAO extends JDBCAbstractDAO<Answer> implements Answ
     @Override
     public void fillUpdatePrepareStatement(PreparedStatement ps, Answer entity) throws SQLException {
         ps.setBoolean(1, entity.isChosen());
-        ps.setInt(2, entity.getIdLocal());
+        ps.setInt(2, entity.getId());
     }
 
     @Override
-    public List<Integer> getIdsIncorrectAnsweredQuestions(int idSummary) {
+    public List<Integer> getIncorrectQuestionsIds(int idSummary) {
         List<Integer> incorrectQuestionIdsList = new ArrayList<>();
         try (PreparedStatement ps = connection.
                 prepareStatement(

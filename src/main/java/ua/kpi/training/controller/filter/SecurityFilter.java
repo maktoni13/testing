@@ -10,11 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Class Security Filter
+ * <p> filter do redirect to login page in next cases:
+ * Guest trying to open some application pages which are
+ *
+ * @author Anton Makukhin
+ */
 @WebFilter(urlPatterns = {"/*"}, servletNames = {"Servlet"})
 public class SecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -35,11 +41,9 @@ public class SecurityFilter implements Filter {
         String requestURI = httpServletRequest.getRequestURI();
         if (requestURI.contains(PageContainer.SECURITY_FILTER_ADMIN)
                 && !userType.equals(UserType.ADMIN)) {
-            // TODO: Send error message
             httpServletResponse.sendRedirect(PageContainer.PATH_COMMAND_LOGIN);
         } else if (requestURI.contains(PageContainer.SECURITY_FILTER_COMMON)
                 && userType.equals(UserType.GUEST)) {
-            // TODO: Send error message
             httpServletResponse.sendRedirect(PageContainer.PATH_COMMAND_LOGIN);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);

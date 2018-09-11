@@ -107,9 +107,9 @@ public class ProcessingTestCommand implements Command {
         }
         updateTestInfo(test, themeId);
 
-        Question question = test.getByLocalId(questionId);
+        Question question = test.getQuestionByLocalId(questionId);
         if(question == null){
-            question = test.getByLocalId(1);
+            question = test.getQuestionByLocalId(1);
         }
 
         if (PageContainer.HTTP_POST.equals(request.getMethod())) {

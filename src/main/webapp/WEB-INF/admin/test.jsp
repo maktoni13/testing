@@ -105,22 +105,20 @@
                     <tbody>
                     <tr>
                         <td>
-                            <label><fmt:message key="label.test.page.question.description"
-                                                var="questionDescriptionLabel"/></label>
+                            <label class="sr-only"><fmt:message key="label.test.page.question.description"
+                                                                var="questionDescriptionLabel"/></label>
                             <label for="inputQuestionDescription">${questionDescriptionLabel}:</label>
-                            <input type="text" class="form-control" id="inputQuestionDescription"
-                                   name="questionDescription"
-                                   placeholder="${questionDescriptionLabel}"
-                                   value="${question.description}" required>
+                            <textarea class="form-control" id="inputQuestionDescription" name="questionDescription"
+                                      placeholder="${questionDescriptionLabel}"
+                                      required>${question.description}</textarea>
                         </td>
                         <td>
-                            <label><fmt:message key="label.test.page.question.description.ua"
-                                                var="questionDescriptionUALabel"/></label>
+                            <label class="sr-only"><fmt:message key="label.test.page.question.description.ua"
+                                                                var="questionDescriptionUALabel"/></label>
                             <label for="inputQuestionDescriptionUA">${questionDescriptionUALabel}:</label>
-                            <input type="text" class="form-control" id="inputQuestionDescriptionUA"
-                                   name="questionDescriptionUA"
-                                   placeholder="${questionDescriptionUALabel}"
-                                   value="${question.descriptionUA}" required>
+                            <textarea class="form-control" id="inputQuestionDescriptionUA" name="questionDescriptionUA"
+                                      placeholder="${questionDescriptionUALabel}"
+                                      required>${question.descriptionUA}</textarea>
                         </td>
                     </tr>
                     </tbody>

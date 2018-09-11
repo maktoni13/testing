@@ -15,6 +15,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class JDBC Theme DAO
+ * <p> implementation of DAO for theme database table
+ *
+ * @author Anton Makukhin
+ */
 public class JDBCThemeDAO implements ThemeDAO {
     private Connection connection;
 
