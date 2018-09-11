@@ -7,6 +7,11 @@ import ua.kpi.training.model.service.impl.ViewAdminProfileServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class View Admin Profile Command
+ * View Admin Profile Command Implementation
+ * @author Anton Makukhin
+ */
 public class ViewAdminProfileCommand implements Command {
     private ViewAdminProfileService viewAdminProfileService;
 
@@ -20,7 +25,6 @@ public class ViewAdminProfileCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        // TODO: Add user profile data receiving
         return PageContainer.WEB_INF_ADMIN_ADMIN_PROFILE_JSP;
     }
 }

@@ -3,7 +3,6 @@ package ua.kpi.training.controller;
 import ua.kpi.training.controller.command.Command;
 import ua.kpi.training.controller.command.IndexPageCommand;
 import ua.kpi.training.controller.command.auth.*;
-import ua.kpi.training.controller.command.students.PassingTestCommand;
 import ua.kpi.training.controller.command.students.StudentListCommand;
 import ua.kpi.training.controller.command.students.TestsListCommand;
 import ua.kpi.training.controller.command.students.ThemeListCommand;
@@ -48,7 +47,6 @@ public class Servlet extends HttpServlet{
         commands.put(PageContainer.COMMAND_VIEW_ADMIN_PROFILE, new ViewAdminProfileCommand(new ViewAdminProfileServiceImpl()));
         commands.put(PageContainer.COMMAND_INDEX_PAGE, new IndexPageCommand(new IndexPageServiceImpl()));
         commands.put(PageContainer.COMMAND_TEST_LIST, new TestsListCommand(new TestServiceImpl()));
-        commands.put(PageContainer.COMMAND_TEST_PASSING, new PassingTestCommand(new PassingTestServiceImpl()));
         commands.put(PageContainer.COMMAND_PROCESS_THEME, new ProcessingThemeCommand(new ThemeServiceImpl()));
         commands.put(PageContainer.COMMAND_PROCESS_TEST, new ProcessingTestCommand(new TestServiceImpl()));
         commands.put(PageContainer.COMMAND_PASSING_TEST, new TestPassingCommand(new TestServiceImpl()));

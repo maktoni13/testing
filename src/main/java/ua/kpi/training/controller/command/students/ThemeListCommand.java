@@ -6,6 +6,11 @@ import ua.kpi.training.model.service.ThemeService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class Themes List Command
+ * Implementation of the command for themes listing
+ * @author Anton Makukhin
+ */
 public class ThemeListCommand implements Command {
     private ThemeService themeService;
 

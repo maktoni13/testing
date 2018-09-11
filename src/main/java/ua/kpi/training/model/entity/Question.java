@@ -10,7 +10,7 @@ public class Question {
     private int idLocal;
     private String description;
     private String descriptionUA;
-    private boolean correct;
+    private boolean incorrect;
     private boolean answered;
     private List<Answer> answers;
 
@@ -66,12 +66,12 @@ public class Question {
         this.descriptionUA = descriptionUA;
     }
 
-    public boolean isCorrect() {
-        return correct;
+    public boolean isIncorrect() {
+        return incorrect;
     }
 
-    public void setCorrect(boolean correct) {
-        this.correct = correct;
+    public void setIncorrect(boolean incorrect) {
+        this.incorrect = incorrect;
     }
 
     public List<Answer> getAnswers() {

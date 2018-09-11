@@ -6,6 +6,11 @@ import ua.kpi.training.model.service.StudentService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class Student List Command
+ * Implementation of the command for students listing
+ * @author Anton Makukhin
+ */
 public class StudentListCommand implements Command {
     private StudentService studentService;
 

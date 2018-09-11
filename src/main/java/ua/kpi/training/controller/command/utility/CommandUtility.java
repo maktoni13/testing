@@ -6,9 +6,17 @@ import ua.kpi.training.model.entity.enums.UserType;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+/**
+ * Class Command Utility
+ * <p> Helper class for some common command actions
+ *
+ * @author Anton Makukhin
+ */
 public class CommandUtility {
 
     public static void setUserRights(HttpServletRequest request,
@@ -38,19 +46,30 @@ public class CommandUtility {
         }
     }
 
+    public static void removeRequestAttributes(HttpServletRequest request, List<String> attributesList){
+        if (request != null && attributesList != null){
+            attributesList.forEach(request::removeAttribute);
+        }
+    }
+
+    public static void removeSessionAttributes(HttpServletRequest request, List<String> attributesList){
+        if (request != null && attributesList != null){
+            attributesList.forEach(request::removeAttribute);
+        }
+    }
+
     private static String getUserFromSession(HttpSession session){
         return (String) session.getAttribute(PageContainer.SESSION_USER_NAME);
     }
 
     private static Set<String> getLoggedUsers(ServletContext servletContext){
-        return (HashSet<String>) servletContext
+        Set<?> loggedUsersObj = (HashSet<?>) servletContext
                 .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
-//        Set<?> loggedUsersObj = (HashSet<?>) servletContext
-//                .getAttribute(PageContainer.CONTEXT_LOGGED_USERS);
-//        Set<String> loggedUsers = new HashSet<>();
-//        loggedUsersObj.forEach(element -> loggedUsers.add((String) element));
-//
-//        return loggedUsers;
+        Set<String> loggedUsers = new HashSet<>();
+        loggedUsersObj.forEach(element -> loggedUsers.add((String) element));
+
+        return loggedUsers;
     }
+
 
 }

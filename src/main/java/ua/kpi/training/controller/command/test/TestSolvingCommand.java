@@ -3,6 +3,7 @@ package ua.kpi.training.controller.command.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.kpi.training.controller.command.Command;
+import ua.kpi.training.controller.command.utility.CommandUtility;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.logger.LoggerMessages;
 import ua.kpi.training.model.entity.Answer;
@@ -16,10 +17,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class Test Solving Command
+ * <p> Class provides solving of test process summary created on previous step
+ *
+ * @author Anton Makukhin
+ */
 public class TestSolvingCommand implements Command {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(TestPassingCommand.class);
-
-    private SummaryTestSolveService summaryTestSolveService;
 
     private static final String SUMMARY_ID = "summaryid";
     private static final String QUESTION_ID_PARAM = "questionid";
@@ -35,17 +40,16 @@ public class TestSolvingCommand implements Command {
     private static final String ANSWER_UA_DESC = "answerDescUA";
     private static final String ATTR_ERROR = "savingErrorMessage";
 
+    private SummaryTestSolveService summaryTestSolveService;
+
     public TestSolvingCommand(SummaryTestSolveService summaryTestSolveService) {
         this.summaryTestSolveService = summaryTestSolveService;
     }
 
     private void removeAttributes(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        request.removeAttribute(SUMMARY);
-        request.removeAttribute(QUESTION);
-        session.removeAttribute(SUMMARY);
-        session.removeAttribute(QUESTION);
-//        Arrays.asList(SUMMARY, QUESTION);
+        List<String> attributesList = Arrays.asList(SUMMARY, QUESTION);
+        CommandUtility.removeRequestAttributes(request, attributesList);
+        CommandUtility.removeSessionAttributes(request, attributesList);
     }
 
     private void saveQuestionData(HttpServletRequest request, Summary summary, Question question){

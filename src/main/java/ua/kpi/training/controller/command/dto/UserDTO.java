@@ -2,6 +2,12 @@ package ua.kpi.training.controller.command.dto;
 
 import ua.kpi.training.model.entity.enums.UserType;
 
+/**
+ * Class User DTO
+ * Data transfer object for receiving small part of information about User
+ * Used in registering user and login command
+ * @author Anton Makukhin
+ */
 public class UserDTO {
     private boolean exists;
     private String username;

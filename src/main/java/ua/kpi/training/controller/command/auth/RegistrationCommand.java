@@ -13,6 +13,11 @@ import ua.kpi.training.view.resource.MessageKey;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
+/**
+ * Class Registration Command
+ * Registration command implementation
+ * @author Anton Makukhin
+ */
 public class RegistrationCommand implements Command {
     private static final String REG_PARAM_USERNAME = "username";
     private static final String REG_PARAM_PASSWORD = "password";

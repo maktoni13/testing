@@ -9,4 +9,5 @@ public interface AnswerResultDAO extends GenericDAO<Answer> {
     boolean deleteList(List<Answer> answerList) throws DAOException;
     boolean createList(List<Answer> answerList) throws DAOException;
     boolean updateChosenList(List<Answer> answerList) throws DAOException;
+    List<Integer> getIdsIncorrectAnsweredQuestions(int idSummary);
 }

@@ -12,7 +12,14 @@ import ua.kpi.training.view.resource.MessageKey;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Class Login Command
+ * Login command implementation
+ * @author Anton Makukhin
+ */
 public class LoginCommand implements Command {
+    private static final String PARAMETER_USER_NAME = "username";
+    private static final String PARAMETER_PASSWORD = "password";
 
     private LoginService loginService;
 
@@ -30,8 +37,8 @@ public class LoginCommand implements Command {
         if (PageContainer.HTTP_GET.equals(request.getMethod())){
             return page;
         }
-        String username = request.getParameter(PageContainer.PARAMETER_USER_NAME);
-        String password = request.getParameter(PageContainer.PARAMETER_PASSWORD);
+        String username = request.getParameter(PARAMETER_USER_NAME);
+        String password = request.getParameter(PARAMETER_PASSWORD);
 
         request.setAttribute(PageContainer.LOGIN_PAGE_ATTR_USERNAME, username);
 

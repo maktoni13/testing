@@ -85,7 +85,6 @@ public class SummaryTestSolveServiceImpl implements SummaryTestSolveService {
             SummaryDAO summaryDAO = daoFactory.createSummaryDAO(connection);
             QuestionResultDAO questionResultDAO = daoFactory.createQuestionResultDAO(connection);
             AnswerResultDAO answerResultDAO = daoFactory.createAnswerResultDAO(connection);
-            result = summaryDAO.update(summary);
 
             List<Question> questionList = summary.getQuestions();
 //            if((questionList != null)
@@ -94,11 +93,19 @@ public class SummaryTestSolveServiceImpl implements SummaryTestSolveService {
 //                throw new DAOException(QUESTIONS_CREATION_ERROR);
 //            }
             List<Answer> answerList = getAnswersFromQuestionList(questionList);
+
+
             if((answerList != null)
                     && !answerResultDAO.updateChosenList(answerList)){
                 summary.appendValidationResult(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
                 throw new DAOException(ANSWERS_CREATION_ERROR);
             }
+
+            List<Integer> incorrectQuestionIds = answerResultDAO.getIdsIncorrectAnsweredQuestions(summary.getId());
+
+
+
+            result = summaryDAO.update(summary);
             connection.commit();
         } catch (Exception e) {
             result = false;

@@ -8,6 +8,8 @@ public interface LoggerMessages {
     String ERROR_DAO_DELETE_QUERY = "SQL Exception throws during delete query in DAO";
     String ERROR_DAO_INSERT_QUERY = "SQL Exception throws during insert query in DAO";
     String ERROR_DAO_UPDATE_QUERY = "SQL Exception throws during update query in DAO";
+    String ERROR_SCRYPT_PASSWORD_VALIDATION_PROCESS = "Error in scrypt password validation process";
+
     String INFO_DAO_FACTORY_CREATED = "DAO Factory created";
 
     String WARN_UNEXPECTED_CONNECTION_CLOSING = "Unexpected connection closing";

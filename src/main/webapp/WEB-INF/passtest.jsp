@@ -13,7 +13,7 @@
             </div>
             <div class="col-md-12 mb-3">
                 <label for="saveTest" class="sr-only"><fmt:message key="label.test.page.button.save"/></label>
-                <input name="save" class="btn btn-sm btn-dark" type="submit" value="Save test" id="saveTest">
+                <input name="save" class="btn btn-sm btn-dark" type="submit" value="Save summary" id="saveTest">
                 <label for="saveQuestion" class="sr-only"><fmt:message
                         key="label.test.page.button.save.question"/></label>
                 <input name="save" class="btn btn-sm btn-dark" type="submit" value="Save question" id="saveQuestion">

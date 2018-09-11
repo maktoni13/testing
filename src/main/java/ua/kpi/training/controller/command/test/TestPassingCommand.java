@@ -8,6 +8,12 @@ import ua.kpi.training.model.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class Test Passing Command
+ * Implementation of command for starting test solving process
+ * Firstly we create summary and then redirect to page for solving
+ * @author Anton Makukhin
+ */
 public class TestPassingCommand implements Command {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(TestPassingCommand.class);
 

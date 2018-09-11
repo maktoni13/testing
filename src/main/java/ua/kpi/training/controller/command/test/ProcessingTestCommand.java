@@ -3,6 +3,7 @@ package ua.kpi.training.controller.command.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.kpi.training.controller.command.Command;
+import ua.kpi.training.controller.command.utility.CommandUtility;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.logger.LoggerMessages;
 import ua.kpi.training.model.entity.Answer;
@@ -19,9 +20,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Class Processing Test Command
+ * Implementation of the command for test adding and editing
  * <p> Class provides full cycle of test entity processing (Add, Edit, Delete)
- *
- * @author Maktoni
+ * @author Anton Makukhin
  */
 public class ProcessingTestCommand implements Command {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(ProcessingTestCommand.class);
@@ -57,92 +59,6 @@ public class ProcessingTestCommand implements Command {
 
     public ProcessingTestCommand(TestService testService) {
         this.testService = testService;
-    }
-
-
-    private Test extractTestFromRequest(HttpServletRequest request) {
-        Test test = (Test) request.getSession().getAttribute(SESSION_ATTR_TEST);
-        test.setName(request.getParameter(REQ_PARAM_TEST_NAME));
-        test.setNameUA(request.getParameter(REQ_PARAM_TEST_NAME_UA));
-        test.setDescription(request.getParameter(REQ_PARAM_TEST_DESC));
-        test.setDescriptionUA(request.getParameter(REQ_PARAM_TEST_DESC_UA));
-        String[] inactive = request.getParameterValues(REQ_PARAM_TEST_INACTIVE);
-        test.setInactive((inactive != null) && inactive.length > 0 && "on".equals(inactive[0]));
-        return test;
-    }
-
-    private void saveTestData(HttpServletRequest request, Test test, Question question) {
-        HttpSession session = request.getSession();
-        request.setAttribute(REQ_ATTR_TEST, test);
-        session.setAttribute(SESSION_ATTR_TEST, test);
-        request.setAttribute(SESSION_ATTR_QUESTION, question);
-        session.setAttribute(SESSION_ATTR_QUESTION, question);
-        request.setAttribute(REQ_ATTR_ERROR, test.getValidationResult());
-        test.setValidationResult(new StringBuilder());
-    }
-
-    private boolean isIncorrectRequestParams(String themeIdText, String testIdText, String questionIdText){
-        return (themeIdText == null || "".equals(themeIdText))
-                || (testIdText == null || "".equals(testIdText))
-                || (questionIdText == null || "".equals(questionIdText));
-    }
-
-    private void updateTestInfo(Test test, int themeId){
-        if (test.getTheme() == null){
-            ThemeService themeService = new ThemeServiceImpl();
-            test.setTheme(themeService.getThemeEntity(themeId));
-        }
-        if (test.getQuestions() == null || test.getQuestions().size() == 0){
-            addNewQuestion(test);
-        }
-    }
-
-    private void saveQuestionData(HttpServletRequest request, Test test, Question question){
-        List<String> correctAnswers;
-        String[] correct = request.getParameterValues(ANSWERS);
-        if (correct == null) {
-            correctAnswers = new ArrayList<>();
-        } else {
-            correctAnswers = Arrays.asList(correct);
-        }
-
-        for (Answer answer : question.getAnswers()) {
-            answer.setDescription(request.getParameter(
-                    ANSWER_DESC + answer.getIdLocal()));
-            answer.setDescriptionUA(request.getParameter(
-                    ANSWER_UA_DESC + answer.getIdLocal()));
-            answer.setCorrect(correctAnswers.contains(Integer.toString(answer.getIdLocal())));
-
-        }
-        question.setDescription(request.getParameter(QUEST_DESC));
-        question.setDescriptionUA(request.getParameter(QUEST_UA_DESC));
-    }
-
-    private void addNewQuestion(Test test){
-        if (test.getQuestions() == null){
-            test.setQuestions(new ArrayList<>());
-        }
-        Question question = new Question();
-        question.setTest(test);
-        question.setIdLocal(test.getQuestions().size() + 1);
-        List<Question> questionList = test.getQuestions();
-        List<Answer> answerList = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            Answer answer = new Answer();
-            answer.setIdLocal(i + 1);
-            answer.setQuestion(question);
-            answerList.add(answer);
-        }
-        question.setAnswers(answerList);
-        questionList.add(question);
-    }
-
-    private void removeAttributes(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        request.removeAttribute(REQ_ATTR_TEST);
-        request.removeAttribute(SESSION_ATTR_QUESTION);
-        session.removeAttribute(REQ_ATTR_TEST);
-        session.removeAttribute(SESSION_ATTR_QUESTION);
     }
 
     @Override
@@ -220,5 +136,88 @@ public class ProcessingTestCommand implements Command {
         return pageTestProcess;
     }
 
+    private Test extractTestFromRequest(HttpServletRequest request) {
+        Test test = (Test) request.getSession().getAttribute(SESSION_ATTR_TEST);
+        test.setName(request.getParameter(REQ_PARAM_TEST_NAME));
+        test.setNameUA(request.getParameter(REQ_PARAM_TEST_NAME_UA));
+        test.setDescription(request.getParameter(REQ_PARAM_TEST_DESC));
+        test.setDescriptionUA(request.getParameter(REQ_PARAM_TEST_DESC_UA));
+        String[] inactive = request.getParameterValues(REQ_PARAM_TEST_INACTIVE);
+        test.setInactive((inactive != null) && inactive.length > 0
+                && "on".equals(inactive[0]));
+        return test;
+    }
+
+    private void saveTestData(HttpServletRequest request, Test test, Question question) {
+        HttpSession session = request.getSession();
+        request.setAttribute(REQ_ATTR_TEST, test);
+        session.setAttribute(SESSION_ATTR_TEST, test);
+        request.setAttribute(SESSION_ATTR_QUESTION, question);
+        session.setAttribute(SESSION_ATTR_QUESTION, question);
+        request.setAttribute(REQ_ATTR_ERROR, test.getValidationResult());
+        test.setValidationResult(new StringBuilder());
+    }
+
+    private boolean isIncorrectRequestParams(String themeIdText, String testIdText, String questionIdText){
+        return (themeIdText == null || "".equals(themeIdText))
+                || (testIdText == null || "".equals(testIdText))
+                || (questionIdText == null || "".equals(questionIdText));
+    }
+
+    private void updateTestInfo(Test test, int themeId){
+        if (test.getTheme() == null){
+            ThemeService themeService = new ThemeServiceImpl();
+            test.setTheme(themeService.getThemeEntity(themeId));
+        }
+        if (test.getQuestions() == null || test.getQuestions().size() == 0){
+            addNewQuestion(test);
+        }
+    }
+
+    private void saveQuestionData(HttpServletRequest request, Test test, Question question){
+        List<String> correctAnswers;
+        String[] correct = request.getParameterValues(ANSWERS);
+        if (correct == null) {
+            correctAnswers = new ArrayList<>();
+        } else {
+            correctAnswers = Arrays.asList(correct);
+        }
+
+        for (Answer answer : question.getAnswers()) {
+            answer.setDescription(request.getParameter(
+                    ANSWER_DESC + answer.getIdLocal()));
+            answer.setDescriptionUA(request.getParameter(
+                    ANSWER_UA_DESC + answer.getIdLocal()));
+            answer.setCorrect(correctAnswers.contains(Integer.toString(answer.getIdLocal())));
+
+        }
+        question.setDescription(request.getParameter(QUEST_DESC));
+        question.setDescriptionUA(request.getParameter(QUEST_UA_DESC));
+    }
+
+    private void addNewQuestion(Test test){
+        if (test.getQuestions() == null){
+            test.setQuestions(new ArrayList<>());
+        }
+        Question question = new Question();
+        question.setTest(test);
+        question.setIdLocal(test.getQuestions().size() + 1);
+        List<Question> questionList = test.getQuestions();
+        List<Answer> answerList = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Answer answer = new Answer();
+            answer.setIdLocal(i + 1);
+            answer.setQuestion(question);
+            answerList.add(answer);
+        }
+        question.setAnswers(answerList);
+        questionList.add(question);
+    }
+
+    private void removeAttributes(HttpServletRequest request){
+        List<String> attributeList = Arrays.asList(REQ_ATTR_TEST, SESSION_ATTR_QUESTION);
+        CommandUtility.removeRequestAttributes(request, attributeList);
+        CommandUtility.removeSessionAttributes(request, attributeList);
+    }
 
 }

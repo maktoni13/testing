@@ -10,6 +10,11 @@ import ua.kpi.training.model.service.TestService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * Class Student List Command
+ * Implementation of the command for tests listing by theme
+ * @author Anton Makukhin
+ */
 public class TestsListCommand implements Command {
     private TestService testService;
     private static final String THEME_ID_PARAM = "themeid";
