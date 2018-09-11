@@ -2,8 +2,24 @@
 <%@include file="jspf/navigation.jspf" %>
 
 <div class="container">
-    <h2>Small Table Example</h2>
-    <p>The .table-sm class is used to make the table smaller by cutting cell padding in half.</p>
+    <form class="text-center" method="post" action="${pageContext.request.contextPath}/testing/api/login">
+        <div class="form-group">
+            <c:if test="${lang == 'en'}">
+                <h1 class="h3 mb-3 font-weight-normal">${sessionScope.testPass.name}
+                    / ${sessionScope.testPass.theme.name}</h1>
+            </c:if>
+            <c:if test="${lang == 'ua'}">
+                <h1 class="h3 mb-3 font-weight-normal">${sessionScope.testPass.nameUA}
+                    / ${sessionScope.testPass.theme.nameUA}</h1>
+            </c:if>
+        </div>
+        <c:if test="${lang == 'en'}">
+            <p>${sessionScope.testPass.description}</p>
+        </c:if>
+        <c:if test="${lang == 'ua'}">
+            <p>${sessionScope.testPass.descriptionUA}</p>
+        </c:if>
+    </form>
     <div class="container">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
@@ -39,10 +55,16 @@
             <div class="checkbox">
                 <c:forEach items="${question.answers}" var="answer">
                     <c:if test="${lang == 'en'}">
-                        <label><input type="checkbox" value="${answer.id}">${answer.description}</label><br/>
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="${answer.id}" value="${answer.id}">
+                            <label class="custom-control-label" for="${answer.id}">${answer.description}</label>
+                        </div>
                     </c:if>
                     <c:if test="${lang == 'ua'}">
-                        <label><input type="checkbox" value="${answer.id}">${answer.descriptionUA}</label><br/>
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="${answer.id}" value="${answer.id}">
+                            <label class="custom-control-label" for="${answer.id}">${answer.descriptionUA}</label>
+                        </div>
                     </c:if>
                 </c:forEach>
             </div>

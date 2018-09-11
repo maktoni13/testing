@@ -1,6 +1,8 @@
-package ua.kpi.training.model.entity.exception;
+package ua.kpi.training.model.dao.exception;
 
-public class NonUniqueUserException extends Exception {
+import java.sql.SQLException;
+
+public class NonUniqueUserException extends SQLException {
 
     /**
      * Constructs a new exception with the specified detail message.  The

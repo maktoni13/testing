@@ -2,10 +2,10 @@ package ua.kpi.training.controller.command.auth;
 
 import ua.kpi.training.controller.command.Command;
 import ua.kpi.training.controller.command.dto.RegistrationUserDTO;
-import ua.kpi.training.controller.command.regex.RegexContainer;
+import ua.kpi.training.controller.command.utility.RegexContainer;
 import ua.kpi.training.controller.command.utility.SCryptPassHashing;
 import ua.kpi.training.controller.resource.PageContainer;
-import ua.kpi.training.model.entity.exception.NonUniqueUserException;
+import ua.kpi.training.model.dao.exception.NonUniqueUserException;
 import ua.kpi.training.model.service.RegistrationService;
 import ua.kpi.training.view.resource.MessageBundle;
 import ua.kpi.training.view.resource.MessageKey;
@@ -14,6 +14,25 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
 public class RegistrationCommand implements Command {
+    private static final String REG_PARAM_USERNAME = "username";
+    private static final String REG_PARAM_PASSWORD = "password";
+    private static final String REG_PARAM_CONFIRM_PASSWORD = "confirm-password";
+    private static final String REG_PARAM_EMAIL = "email";
+    private static final String REG_PARAM_CONFIRM_EMAIL = "confirm-email";
+    private static final String REG_PARAM_FIRST_NAME = "first-name";
+    private static final String REG_PARAM_FIRST_NAME_UA = "first-name-ua";
+    private static final String REG_PARAM_LAST_NAME = "last-name";
+    private static final String REG_PARAM_LAST_NAME_UA = "last-name-ua";
+    private static final String REG_ATTR_USERNAME = "username";
+    private static final String REG_ATTR_PASSWORD = "password";
+    private static final String REG_ATTR_CONFIRM_PASSWORD = "confirmPassword";
+    private static final String REG_ATTR_EMAIL = "email";
+    private static final String REG_ATTR_CONFIRM_EMAIL = "confirmEmail";
+    private static final String REG_ATTR_FIRST_NAME = "firstName";
+    private static final String REG_ATTR_FIRST_NAME_UA = "firstNameUA";
+    private static final String REG_ATTR_LAST_NAME = "lastName";
+    private static final String REG_ATTR_LAST_NAME_UA = "lastNameUA";
+    private static final String REG_ATTR_ERROR_MESSAGE = "registrationErrorMessage";
 
     private RegistrationService registrationService;
 
@@ -27,23 +46,23 @@ public class RegistrationCommand implements Command {
     private RegistrationUserDTO extractRegistrationUserDTO(HttpServletRequest request) {
         RegistrationUserDTO regUserDTO = new RegistrationUserDTO();
         regUserDTO.setUsername(
-                request.getParameter(PageContainer.REG_PARAM_USERNAME));
+                request.getParameter(REG_PARAM_USERNAME));
         regUserDTO.setPassword(
-                request.getParameter(PageContainer.REG_PARAM_PASSWORD));
+                request.getParameter(REG_PARAM_PASSWORD));
         regUserDTO.setConfirmPassword(
-                request.getParameter(PageContainer.REG_PARAM_CONFIRM_PASSWORD));
+                request.getParameter(REG_PARAM_CONFIRM_PASSWORD));
         regUserDTO.setEmail(
-                request.getParameter(PageContainer.REG_PARAM_EMAIL));
+                request.getParameter(REG_PARAM_EMAIL));
         regUserDTO.setConfirmEmail(
-                request.getParameter(PageContainer.REG_PARAM_CONFIRM_EMAIL));
+                request.getParameter(REG_PARAM_CONFIRM_EMAIL));
         regUserDTO.setFirstName(
-                request.getParameter(PageContainer.REG_PARAM_FIRST_NAME));
+                request.getParameter(REG_PARAM_FIRST_NAME));
         regUserDTO.setFirstNameUA(
-                request.getParameter(PageContainer.REG_PARAM_FIRST_NAME_UA));
+                request.getParameter(REG_PARAM_FIRST_NAME_UA));
         regUserDTO.setLastName(
-                request.getParameter(PageContainer.REG_PARAM_LAST_NAME));
+                request.getParameter(REG_PARAM_LAST_NAME));
         regUserDTO.setLastNameUA(
-                request.getParameter(PageContainer.REG_PARAM_LAST_NAME_UA));
+                request.getParameter(REG_PARAM_LAST_NAME_UA));
         return regUserDTO;
     }
 
@@ -93,7 +112,7 @@ public class RegistrationCommand implements Command {
                     MessageBundle.getMessage(MessageKey.EMAILS_NOT_EQUAL_ERR));
         }
         boolean result = "".equals(regUserDTO.getValidationResultString());
-        if (result){
+        if (result) {
             String cryptedPassword =
                     SCryptPassHashing.cryptPass(regUserDTO.getPassword());
             regUserDTO.setPassword(cryptedPassword);
@@ -115,32 +134,22 @@ public class RegistrationCommand implements Command {
     }
 
     private void saveRegistrationData(HttpServletRequest request, RegistrationUserDTO regUserDTO) {
-        request.setAttribute(PageContainer.REG_ATTR_USERNAME,
-                regUserDTO.getUsername());
-        request.setAttribute(PageContainer.REG_ATTR_PASSWORD,
-                regUserDTO.getPassword());
-        request.setAttribute(PageContainer.REG_ATTR_CONFIRM_PASSWORD,
-                regUserDTO.getConfirmPassword());
-        request.setAttribute(PageContainer.REG_ATTR_EMAIL,
-                regUserDTO.getEmail());
-        request.setAttribute(PageContainer.REG_ATTR_CONFIRM_EMAIL,
-                regUserDTO.getConfirmEmail());
-        request.setAttribute(PageContainer.REG_ATTR_FIRST_NAME,
-                regUserDTO.getFirstName());
-        request.setAttribute(PageContainer.REG_ATTR_FIRST_NAME_UA,
-                regUserDTO.getFirstNameUA());
-        request.setAttribute(PageContainer.REG_ATTR_LAST_NAME,
-                regUserDTO.getLastName());
-        request.setAttribute(PageContainer.REG_ATTR_LAST_NAME_UA,
-                regUserDTO.getLastNameUA());
-        request.setAttribute(PageContainer.REG_ATTR_ERROR_MESSAGE,
-                regUserDTO.getValidationResult());
+        request.setAttribute(REG_ATTR_USERNAME, regUserDTO.getUsername());
+        request.setAttribute(REG_ATTR_PASSWORD, regUserDTO.getPassword());
+        request.setAttribute(REG_ATTR_CONFIRM_PASSWORD, regUserDTO.getConfirmPassword());
+        request.setAttribute(REG_ATTR_EMAIL, regUserDTO.getEmail());
+        request.setAttribute(REG_ATTR_CONFIRM_EMAIL, regUserDTO.getConfirmEmail());
+        request.setAttribute(REG_ATTR_FIRST_NAME, regUserDTO.getFirstName());
+        request.setAttribute(REG_ATTR_FIRST_NAME_UA, regUserDTO.getFirstNameUA());
+        request.setAttribute(REG_ATTR_LAST_NAME, regUserDTO.getLastName());
+        request.setAttribute(REG_ATTR_LAST_NAME_UA, regUserDTO.getLastNameUA());
+        request.setAttribute(REG_ATTR_ERROR_MESSAGE, regUserDTO.getValidationResult());
     }
 
     @Override
     public String execute(HttpServletRequest request) {
         String page = PageContainer.WEB_INF_REGISTRATION_JSP;
-        if (PageContainer.HTTP_GET.equals(request.getMethod())){
+        if (PageContainer.HTTP_GET.equals(request.getMethod())) {
             return page;
         }
         RegistrationUserDTO regUserDTO = extractRegistrationUserDTO(request);

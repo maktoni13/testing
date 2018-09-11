@@ -2,16 +2,26 @@
 <%@include file="jspf/navigation.jspf" %>
 
 <div class="container">
-    <!--<p>The .table-sm class is used to make the table smaller by cutting cell padding in half.</p>-->
-    <h2><c:if test="${lang == 'en'}">${theme.name}</c:if><c:if test="${lang == 'ua'}">${theme.nameUA}</c:if><fmt:message
-            key="label.testslist.body.title"/></h2>
+    <div class="col-md-6 mb-3">
+        <h2><c:if test="${lang == 'en'}">${theme.name}</c:if><c:if
+                test="${lang == 'ua'}">${theme.nameUA}</c:if><fmt:message
+                key="label.tests.list.body.title"/><p class="lead"><fmt:message
+                key="label.tests.list.page.description"/></p></h2>
+        <c:if test="${not empty sessionScope.authority && sessionScope.authority.toString() == 'ADMIN'}">
+            <a class="nav-link"
+               href="${pageContext.request.contextPath}/testing/api/admin/processtest?themeid=${theme.id}&testid=0&currentquestion=1"><fmt:message
+                    key="label.themes.list.page.adding.new.theme.link"/></a>
+        </c:if>
+    </div>
     <table class="table table-bordered table-sm">
-
         <thead>
         <tr>
             <th scope="col"><fmt:message key="label.column.name.label"/></th>
             <th scope="col"><fmt:message key="label.column.description.label"/></th>
             <th scope="col"><fmt:message key="label.column.actions.label"/></th>
+            <c:if test="${not empty sessionScope.authority && sessionScope.authority.toString() == 'ADMIN'}">
+                <th scope="col"></th>
+            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -27,9 +37,19 @@
                 </c:if>
                 <td>
                     <a class="nav-link"
-                       href="${pageContext.request.contextPath}/testing/api/common/passing?testid=${test.id}"><fmt:message
-                            key="label.testslist.page.passing.the.test.link"/></a>
+                       href="${pageContext.request.contextPath}/testing/api/common/passing?themeid=${theme.id}&testid=${test.id}"&currentquestion=1><fmt:message
+                            key="label.tests.list.page.passing.the.test.link"/></a>
+                    <a class="nav-link"
+                       href="${pageContext.request.contextPath}/testing/api/common/testpass?themeid=${theme.id}&testid=${test.id}">summary</a>
                 </td>
+                <c:if test="${not empty sessionScope.authority && sessionScope.authority.toString() == 'ADMIN'}">
+                    <td>
+                        <a class="nav-link"
+                           href="${pageContext.request.contextPath}/testing/api/admin/processtest?themeid=${theme.id}&testid=${test.id}&currentquestion=1"><fmt:message
+                                key="label.tests.list.page.edit.test.link"/></a>
+                    </td>
+                </c:if>
+
             </tr>
         </c:forEach>
         </tbody>

@@ -1,4 +1,4 @@
-package ua.kpi.training.controller.command.regex;
+package ua.kpi.training.controller.command.utility;
 
 public interface RegexContainer {
     String USERNAME = "^[A-Za-z0-9_-]{8,20}$";

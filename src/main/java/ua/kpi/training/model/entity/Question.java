@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Question {
     private Test test;
+    private Summary summary;
     private int id;
     private int idLocal;
     private String description;
@@ -81,7 +82,11 @@ public class Question {
         this.answers = answers;
     }
 
-    public void setLocalAnswersId(){
-        answers.forEach(answer -> answer.setIdLocal(answers.indexOf(answer) + 1));
+    public Summary getSummary() {
+        return summary;
+    }
+
+    public void setSummary(Summary summary) {
+        this.summary = summary;
     }
 }

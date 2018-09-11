@@ -1,6 +1,5 @@
 package ua.kpi.training.model.service.impl;
 
-import ua.kpi.training.controller.command.dto.TestsListByThemeDTO;
 import ua.kpi.training.model.dao.DAOFactory;
 import ua.kpi.training.model.dao.QuestionDAO;
 import ua.kpi.training.model.dao.TestDAO;
@@ -20,13 +19,15 @@ public class PassingTestServiceImpl implements PassingTestService {
     public Test getTestById(int id) {
 
         Test test;
-        try (TestDAO testDAO = daoFactory.createTestDAO()) {
+        try {
+            TestDAO testDAO = daoFactory.createTestDAO();
             test = testDAO.findById(id);
         } catch (Exception e){
             throw new RuntimeException(e); // TODO: Right exception
         }
         Theme theme;
-        try (ThemeDAO themeDAO = daoFactory.createThemeDAO()) {
+        try {
+            ThemeDAO themeDAO = daoFactory.createThemeDAO();
             theme = themeDAO.findById(test.getThemeId());
         } catch (Exception e){
             throw new RuntimeException(e); // TODO: Right exception
@@ -34,13 +35,13 @@ public class PassingTestServiceImpl implements PassingTestService {
 
         test.setTheme(theme);
 
-        try (QuestionDAO questionDAO = daoFactory.createQuestionDAO()){
-            test.setQuestions(questionDAO.findQuestionsPassingTestId(id));
+        try {
+            QuestionDAO questionDAO = daoFactory.createQuestionDAO();
+            test.setQuestions(questionDAO.findQuestionsPassingTestId(test));
         } catch (Exception e){
             throw new RuntimeException(e); // TODO: Right exception
         }
-        test.getQuestions().forEach(Question::setLocalAnswersId);
-        test.setLocalQuestionsId();
+        test.getQuestions().forEach(question -> question.setTest(test));
 
         return test;
     }

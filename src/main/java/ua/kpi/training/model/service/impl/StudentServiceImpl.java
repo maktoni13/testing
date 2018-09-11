@@ -2,9 +2,11 @@ package ua.kpi.training.model.service.impl;
 
 import ua.kpi.training.model.dao.DAOFactory;
 import ua.kpi.training.model.dao.UserDAO;
+import ua.kpi.training.model.dao.exception.DAOException;
 import ua.kpi.training.model.entity.User;
 import ua.kpi.training.model.service.StudentService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentServiceImpl implements StudentService {
@@ -15,8 +17,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<User> getAllStudents() {
-        try (UserDAO userDAO = daoFactory.createUserDAO()){
+        try {
+            UserDAO userDAO = daoFactory.createUserDAO();
             return userDAO.findAll();
+        } catch (DAOException e){
+            return new ArrayList<>();
         }
     }
 }

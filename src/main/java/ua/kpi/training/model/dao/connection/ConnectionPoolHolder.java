@@ -2,6 +2,10 @@ package ua.kpi.training.model.dao.connection;
 
 import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
+import ua.kpi.training.logger.LoggerMessages;
+
+import java.sql.SQLException;
+
 // TODO: Add properties or Move connection pool to META-INF/context.xml
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
@@ -11,7 +15,11 @@ public class ConnectionPoolHolder {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
-                    ds.setUrl("jdbc:mysql://localhost:3306/testing_db?serverTimezone=UTC&autoReconnect=true&useSSL=false");
+                    ds.setUrl("jdbc:mysql://localhost:3306/testing_db" +
+                            "?rewriteBatchedStatements=true" +
+                            "&serverTimezone=UTC" +
+                            "&autoReconnect=true" +
+                            "&useSSL=false");
                     ds.setUsername("root");
                     ds.setPassword("root");
                     ds.setMinIdle(5);
@@ -24,4 +32,5 @@ public class ConnectionPoolHolder {
         }
         return dataSource;
     }
+
 }

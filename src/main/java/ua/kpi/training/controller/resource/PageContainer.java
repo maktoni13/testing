@@ -13,6 +13,9 @@ public interface PageContainer {
     String WEB_INF_THEMES_LIST_JSP = "/WEB-INF/themeslist.jsp";
     String WEB_INF_TESTS_LIST_JSP = "/WEB-INF/testslist.jsp";
     String WEB_INF_TEST_PASSING_JSP = "/WEB-INF/testpassing.jsp";
+    String WEB_INF_ADMIN_THEME_JSP = "/WEB-INF/admin/theme.jsp";
+    String WEB_INF_ADMIN_TEST_JSP = "/WEB-INF/admin/test.jsp";
+    String WEB_INF_COMMON_PASS_TEST_JSP = "/WEB-INF/passtest.jsp";
 
     // PATH prefixes
     String PATH_PREFIX_REDIRECT = "redirect:";
@@ -21,8 +24,11 @@ public interface PageContainer {
     String PATH_COMMAND_USER_PROFILE = "/testing/api/common/userprofile";
     String PATH_COMMAND_ADMIN_PROFILE = "/testing/api/admin/adminprofile";
     String PATH_COMMAND_LOGIN = "/testing/api/login";
+    String PATH_COMMAND_LOGOUT = "/testing/api/logout";
     String PATH_COMMAND_INDEX = "/testing/api/index";
     String PATH_COMMAND_THEMES = "/testing/api/common/themes";
+    String PATH_COMMAND_TESTS = "/testing/api/common/tests?themeid=";
+    String PATH_COMMAND_TEST_SOLVE = "/testing/api/common/testsolve?summaryid=";
 
     // HTTP METHOD
     String HTTP_GET = "GET";
@@ -40,6 +46,11 @@ public interface PageContainer {
     String COMMAND_INDEX_PAGE = "index";
     String COMMAND_TEST_LIST = "common/tests";
     String COMMAND_TEST_PASSING = "common/passing";
+    String COMMAND_PROCESS_THEME = "admin/processtheme";
+    String COMMAND_PROCESS_TEST = "admin/processtest";
+    String COMMAND_EDIT_THEME = "admin/edittheme";
+    String COMMAND_PASSING_TEST = "common/testpass";
+    String COMMAND_SOLVING_TEST = "common/testsolve";
 
     // SECURITY filter
     String SECURITY_FILTER_ADMIN = "admin/";
@@ -51,30 +62,10 @@ public interface PageContainer {
     String CONTEXT_LOGGED_USERS = "loggedUsers";
     String SESSION_USER_NAME = "username";
     String SESSION_AUTHORITY = "authority";
-    String SESSION_INCORRECT_LOGIN_PASSWORD = "";
     String CONTENT_TYPE = "text/html";
     String CHARACTER_ENCODING = "UTF-8";
     String PARAMETER_USER_NAME = "username";
     String PARAMETER_PASSWORD = "password";
-    String REG_PARAM_USERNAME = "username";
-    String REG_PARAM_PASSWORD = "password";
-    String REG_PARAM_CONFIRM_PASSWORD = "confirm-password";
-    String REG_PARAM_EMAIL = "email";
-    String REG_PARAM_CONFIRM_EMAIL = "confirm-email";
-    String REG_PARAM_FIRST_NAME = "first-name";
-    String REG_PARAM_FIRST_NAME_UA = "first-name-ua";
-    String REG_PARAM_LAST_NAME = "last-name";
-    String REG_PARAM_LAST_NAME_UA = "last-name-ua";
-    String REG_ATTR_USERNAME = "username";
-    String REG_ATTR_PASSWORD = "password";
-    String REG_ATTR_CONFIRM_PASSWORD = "confirmPassword";
-    String REG_ATTR_EMAIL = "email";
-    String REG_ATTR_CONFIRM_EMAIL = "confirmEmail";
-    String REG_ATTR_FIRST_NAME = "firstName";
-    String REG_ATTR_FIRST_NAME_UA = "firstNameUA";
-    String REG_ATTR_LAST_NAME = "lastName";
-    String REG_ATTR_LAST_NAME_UA = "lastNameUA";
-    String REG_ATTR_ERROR_MESSAGE = "registrationErrorMessage";
     String LOGIN_PAGE_ATTR_ERROR_MESSAGE = "loginErrorMessage";
     String LOGIN_PAGE_ATTR_USERNAME = "username";
     String STUDENT_LIST_ATTR = "studentList";
