@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Class Processing theme command
  * <p> Class provides full cycle of theme entity processing (Add, Edit, Delete)
  *
- * @author Maktoni
+ * @author Anton Makukhin
  */
 public class ProcessingThemeCommand implements Command {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(ProcessingThemeCommand.class);

@@ -6,6 +6,12 @@ import ua.kpi.training.model.entity.Test;
 
 import java.util.List;
 
+/**
+ * Interface Question DAO
+ * <p> interface for Question DAO
+ *
+ * @author Anton Makukhin
+ */
 public interface QuestionDAO extends GenericDAO<Question> {
     List<Question> findQuestionsPassingTestId(Test test);
     boolean deleteList(List<Question> questionList) throws DAOException;

@@ -10,10 +10,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class JDBC Answer Result DAO
+ * <p> implementation of DAO for answer result database table
+ *
+ * @author Anton Makukhin
+ */
 public class JDBCAnswerResultDAO extends JDBCAbstractDAO<Answer> implements AnswerResultDAO {
+    private static final String ID_COLUMN = "question_result_id";
     protected Connection connection;
+
 
     public JDBCAnswerResultDAO(Connection connection) {
         this.connection = connection;
@@ -92,6 +101,24 @@ public class JDBCAnswerResultDAO extends JDBCAbstractDAO<Answer> implements Answ
     @Override
     public void fillUpdatePrepareStatement(PreparedStatement ps, Answer entity) throws SQLException {
         ps.setBoolean(1, entity.isChosen());
-        ps.setInt(2, entity.getIdLocal());
+        ps.setInt(2, entity.getId());
+    }
+
+    @Override
+    public List<Integer> getIncorrectQuestionsIds(int idSummary) {
+        List<Integer> incorrectQuestionIdsList = new ArrayList<>();
+        try (PreparedStatement ps = connection.
+                prepareStatement(
+                        DAOBundle.getStatement(
+                                DAOKey.SELECT_INCORRECT_ANSWERED_QUESTION_ID))) {
+            ps.setInt(1, idSummary);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                incorrectQuestionIdsList.add(resultSet.getInt(ID_COLUMN));
+            }
+            return incorrectQuestionIdsList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

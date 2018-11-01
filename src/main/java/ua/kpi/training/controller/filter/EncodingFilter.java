@@ -5,6 +5,12 @@ import ua.kpi.training.controller.resource.PageContainer;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * Class Encoding filter
+ * <p> Encoding filter for application
+ *
+ * @author Anton Makukhin
+ */
 public class EncodingFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

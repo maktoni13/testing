@@ -1,6 +1,14 @@
 package ua.kpi.training.model.entity;
 
-public class Answer {
+import java.util.Objects;
+
+/**
+ * Class Answer
+ * DTO for Answer
+ *
+ * @author Anton Makukhin
+ */
+public class Answer{
     private Question question;
     private int id;
     private int idLocal;
@@ -66,5 +74,31 @@ public class Answer {
 
     public void setChosen(boolean chosen) {
         this.chosen = chosen;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId() == user.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 37 * result + Objects.hash(getId());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", idLocal=" + idLocal +
+                ", description='" + description + '\'' +
+                ", descriptionUA='" + descriptionUA + '\'' +
+                ", chosen=" + chosen +
+                '}';
     }
 }

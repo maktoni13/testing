@@ -6,6 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Class Answer mapper
+ * <p> Mapper for object Answer from answer_result database table
+ *
+ * @author Anton Makukhin
+ */
+
 public class AnswerResultMapper implements ObjectMapper<Answer> {
     private static final String ID_COLUMN = "answer_result.id";
     private static final String ID_LOCAL_COLUMN = "answer_result.id_local";

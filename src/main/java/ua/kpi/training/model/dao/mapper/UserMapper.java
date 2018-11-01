@@ -6,6 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Class User mapper
+ * <p> Mapper for object User from user database table
+ *
+ * @author Anton Makukhin
+ */
 public class UserMapper implements ObjectMapper<User> {
     private static final String ID_COLUMN = "id";
     private static final String USER_NAME_COLUMN = "username";

@@ -1,18 +1,22 @@
 package ua.kpi.training.controller.filter;
 
 
-import com.sun.deploy.util.StringUtils;
 import ua.kpi.training.controller.command.utility.ConfigurationContainer;
 import ua.kpi.training.view.resource.MessageBundle;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Locale;
 
+/**
+ * Class Localization Filter
+ * <p> Update locale for message bundle
+ *
+ * @author Anton Makukhin
+ */
 @WebFilter(urlPatterns = {"/*"}, servletNames = {"Servlet"})
 public class LocalizationFilter implements Filter {
     private final static String SESSION_USER_LOCALE_PARAM = "lang";

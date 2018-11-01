@@ -3,7 +3,6 @@ package ua.kpi.training.controller;
 import ua.kpi.training.controller.command.Command;
 import ua.kpi.training.controller.command.IndexPageCommand;
 import ua.kpi.training.controller.command.auth.*;
-import ua.kpi.training.controller.command.students.PassingTestCommand;
 import ua.kpi.training.controller.command.students.StudentListCommand;
 import ua.kpi.training.controller.command.students.TestsListCommand;
 import ua.kpi.training.controller.command.students.ThemeListCommand;
@@ -12,6 +11,9 @@ import ua.kpi.training.controller.command.test.TestPassingCommand;
 import ua.kpi.training.controller.command.test.TestSolvingCommand;
 import ua.kpi.training.controller.command.theme.ProcessingThemeCommand;
 import ua.kpi.training.controller.resource.PageContainer;
+import ua.kpi.training.model.dao.DAOFactory;
+import ua.kpi.training.model.dao.UserDAO;
+import ua.kpi.training.model.service.factory.ServiceFactory;
 import ua.kpi.training.model.service.impl.*;
 import ua.kpi.training.model.service.impl.ThemeServiceImpl;
 
@@ -37,18 +39,18 @@ public class Servlet extends HttpServlet{
 
     @Override
     public void init(ServletConfig servletConfig){
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
         servletConfig.getServletContext().setAttribute(PageContainer.CONTEXT_LOGGED_USERS, new HashSet<String>());
         commands.put(PageContainer.COMMAND_EXCEPTION, new ExceptionCommand());
-        commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand(new LoginServiceImpl()));
+        commands.put(PageContainer.COMMAND_LOGIN, new LoginCommand(serviceFactory.getLoginService()));
         commands.put(PageContainer.COMMAND_LOGOUT, new LogoutCommand());
         commands.put(PageContainer.COMMAND_REGISTRATION, new RegistrationCommand(new RegistrationServiceImpl()));
         commands.put(PageContainer.COMMAND_STUDENT_LIST, new StudentListCommand(new StudentServiceImpl()));
         commands.put(PageContainer.COMMAND_THEME_LIST, new ThemeListCommand(new ThemeServiceImpl()));
         commands.put(PageContainer.COMMAND_VIEW_USER_PROFILE, new ViewUserProfileCommand(new ViewUserProfileServiceImpl()));
         commands.put(PageContainer.COMMAND_VIEW_ADMIN_PROFILE, new ViewAdminProfileCommand(new ViewAdminProfileServiceImpl()));
-        commands.put(PageContainer.COMMAND_INDEX_PAGE, new IndexPageCommand(new IndexPageServiceImpl()));
+        commands.put(PageContainer.COMMAND_INDEX_PAGE, new IndexPageCommand());
         commands.put(PageContainer.COMMAND_TEST_LIST, new TestsListCommand(new TestServiceImpl()));
-        commands.put(PageContainer.COMMAND_TEST_PASSING, new PassingTestCommand(new PassingTestServiceImpl()));
         commands.put(PageContainer.COMMAND_PROCESS_THEME, new ProcessingThemeCommand(new ThemeServiceImpl()));
         commands.put(PageContainer.COMMAND_PROCESS_TEST, new ProcessingTestCommand(new TestServiceImpl()));
         commands.put(PageContainer.COMMAND_PASSING_TEST, new TestPassingCommand(new TestServiceImpl()));

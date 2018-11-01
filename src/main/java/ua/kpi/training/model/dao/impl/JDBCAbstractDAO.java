@@ -12,6 +12,14 @@ import ua.kpi.training.view.resource.MessageKey;
 import java.sql.*;
 import java.util.List;
 
+/**
+ * Class JDBC Abstract DAO
+ * <p> abstract level of simple DAO procedures
+ * contains template methods for common operations
+ * includes batch operations
+ *
+ * @author Anton Makukhin
+ */
 public abstract class JDBCAbstractDAO<T> {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(JDBCAbstractDAO.class);
 
@@ -20,7 +28,6 @@ public abstract class JDBCAbstractDAO<T> {
     public abstract void fillUpdatePrepareStatement(PreparedStatement ps, T entity) throws SQLException;
 
     public abstract void setKeyToEntity(T entity, ResultSet rs) throws SQLException;
-
 
     boolean createEntity(T entity, String sql, Connection connection) throws DAOException{
 
@@ -103,24 +110,12 @@ public abstract class JDBCAbstractDAO<T> {
         if (entityList == null) {
             return true;
         }
-        try (PreparedStatement ps = connection.prepareStatement(sql,
-                Statement.RETURN_GENERATED_KEYS )) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             for (T entity : entityList) {
                 fillUpdatePrepareStatement(ps, entity);
                 ps.addBatch();
             }
             ps.executeBatch();
-            ResultSet rs = ps.getGeneratedKeys();
-            if(rs == null){
-                throw new DAOException(DAOException.DAO_EXCEPTION);
-            }
-            for (T entity : entityList) {
-                if (rs.next()){
-                    setKeyToEntity(entity, rs);
-                } else {
-                    throw new DAOException(DAOException.DAO_EXCEPTION);
-                }
-            }
         } catch (SQLException e) {
             LOGGER_SLF4J.error(LoggerMessages.ERROR_DAO_UPDATE_QUERY);
             throw new DAOException(
@@ -128,6 +123,5 @@ public abstract class JDBCAbstractDAO<T> {
         }
         return true;
     }
-
 
 }

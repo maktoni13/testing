@@ -6,6 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Class Theme mapper
+ * <p> Mapper for object Theme from theme database table
+ *
+ * @author Anton Makukhin
+ */
 public class ThemeMapper implements ObjectMapper<Theme>{
 
     private static final String ID_COLUMN = "id";

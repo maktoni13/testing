@@ -13,32 +13,14 @@
             </div>
             <div class="col-md-12 mb-3">
                 <label for="saveTest" class="sr-only"><fmt:message key="label.test.page.button.save"/></label>
-                <input name="save" class="btn btn-sm btn-dark" type="submit" value="Save test" id="saveTest">
+                <input name="save" class="btn btn-sm btn-dark" type="submit" value="Save summary" id="saveTest">
                 <label for="saveQuestion" class="sr-only"><fmt:message
                         key="label.test.page.button.save.question"/></label>
                 <input name="save" class="btn btn-sm btn-dark" type="submit" value="Save question" id="saveQuestion">
-                <a href="${pageContext.request.contextPath}/testing/api/admin/testsolve?action=cancel"><fmt:message
+                <a href="${pageContext.request.contextPath}/testing/api/common/testsolve?action=cancel"><fmt:message
                         key="label.test.page.button.cancel"/></a>
             </div>
             <div class="col-md-12 mb-3">
-                <table class="table table-bordered table-sm">
-                    <thead></thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <hr class="mb-4">
                 <nav aria-label="question navigation">
                     <ul class="pagination justify-content-center">
                         <c:forEach items="${summary.questions}" var="quest">
@@ -49,7 +31,7 @@
                                 <li class="page-item">
                             </c:if>
                             <a class="page-link"
-                               href="${pageContext.request.contextPath}/testing/api/admin/testsolve?summaryid=${summary.id}&questionid=${quest.idLocal}">${quest.idLocal}</a>
+                               href="${pageContext.request.contextPath}/testing/api/common/testsolve?summaryid=${summary.id}&questionid=${quest.idLocal}">${quest.idLocal}</a>
                             </li>
                         </c:forEach>
                     </ul>
@@ -58,24 +40,27 @@
                     <thead></thead>
                     <tbody>
                     <tr>
-                        <td>
-                            <label><fmt:message key="label.test.page.question.description"
-                                                var="questionDescriptionLabel"/></label>
-                            <label for="inputQuestionDescription">${questionDescriptionLabel}:</label>
-                            <input type="text" class="form-control" id="inputQuestionDescription"
-                                   name="questionDescription"
-                                   placeholder="${questionDescriptionLabel}"
-                                   value="${question.description}" required>
-                        </td>
-                        <td>
-                            <label><fmt:message key="label.test.page.question.description.ua"
-                                                var="questionDescriptionUALabel"/></label>
-                            <label for="inputQuestionDescriptionUA">${questionDescriptionUALabel}:</label>
-                            <input type="text" class="form-control" id="inputQuestionDescriptionUA"
-                                   name="questionDescriptionUA"
-                                   placeholder="${questionDescriptionUALabel}"
-                                   value="${question.descriptionUA}" required>
-                        </td>
+                        <c:if test="${lang == 'en'}">
+                            <td>
+                                <label class="sr-only"><fmt:message key="label.test.page.question.description"
+                                                                    var="questionDescriptionLabel"/></label>
+                                <label for="inputQuestionDescription">${questionDescriptionLabel}:</label>
+                                <textarea class="form-control" id="inputQuestionDescription" name="questionDescription"
+                                          placeholder="${questionDescriptionLabel}"
+                                          readonly>${question.description}</textarea>
+
+                            </td>
+                        </c:if>
+                        <c:if test="${lang == 'ua'}">
+                            <td>
+                                <label class="sr-only"><fmt:message key="label.test.page.question.description.ua"
+                                                                    var="questionDescriptionUALabel"/></label>
+                                <label for="inputQuestionDescriptionUA">${questionDescriptionUALabel}:</label>
+                                <textarea class="form-control" id="inputQuestionDescriptionUA" name="questionDescriptionUA"
+                                          placeholder="${questionDescriptionUALabel}"
+                                          readonly>${question.descriptionUA}</textarea>
+                            </td>
+                        </c:if>
                     </tr>
                     </tbody>
                 </table>
@@ -97,10 +82,15 @@
                                         </c:if>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" name="answerDesc${answer.idLocal}"
-                                       value="${answer.description}" aria-label="Text input with checkbox">
-                                <input type="text" class="form-control" name="answerDescUA${answer.idLocal}"
-                                       value="${answer.descriptionUA}" aria-label="Text input with checkbox">
+                                <c:if test="${lang == 'en'}">
+                                    <input type="text" class="form-control" name="answerDesc${answer.idLocal}"
+                                           value="${answer.description}" aria-label="Text input with checkbox" readonly>
+                                </c:if>
+                                <c:if test="${lang == 'ua'}">
+                                    <input type="text" class="form-control" name="answerDescUA${answer.idLocal}"
+                                           value="${answer.descriptionUA}" aria-label="Text input with checkbox"
+                                           readonly>
+                                </c:if>
                             </div>
                         </c:forEach>
                     </div>

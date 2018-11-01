@@ -13,6 +13,11 @@ import ua.kpi.training.view.resource.MessageKey;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
+/**
+ * Class Registration Command
+ * Registration command implementation
+ * @author Anton Makukhin
+ */
 public class RegistrationCommand implements Command {
     private static final String REG_PARAM_USERNAME = "username";
     private static final String REG_PARAM_PASSWORD = "password";
@@ -67,6 +72,9 @@ public class RegistrationCommand implements Command {
     }
 
     private boolean matchWithRegex(String inputValue, String regexExpression) {
+        if ((inputValue == null) || (regexExpression == null)) {
+            return false;
+        }
         return Pattern.compile(regexExpression).matcher(inputValue).matches();
     }
 
@@ -103,11 +111,15 @@ public class RegistrationCommand implements Command {
                 regUserDTO.getLastNameUA(),
                 RegexContainer.NAME_UA,
                 MessageBundle.getMessage(MessageKey.LAST_NAME_UA_REGEX_ERR)));
-        if (!regUserDTO.getPassword().equals(regUserDTO.getConfirmPassword())) {
+        if ((regUserDTO.getPassword() == null)
+                || (regUserDTO.getConfirmPassword() == null)
+                || !regUserDTO.getPassword().equals(regUserDTO.getConfirmPassword())) {
             regUserDTO.appendValidationResult(
                     MessageBundle.getMessage(MessageKey.PASSWORDS_NOT_EQUAL_ERR));
         }
-        if (!regUserDTO.getEmail().equals(regUserDTO.getConfirmEmail())) {
+        if ((regUserDTO.getEmail() == null)
+                || (regUserDTO.getConfirmEmail() == null)
+                || !regUserDTO.getEmail().equals(regUserDTO.getConfirmEmail())) {
             regUserDTO.appendValidationResult(
                     MessageBundle.getMessage(MessageKey.EMAILS_NOT_EQUAL_ERR));
         }

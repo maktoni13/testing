@@ -1,9 +1,15 @@
 package ua.kpi.training.model.entity;
 
-import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
-public class Theme implements Serializable {
+/**
+ * Class Theme
+ * DTO for Theme
+ *
+ * @author Anton Makukhin
+ */
+public class Theme {
     private int id;
     private String name;
     private String nameUA;
@@ -74,6 +80,21 @@ public class Theme implements Serializable {
 
     public void appendValidationResult(String validationMessage){
         validationResult.append(validationMessage);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId() == user.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 37 * result + Objects.hash(getId());
+        return result;
     }
 
     @Override

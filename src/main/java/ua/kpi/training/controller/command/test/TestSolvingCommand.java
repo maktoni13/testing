@@ -3,6 +3,7 @@ package ua.kpi.training.controller.command.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.kpi.training.controller.command.Command;
+import ua.kpi.training.controller.command.utility.CommandUtility;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.logger.LoggerMessages;
 import ua.kpi.training.model.entity.Answer;
@@ -16,10 +17,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class Test Solving Command
+ * <p> Class provides solving of test process summary created on previous step
+ *
+ * @author Anton Makukhin
+ */
 public class TestSolvingCommand implements Command {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(TestPassingCommand.class);
-
-    private SummaryTestSolveService summaryTestSolveService;
 
     private static final String SUMMARY_ID = "summaryid";
     private static final String QUESTION_ID_PARAM = "questionid";
@@ -31,21 +36,18 @@ public class TestSolvingCommand implements Command {
     private static final String SUBMIT_VALUE_SAVE_QUESTION = "Save question";
     private static final String SUBMIT_VALUE_SAVE = "Save summary";
     private static final String ANSWERS = "answer";
-    private static final String ANSWER_DESC = "answerDesc";
-    private static final String ANSWER_UA_DESC = "answerDescUA";
     private static final String ATTR_ERROR = "savingErrorMessage";
+
+    private SummaryTestSolveService summaryTestSolveService;
 
     public TestSolvingCommand(SummaryTestSolveService summaryTestSolveService) {
         this.summaryTestSolveService = summaryTestSolveService;
     }
 
     private void removeAttributes(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        request.removeAttribute(SUMMARY);
-        request.removeAttribute(QUESTION);
-        session.removeAttribute(SUMMARY);
-        session.removeAttribute(QUESTION);
-//        Arrays.asList(SUMMARY, QUESTION);
+        List<String> attributesList = Arrays.asList(SUMMARY, QUESTION);
+        CommandUtility.removeRequestAttributes(request, attributesList);
+        CommandUtility.removeSessionAttributes(request, attributesList);
     }
 
     private void saveQuestionData(HttpServletRequest request, Summary summary, Question question){
@@ -58,10 +60,6 @@ public class TestSolvingCommand implements Command {
         }
 
         for (Answer answer : question.getAnswers()) {
-            answer.setDescription(request.getParameter(
-                    ANSWER_DESC + answer.getIdLocal()));
-            answer.setDescriptionUA(request.getParameter(
-                    ANSWER_UA_DESC + answer.getIdLocal()));
             answer.setChosen(chosenAnswers.contains(Integer.toString(answer.getIdLocal())));
         }
     }
@@ -85,17 +83,17 @@ public class TestSolvingCommand implements Command {
         String actionText = request.getParameter(ACTION_PARAM);
 
         String pageSolveProcess = PageContainer.WEB_INF_COMMON_PASS_TEST_JSP;
-        String redirectLoginPage = PageContainer.PATH_PREFIX_REDIRECT +
-                PageContainer.PATH_COMMAND_LOGOUT;
+        String redirectIndexPage = PageContainer.PATH_PREFIX_REDIRECT +
+                PageContainer.PATH_COMMAND_INDEX;
 
         if(ACTION_CANCEL.equals(actionText)){
             removeAttributes(request);
-            return redirectLoginPage;
+            return redirectIndexPage;
         }
 
         if ((summaryIdText == null || "".equals(summaryIdText))
                 || (questionIdText == null || "".equals(questionIdText))) {
-            return redirectLoginPage;
+            return redirectIndexPage;
         }
 
         int summaryId;
@@ -104,18 +102,18 @@ public class TestSolvingCommand implements Command {
             summaryId = Integer.parseInt(summaryIdText);
             questionId = Integer.parseInt(questionIdText);
         } catch (NumberFormatException e) {
-            return redirectLoginPage;
+            return redirectIndexPage;
         }
 
         Summary summary = (Summary) request.getSession().getAttribute(SUMMARY);
         if (summary != null
                 && (summaryId != summary.getId()) ) {
-            return redirectLoginPage;
+            return redirectIndexPage;
         }else if (summary == null){
             if (summaryId > 0) {
                 summary = summaryTestSolveService.getSummaryEntity(summaryId);
                 if (summary == null) {
-                    return redirectLoginPage;
+                    return redirectIndexPage;
                 }
             } else {
                 summary = new Summary();
@@ -140,7 +138,7 @@ public class TestSolvingCommand implements Command {
                     return pageSolveProcess;
                 }
                 removeAttributes(request);
-                return redirectLoginPage;
+                return redirectIndexPage;
             }
         }
 

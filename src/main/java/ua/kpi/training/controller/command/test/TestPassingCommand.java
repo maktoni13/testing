@@ -8,6 +8,12 @@ import ua.kpi.training.model.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class Test Passing Command
+ * Implementation of command for starting test solving process
+ * Firstly we create summary and then redirect to page for solving
+ * @author Anton Makukhin
+ */
 public class TestPassingCommand implements Command {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(TestPassingCommand.class);
 
@@ -42,7 +48,7 @@ public class TestPassingCommand implements Command {
         }
         String username = (String) request.getSession().getAttribute(USERNAME);
         int summaryId = testService.prepareSummaryForTestPassing(testId, username);
-        if (summaryId >= 0){
+        if (summaryId > 0){
             return PageContainer.PATH_PREFIX_REDIRECT +
                     PageContainer.PATH_COMMAND_TEST_SOLVE + summaryId + "&questionid=1";
         }

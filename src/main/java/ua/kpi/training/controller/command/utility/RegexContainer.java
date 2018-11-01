@@ -1,5 +1,10 @@
 package ua.kpi.training.controller.command.utility;
 
+/**
+ * Interface Regex container
+ * <p> Contains regex for registration needs
+ * @author Anton Makukhin
+ */
 public interface RegexContainer {
     String USERNAME = "^[A-Za-z0-9_-]{8,20}$";
     String NAME = "^[A-Z][a-z]{1,20}$";

@@ -14,8 +14,11 @@ import ua.kpi.training.view.resource.MessageKey;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SummaryTestSolveServiceImpl implements SummaryTestSolveService {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(TestServiceImpl.class);
@@ -85,20 +88,35 @@ public class SummaryTestSolveServiceImpl implements SummaryTestSolveService {
             SummaryDAO summaryDAO = daoFactory.createSummaryDAO(connection);
             QuestionResultDAO questionResultDAO = daoFactory.createQuestionResultDAO(connection);
             AnswerResultDAO answerResultDAO = daoFactory.createAnswerResultDAO(connection);
-            result = summaryDAO.update(summary);
 
             List<Question> questionList = summary.getQuestions();
-//            if((questionList != null)
-//                    && !questionResultDAO.updateChosenList(summary.getQuestions())){
-//                summary.appendValidationResult(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
-//                throw new DAOException(QUESTIONS_CREATION_ERROR);
-//            }
+            Map<Integer, Question> questionMap = new HashMap<>();
+            questionList.forEach(
+                    question -> questionMap.putIfAbsent(question.getId(), question));
+
             List<Answer> answerList = getAnswersFromQuestionList(questionList);
+
+
             if((answerList != null)
                     && !answerResultDAO.updateChosenList(answerList)){
                 summary.appendValidationResult(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
                 throw new DAOException(ANSWERS_CREATION_ERROR);
             }
+
+            List<Integer> incorrectIds =
+                    answerResultDAO.getIncorrectQuestionsIds(summary.getId());
+            summary.setQuestionsQuantity(questionList.size());
+            summary.setFinishDate(LocalDateTime.now());
+            summary.setCorrectAnswered(
+                    summary.getQuestionsQuantity() - incorrectIds.size());
+
+            incorrectIds.forEach(id -> questionMap.get(id).setIncorrect(true));
+            if(!questionResultDAO.updateChosenList(summary.getQuestions())){
+                summary.appendValidationResult(LoggerMessages.ERROR_SERVICE_TRANSACTION_INCOMPLETE);
+                throw new DAOException(QUESTIONS_CREATION_ERROR);
+            }
+
+            result = summaryDAO.update(summary);
             connection.commit();
         } catch (Exception e) {
             result = false;

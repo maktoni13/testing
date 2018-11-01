@@ -1,5 +1,10 @@
 package ua.kpi.training.controller.command.dto;
 
+/**
+ * Class Registration User DTO
+ * Data transfer object for registering user
+ * @author Anton Makukhin
+ */
 public class RegistrationUserDTO {
 
     private static final String NEXT_LINE = "\n";

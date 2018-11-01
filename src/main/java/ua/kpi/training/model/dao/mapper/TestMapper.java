@@ -7,6 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Class Test Mapper
+ * <p> Mapper for object Test from test database table
+ *
+ * @author Anton Makukhin
+ */
 public class TestMapper implements ObjectMapper<Test> {
     private static final String ID_COLUMN = "id";
     private static final String NAME_COLUMN = "name";

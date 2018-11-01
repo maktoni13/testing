@@ -6,6 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Class Question mapper
+ * <p> Mapper for object Question from question database table
+ *
+ * @author Anton Makukhin
+ */
 public class QuestionMapper implements ObjectMapper<Question> {
     private static final String ID_COLUMN = "id";
     private static final String ID_LOCAL_COLUMN = "id_local";

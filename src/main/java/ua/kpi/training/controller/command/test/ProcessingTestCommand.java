@@ -3,6 +3,7 @@ package ua.kpi.training.controller.command.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.kpi.training.controller.command.Command;
+import ua.kpi.training.controller.command.utility.CommandUtility;
 import ua.kpi.training.controller.resource.PageContainer;
 import ua.kpi.training.logger.LoggerMessages;
 import ua.kpi.training.model.entity.Answer;
@@ -19,9 +20,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Class Processing Test Command
+ * Implementation of the command for test adding and editing
  * <p> Class provides full cycle of test entity processing (Add, Edit, Delete)
- *
- * @author Maktoni
+ * @author Anton Makukhin
  */
 public class ProcessingTestCommand implements Command {
     private static final Logger LOGGER_SLF4J = LoggerFactory.getLogger(ProcessingTestCommand.class);
@@ -59,6 +61,80 @@ public class ProcessingTestCommand implements Command {
         this.testService = testService;
     }
 
+    @Override
+    public String execute(HttpServletRequest request) {
+
+        String testIdText = request.getParameter(TEST_ID_PARAM);
+        String themeIdText = request.getParameter(THEME_ID_PARAM);
+        String questionIdText = request.getParameter(QUESTION_ID_PARAM);
+        String actionText = request.getParameter(ACTION_PARAM);
+        String pageTestProcess = PageContainer.WEB_INF_ADMIN_TEST_JSP;
+        String redirectTestsPage = PageContainer.PATH_PREFIX_REDIRECT +
+                PageContainer.PATH_COMMAND_TESTS + themeIdText;
+        if(ACTION_CANCEL.equals(actionText)){
+            removeAttributes(request);
+            return redirectTestsPage;
+        }
+
+        if (isIncorrectRequestParams(themeIdText, testIdText, questionIdText)) {
+            return redirectTestsPage;
+        }
+
+        int testId;
+        int themeId;
+        int questionId;
+        try {
+            themeId = Integer.parseInt(themeIdText);
+            testId = Integer.parseInt(testIdText);
+            questionId = Integer.parseInt(questionIdText);
+        } catch (NumberFormatException e) {
+            return redirectTestsPage;
+        }
+
+        Test test = (Test) request.getSession().getAttribute(SESSION_ATTR_TEST);
+        if (test != null
+                && (testId != test.getId() || themeId != test.getTheme().getId()) ) {
+            return redirectTestsPage;
+        }else if (test == null){
+            if (testId > 0) {
+                test = testService.getTestEntity(testId);
+                if (test == null || test.getTheme().getId() != themeId) {
+                    return redirectTestsPage;
+                }
+            } else {
+                test = new Test();
+            }
+        }
+        updateTestInfo(test, themeId);
+
+        Question question = test.getQuestionByLocalId(questionId);
+        if(question == null){
+            question = test.getQuestionByLocalId(1);
+        }
+
+        if (PageContainer.HTTP_POST.equals(request.getMethod())) {
+            test = extractTestFromRequest(request);
+            String submitText = request.getParameter(SUBMIT_PARAM);
+            if (SUBMIT_VALUE_ADD_QUESTION.equals(submitText)){
+                addNewQuestion(test);
+            }else if (SUBMIT_VALUE_SAVE_QUESTION.equals(submitText)){
+                saveQuestionData(request, test, question);
+            } else if (SUBMIT_VALUE_SAVE.equals(submitText)) {
+
+                if (!testService.saveTestEntity(test)) {
+                    LOGGER_SLF4J.debug(LoggerMessages.DEBUG_SAVE_TEST_ENTITY_INCOMPLETE);
+                    LOGGER_SLF4J.debug(test.toString());
+                    saveTestData(request, test, question);
+                    return pageTestProcess;
+                }
+                removeAttributes(request);
+                return redirectTestsPage;
+            }
+        }
+
+        saveTestData(request, test, question);
+        return pageTestProcess;
+    }
 
     private Test extractTestFromRequest(HttpServletRequest request) {
         Test test = (Test) request.getSession().getAttribute(SESSION_ATTR_TEST);
@@ -67,7 +143,8 @@ public class ProcessingTestCommand implements Command {
         test.setDescription(request.getParameter(REQ_PARAM_TEST_DESC));
         test.setDescriptionUA(request.getParameter(REQ_PARAM_TEST_DESC_UA));
         String[] inactive = request.getParameterValues(REQ_PARAM_TEST_INACTIVE);
-        test.setInactive((inactive != null) && inactive.length > 0 && "on".equals(inactive[0]));
+        test.setInactive((inactive != null) && inactive.length > 0
+                && "on".equals(inactive[0]));
         return test;
     }
 
@@ -138,87 +215,9 @@ public class ProcessingTestCommand implements Command {
     }
 
     private void removeAttributes(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        request.removeAttribute(REQ_ATTR_TEST);
-        request.removeAttribute(SESSION_ATTR_QUESTION);
-        session.removeAttribute(REQ_ATTR_TEST);
-        session.removeAttribute(SESSION_ATTR_QUESTION);
+        List<String> attributeList = Arrays.asList(REQ_ATTR_TEST, SESSION_ATTR_QUESTION);
+        CommandUtility.removeRequestAttributes(request, attributeList);
+        CommandUtility.removeSessionAttributes(request, attributeList);
     }
-
-    @Override
-    public String execute(HttpServletRequest request) {
-
-        String testIdText = request.getParameter(TEST_ID_PARAM);
-        String themeIdText = request.getParameter(THEME_ID_PARAM);
-        String questionIdText = request.getParameter(QUESTION_ID_PARAM);
-        String actionText = request.getParameter(ACTION_PARAM);
-        String pageTestProcess = PageContainer.WEB_INF_ADMIN_TEST_JSP;
-        String redirectTestsPage = PageContainer.PATH_PREFIX_REDIRECT +
-                PageContainer.PATH_COMMAND_TESTS + themeIdText;
-        if(ACTION_CANCEL.equals(actionText)){
-            removeAttributes(request);
-            return redirectTestsPage;
-        }
-
-        if (isIncorrectRequestParams(themeIdText, testIdText, questionIdText)) {
-            return redirectTestsPage;
-        }
-
-        int testId;
-        int themeId;
-        int questionId;
-        try {
-            themeId = Integer.parseInt(themeIdText);
-            testId = Integer.parseInt(testIdText);
-            questionId = Integer.parseInt(questionIdText);
-        } catch (NumberFormatException e) {
-            return redirectTestsPage;
-        }
-
-        Test test = (Test) request.getSession().getAttribute(SESSION_ATTR_TEST);
-        if (test != null
-                && (testId != test.getId() || themeId != test.getTheme().getId()) ) {
-            return redirectTestsPage;
-        }else if (test == null){
-            if (testId > 0) {
-                test = testService.getTestEntity(testId);
-                if (test == null || test.getTheme().getId() != themeId) {
-                    return redirectTestsPage;
-                }
-            } else {
-                test = new Test();
-            }
-        }
-        updateTestInfo(test, themeId);
-
-        Question question = test.getByLocalId(questionId);
-        if(question == null){
-            question = test.getByLocalId(1);
-        }
-
-        if (PageContainer.HTTP_POST.equals(request.getMethod())) {
-            test = extractTestFromRequest(request);
-            String submitText = request.getParameter(SUBMIT_PARAM);
-            if (SUBMIT_VALUE_ADD_QUESTION.equals(submitText)){
-                addNewQuestion(test);
-            }else if (SUBMIT_VALUE_SAVE_QUESTION.equals(submitText)){
-                saveQuestionData(request, test, question);
-            } else if (SUBMIT_VALUE_SAVE.equals(submitText)) {
-
-                if (!testService.saveTestEntity(test)) {
-                    LOGGER_SLF4J.debug(LoggerMessages.DEBUG_SAVE_TEST_ENTITY_INCOMPLETE);
-                    LOGGER_SLF4J.debug(test.toString());
-                    saveTestData(request, test, question);
-                    return pageTestProcess;
-                }
-                removeAttributes(request);
-                return redirectTestsPage;
-            }
-        }
-
-        saveTestData(request, test, question);
-        return pageTestProcess;
-    }
-
 
 }

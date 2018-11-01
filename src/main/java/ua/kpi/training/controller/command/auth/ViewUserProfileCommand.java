@@ -7,6 +7,11 @@ import ua.kpi.training.model.service.impl.ViewUserProfileServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class View User Profile Command
+ * View User Profile Command Implementation
+ * @author Anton Makukhin
+ */
 public class ViewUserProfileCommand implements Command {
     private ViewUserProfileService viewUserProfileService;
 
@@ -20,7 +25,6 @@ public class ViewUserProfileCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        // TODO: Add user profile data receiving
         return PageContainer.WEB_INF_USER_USER_PROFILE_JSP;
     }
 }

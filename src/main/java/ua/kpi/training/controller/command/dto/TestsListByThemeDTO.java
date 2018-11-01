@@ -5,6 +5,11 @@ import ua.kpi.training.model.entity.Theme;
 
 import java.util.List;
 
+/**
+ * Class Registration User DTO
+ * Data transfer object for registering user
+ * @author Anton Makukhin
+ */
 public class TestsListByThemeDTO {
     Theme theme;
     List<Test> testList;
